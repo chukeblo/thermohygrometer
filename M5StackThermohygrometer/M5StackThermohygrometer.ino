@@ -1,34 +1,25 @@
 #include <M5Stack.h>
 #include <WiFi.h>
+#include "NetworkController.hpp"
 
-#define JST (3600L * 9)
-
-const char* ssid     = "hoge";
-const char* password = "fuga";
+char *ssid = "hoge";
+char *password = "fuga";
+NetworkController *network_controller = new NetworkController(ssid, password);
 
 void setup()
 {
     M5.begin();
     M5.Lcd.setTextSize(2);
 
-    WiFi.begin(ssid, password);
-
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        M5.Lcd.print(".");
-    }
-
-    M5.Lcd.println("");
-    M5.Lcd.printf("WiFi connected. ssid=%s , password=%s\n", ssid, password);
-    Serial.println(WiFi.localIP());
-
-    configTime(JST, 0, "ntp.nict.jp", "time.google.com", "ntp.jst.mfeed.ad.jp");
+    bool result = network_controller->Prepare();
+    M5.Lcd.printf("NetworkController::Prepare() result = %d\n", result);
 }
 
 void loop()
 {
     struct tm tm;
-    if (getLocalTime(&tm)) {
+    if (getLocalTime(&tm))
+    {
         M5.Lcd.fillScreen(BLACK);
         M5.Lcd.setCursor(60, 80);
         M5.Lcd.printf("%d/%2d/%2d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
