@@ -2,13 +2,15 @@
 
 #include <M5Stack.h>
 #include <SD.h>
+#include <stdexcept>
+#include "JsonHandler.hpp"
 
-void SDCardController::ReadNetworkSettings()
+sNetworkSettings SDCardController::ReadNetworkSettings()
 {
     File file = SD.open("/network_settings.json");
     if (!file)
     {
-        return;
+        throw std::invalid_argument("file not found");
     }
     uint32_t file_size = file.size();
     char raw_data[1000];
@@ -18,7 +20,19 @@ void SDCardController::ReadNetworkSettings()
         file.seek(i);
         raw_data[i] = file.read();
     }
-    M5.Lcd.println(raw_data);
+    sNetworkSettings settings;
+    try
+    {
+        std::map<std::string, std::string> parseResult = JsonHandler::Parse(raw_data);
+        settings.ssid = parseResult["ssid"];
+        settings.password = parseResult["password"];
+    }
+    catch (std::invalid_argument e)
+    {
+        M5.Lcd.println(e.what());
+    }
 
     file.close();
+
+    return settings;
 }

@@ -32,6 +32,7 @@ bool NetworkController::Connect()
         status = WiFi.status();
         if (status == WL_CONNECTED)
         {
+            is_connected_ = true;
             M5.Lcd.printf("\nWiFi connected.\nssid=%s\npassword=%s\n", ssid_, password_);
             M5.Lcd.println(WiFi.localIP());
             return true;
@@ -55,4 +56,5 @@ bool NetworkController::SyncronizeTime()
         return false;
     }
     configTime(JST, 0, "ntp.nict.jp", "time.google.com", "ntp.jst.mfeed.ad.jp");
+    return true;
 }

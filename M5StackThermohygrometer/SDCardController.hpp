@@ -6,5 +6,5 @@
 class SDCardController
 {
 public:
-    static void ReadNetworkSettings();
+    static sNetworkSettings ReadNetworkSettings();
 };
