@@ -126,8 +126,5 @@ sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int in
         }
         value[value_index++] = content[index++];
     }
-    std::string key_string = key;
-    std::string value_string = value;
-    sKeyValuePairResult result{key_string, value_string, index + 1};
-    return result;
+    return sKeyValuePairResult{std::string(key), std::string(value), index + 1};
 }

@@ -13,11 +13,9 @@ sNetworkSettings SDCardController::ReadNetworkSettings()
         throw std::invalid_argument("file not found");
     }
     uint32_t file_size = file.size();
-    char raw_data[1000];
-    memset(raw_data, 0, sizeof(raw_data));
+    char raw_data[1000] = {};
     for (int i = 0; i < file_size; i++)
     {
-        file.seek(i);
         raw_data[i] = file.read();
     }
     sNetworkSettings settings;
