@@ -3,6 +3,5 @@
 
 #include "QMP6988.h"
 #include "SHT3X.h"
-#include "DHT12.h"
 
 #endif
