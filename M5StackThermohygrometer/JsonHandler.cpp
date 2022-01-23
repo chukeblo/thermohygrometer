@@ -70,7 +70,7 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 
 sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
 {
-    if (content[index++] != '"')
+    if (content[index++] != '\"')
     {
         throw std::invalid_argument("key does not start with open quotation ( \" )");
     }
