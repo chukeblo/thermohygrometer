@@ -97,7 +97,7 @@ sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int in
     index = SkipIfBlankCharacters(content, index);
     if (content[index++] != '\"')
     {
-        throw std::invalid_argument("does not end with close quotation ( \" )");
+        throw std::invalid_argument("value does not start with open quotation ( \" )");
     }
     char value[100];
     int value_index = 0;
