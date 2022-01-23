@@ -2,6 +2,17 @@
 
 #include <stdexcept>
 
+static const char kOpenBracket = '{';
+static const char kCloseBracket = '}';
+static const char kQuotationMark = '\"';
+static const char kComma = ',';
+static const char kColon = ':';
+static const char kEndOfString = '\0';
+static const char kSpace = ' ';
+static const char kTab = '\t';
+static const char kCarriageReturn = '\r';
+static const char kLineFeed = '\n';
+
 std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 {
     if (raw.empty())
@@ -13,7 +24,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 
     int count = 0;
     count = SkipBlankAndNewLineCharacters(raw, count);
-    if (raw[count++] != '{')
+    if (raw[count++] != kOpenBracket)
     {
         throw std::invalid_argument("does not start with open bracket ( '{' )");
     }
@@ -23,13 +34,13 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
         sKeyValuePairResult result = ExtractKeyValuePair(raw, count);
         map.insert(std::make_pair(result.key, result.value));
         count = result.index;
-        if (raw[count++] != ',')
+        if (raw[count++] != kComma)
         {
             break;
         }
     }
     count = SkipBlankAndNewLineCharacters(raw, count);
-    if (raw[count] != '}')
+    if (raw[count] != kCloseBracket)
     {
         throw std::invalid_argument("does not end with close bracket ( '}' )");
     }
@@ -46,7 +57,7 @@ int JsonHandler::SkipIfBlankCharacters(std::string content, int index)
 {
     while (true)
     {
-        if (content[index] != ' ' && content[index] != '\t')
+        if (content[index] != kSpace && content[index] != kTab)
         {
             return index;
         }
@@ -58,9 +69,9 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 {
     while (true)
     {
-        if (content[index] != ' ' && content[index] != '\t')
+        if (content[index] != kSpace && content[index] != kTab)
         {
-            if (content[index] != '\r' && content[index] != '\n')
+            if (content[index] != kCarriageReturn && content[index] != kLineFeed)
             {
                 return index;
             }
@@ -71,7 +82,7 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 
 sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
 {
-    if (content[index++] != '\"')
+    if (content[index++] != kQuotationMark)
     {
         throw std::invalid_argument("key does not start with open quotation ( \" )");
     }
@@ -79,24 +90,24 @@ sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int in
     int key_index = 0;
     while (true)
     {
-        if (content[index] == '\0')
+        if (content[index] == kEndOfString)
         {
             throw std::invalid_argument("incorrectly comes to the end of json string");
         }
-        if (content[index] == '\"')
+        if (content[index] == kQuotationMark)
         {
-            key[key_index] = '\0';
+            key[key_index] = kEndOfString;
             break;
         }
         key[key_index++] = content[index++];
     }
     index = SkipIfBlankCharacters(content, ++index);
-    if (content[index++] != ':')
+    if (content[index++] != kColon)
     {
         throw std::invalid_argument("key and value should be divided with colon ( : )");
     }
     index = SkipIfBlankCharacters(content, index);
-    if (content[index++] != '\"')
+    if (content[index++] != kQuotationMark)
     {
         throw std::invalid_argument("value does not start with open quotation ( \" )");
     }
@@ -104,13 +115,13 @@ sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int in
     int value_index = 0;
     while (true)
     {
-        if (content[index] == '\0')
+        if (content[index] == kEndOfString)
         {
             throw std::invalid_argument("incorrectly comes to the end of json string");
         }
-        if (content[index] == '\"')
+        if (content[index] == kQuotationMark)
         {
-            value[value_index] = '\0';
+            value[value_index] = kEndOfString;
             break;
         }
         value[value_index++] = content[index++];
