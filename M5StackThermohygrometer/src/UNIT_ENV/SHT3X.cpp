@@ -1,5 +1,7 @@
 #include "SHT3X.h"
 
+static const uint8_t kReadBytes = 6;
+
 /* Motor()
 
 */
@@ -27,11 +29,11 @@ byte SHT3X::get()
   delay(200);
 
   // Request 6 bytes of data
-  Wire.requestFrom(_address, 6);
+  Wire.requestFrom(_address, kReadBytes);
 
   // Read 6 bytes of data
   // cTemp msb, cTemp lsb, cTemp crc, humidity msb, humidity lsb, humidity crc
-  for (int i=0;i<6;i++) {
+  for (int i=0;i<kReadBytes;i++) {
     data[i]=Wire.read();
   };
   
