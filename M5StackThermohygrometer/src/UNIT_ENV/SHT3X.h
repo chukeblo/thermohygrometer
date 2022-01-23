@@ -1,13 +1,7 @@
 #ifndef __SHT3X_H
 #define __HT3X_H
 
-
-#if ARDUINO >= 100
- #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
-
+#include "Arduino.h"
 #include "Wire.h"
 
 class SHT3X{
