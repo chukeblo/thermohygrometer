@@ -29,7 +29,7 @@ sNetworkSettings SDCardController::ReadNetworkSettings()
     }
     catch (std::invalid_argument e)
     {
-        M5.Lcd.println(e.what());
+        Serial.println(e.what());
     }
 
     file.close();

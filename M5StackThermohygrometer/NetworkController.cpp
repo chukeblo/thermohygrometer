@@ -15,17 +15,19 @@ NetworkController::~NetworkController()
 
 bool NetworkController::Prepare()
 {
-    WiFi.begin(ssid_, password_);
     bool result = false;
     result = Connect();
-    M5.Lcd.printf("network connect result = %d\n", result);
+    Serial.printf("network connect result = %d\n", result);
     result = SyncronizeTime();
-    M5.Lcd.printf("time sync result = %d\n", result);
+    Serial.printf("time sync result = %d\n", result);
     return result;
 }
 
 bool NetworkController::Connect()
 {
+    WiFi.begin(ssid_, password_);
+    Serial.println("connecting...");
+
     uint8_t status;
     while (true)
     {
@@ -33,18 +35,14 @@ bool NetworkController::Connect()
         if (status == WL_CONNECTED)
         {
             is_connected_ = true;
-            M5.Lcd.printf("\nWiFi connected.\nssid=%s\npassword=%s\n", ssid_, password_);
-            M5.Lcd.println(WiFi.localIP());
+            Serial.printf("\nWiFi connected.\nssid=%s\npassword=%s\n", ssid_, password_);
+            Serial.println(WiFi.localIP());
             return true;
         }
         else if (status == WL_CONNECT_FAILED)
         {
-            M5.Lcd.println("\nFailed in WiFi connection");
+            Serial.println("\nFailed in WiFi connection");
             return false;
-        }
-        else
-        {
-            M5.Lcd.print(".");
         }
         delay(500);
     }

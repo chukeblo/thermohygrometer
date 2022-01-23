@@ -1,6 +1,5 @@
 #include "JsonHandler.hpp"
 
-#include <M5Stack.h>
 #include <stdexcept>
 
 std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
