@@ -18,16 +18,14 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
     {
         throw std::invalid_argument("does not start with open bracket ( '{' )");
     }
-    count = SkipBlankAndNewLineCharacters(raw, count);
-    sKeyValuePairResult result = ExtractKeyValuePair(raw, count);
-    map.insert(std::make_pair(result.key, result.value));
-    count = result.index;
-    if (raw[count++] == ',')
-    {
+    while (true) {
         count = SkipBlankAndNewLineCharacters(raw, count);
-        result = ExtractKeyValuePair(raw, count);
+        sKeyValuePairResult result = ExtractKeyValuePair(raw, count);
         map.insert(std::make_pair(result.key, result.value));
         count = result.index;
+        if (raw[count++] != ',') {
+            break;
+        }
     }
     count = SkipBlankAndNewLineCharacters(raw, count);
     if (raw[count] != '}')
