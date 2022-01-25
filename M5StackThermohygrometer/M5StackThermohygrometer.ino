@@ -1,8 +1,12 @@
 #include <M5Stack.h>
 #include <WiFi.h>
-#include "EnvironmentDataReader.hpp"
+#include "EnvironmentDataCollector.hpp"
 #include "NetworkController.hpp"
 #include "SDCardController.hpp"
+
+void CreateTasks() {
+    xTaskCreatePinnedToCore(StartDataCollectionTask, "DataCollectionTask", 4096, nullptr, 1, nullptr, 0);
+}
 
 void setup()
 {
@@ -17,11 +21,7 @@ void setup()
     bool result = network_controller->Prepare();
     M5.Lcd.printf("NetworkController::Prepare() result = %d\n", result);
 
-    EnvironmentDataReader *reader = new EnvironmentDataReader();
-    sThermohydroData data = reader->ReadThermohydroData();
-    if (data.is_succeeded) {
-        M5.Lcd.printf("Temp: %2.1f\nHumi: %2.0f%%\n", data.temperature, data.humidity);
-    }
+    CreateTasks();
 }
 
 void loop()
