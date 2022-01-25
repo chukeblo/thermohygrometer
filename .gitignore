@@ -35,4 +35,9 @@ ehthumb.db
 Thumbs.db
 
 # VSCode settings #
+###################
 *.vscode/
+
+# Arduino output #
+##################
+*ArduinoOutput/
