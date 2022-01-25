@@ -5,15 +5,15 @@
 class EnvironmentDataCollector
 {
 public:
-    static EnvironmentDataCollector *GetInstance();
-    void CollectData();
+	static EnvironmentDataCollector* GetInstance();
+	void CollectData();
 
 private:
-    EnvironmentDataCollector();
-    ~EnvironmentDataCollector();
+	EnvironmentDataCollector();
+	~EnvironmentDataCollector();
 
-    EnvironmentDataReader *reader_;
-    int8_t hour_;
+	EnvironmentDataReader* reader_;
+	int8_t hour_;
 };
 
-void StartDataCollectionTask(void *arg);
+void StartDataCollectionTask(void* arg);

@@ -6,14 +6,14 @@
 class EventHandler
 {
 public:
-    static EventHandler *GetInstance();
-    void EventHandle();
-    void AddEvent(EventType type);
+	static EventHandler* GetInstance();
+	void EventHandle();
+	void AddEvent(EventType type);
 
 private:
-    EventHandler();
-    ~EventHandler();
-    EventType GetEvent();
+	EventHandler();
+	~EventHandler();
+	EventType GetEvent();
 
-    std::queue<EventType> event_queue_;
+	std::queue<EventType> event_queue_;
 };

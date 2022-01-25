@@ -3,15 +3,15 @@
 class NetworkController
 {
 public:
-    NetworkController(char *ssid, char *password);
-    ~NetworkController();
-    bool Prepare();
+	NetworkController(char* ssid, char* password);
+	~NetworkController();
+	bool Prepare();
 
 private:
-    bool Connect();
-    bool SyncronizeTime();
+	bool Connect();
+	bool SyncronizeTime();
 
-    char *ssid_;
-    char *password_;
-    bool is_connected_;
+	char* ssid_;
+	char* password_;
+	bool is_connected_;
 };

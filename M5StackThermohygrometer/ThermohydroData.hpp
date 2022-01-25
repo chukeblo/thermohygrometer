@@ -2,7 +2,7 @@
 
 typedef struct ThermohydroData
 {
-    bool is_succeeded;
-    float temperature;
-    float humidity;
+	bool is_succeeded;
+	float temperature;
+	float humidity;
 } sThermohydroData;
