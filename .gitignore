@@ -38,6 +38,10 @@ Thumbs.db
 ###################
 *.vscode/
 
+# Visual Studio settings #
+##########################
+*.vs/
+
 # Arduino output #
 ##################
 *ArduinoOutput/
