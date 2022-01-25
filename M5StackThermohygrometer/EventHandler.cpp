@@ -42,7 +42,7 @@ void EventHandler::EventHandle()
 
 void EventHandler::AddEvent(EventType type)
 {
-	event_queue_.push(type);
+	event_queue_.push_back(type);
 }
 
 EventType EventHandler::GetEvent()
@@ -52,6 +52,6 @@ EventType EventHandler::GetEvent()
 		return EventType::kNone;
 	}
 	EventType type = event_queue_.front();
-	event_queue_.pop();
+	event_queue_.pop_front();
 	return type;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <queue>
+#include <list>
 #include "EventType.hpp"
 
 class EventHandler
@@ -15,5 +15,5 @@ private:
 	~EventHandler();
 	EventType GetEvent();
 
-	std::queue<EventType> event_queue_;
+	std::list<EventType> event_queue_;
 };
