@@ -4,6 +4,7 @@
 #include <SD.h>
 #include <stdexcept>
 #include "JsonHandler.hpp"
+#include "SDCardConstants.hpp"
 
 static const int kMaxReadSize = 2048;
 
@@ -12,10 +13,10 @@ sNetworkSettings SDCardController::ReadNetworkSettings()
 	sNetworkSettings settings;
 	try
 	{
-		std::string raw_text = ReadFileFromSDCard("/network_settings.json");
+		std::string raw_text = ReadFileFromSDCard(kSDCardRootPath + kNetworkSettingsFileName);
 		std::map<std::string, std::string> parseResult = JsonHandler::Parse(raw_text);
-		settings.ssid = parseResult["ssid"];
-		settings.password = parseResult["password"];
+		settings.ssid = parseResult[kSsidKey];
+		settings.password = parseResult[kPasswordKey];
 	}
 	catch (std::invalid_argument e)
 	{
@@ -29,13 +30,13 @@ sAWSConfig SDCardController::ReadAWSConfig()
 	sAWSConfig config;
 	try
 	{
-		std::string raw_text = ReadFileFromSDCard("/aws_docs/aws_config.json");
+		std::string raw_text = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAwsConfigFileName);
 		std::map<std::string, std::string> parse_result = JsonHandler::Parse(raw_text);
-		config.clientId = parse_result["clientId"];
-		config.endpoint = parse_result["endpoint"];
-		config.rootCa = ReadFileFromSDCard("/aws_docs/AmazonRootCAxxxx.pem");
-		config.deviceCert = ReadFileFromSDCard("/aws_docs/xxxx-certificate.pem.crt");
-		config.privateKey = ReadFileFromSDCard("/aws_docs/xxxx-private.pem.key");
+		config.clientId = parse_result[kClientIdKey];
+		config.endpoint = parse_result[kEndpointKey];
+		config.rootCa = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAWSRootCAFileName);
+		config.deviceCert = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kDeviceCertFileName);
+		config.privateKey = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kPrivateKeyFileName);
 	}
 	catch (std::invalid_argument e)
 	{
