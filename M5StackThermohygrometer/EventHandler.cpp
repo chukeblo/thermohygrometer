@@ -29,8 +29,6 @@ void EventHandler::EventHandle()
 	{
 	case EventType::kReadEnvData:
 		break;
-	case EventType::kLeftButtonPressed:
-		break;
 	case EventType::kMiddleButtonPressed:
 		break;
 	case EventType::kRightButtonPressed:

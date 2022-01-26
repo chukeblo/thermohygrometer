@@ -2,7 +2,6 @@
 
 enum class ButtonType
 {
-	kLeftButton,
 	kMiddleButton,
 	kRightButton
 };
