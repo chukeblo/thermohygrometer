@@ -8,7 +8,7 @@ public:
 	bool Prepare();
 
 private:
-	bool Connect();
+	bool ConnectToWiFi();
 	bool SyncronizeTime();
 
 	const char* ssid_;
