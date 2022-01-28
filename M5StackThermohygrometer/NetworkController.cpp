@@ -5,7 +5,7 @@
 
 #define JST (3600L * 9)
 
-NetworkController::NetworkController(char* ssid, char* password) : ssid_(ssid), password_(password), is_connected_(false)
+NetworkController::NetworkController(const char* ssid, const char* password) : ssid_(ssid), password_(password), is_connected_(false)
 {
 }
 
