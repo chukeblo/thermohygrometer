@@ -17,7 +17,6 @@ public:
 
 private:
 	static int SkipIfBlankCharacters(std::string content, int index);
-	static int SkipNewLine(std::string content, int index);
 	static int SkipBlankAndNewLineCharacters(std::string content, int index);
 	static sKeyValuePairResult ExtractKeyValuePair(std::string content, int index);
 };
