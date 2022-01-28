@@ -42,6 +42,11 @@ sAWSConfig SDCardController::ReadAWSConfig()
 	{
 		Serial.println(e.what());
 	}
+	Serial.printf("SDCardController::ReadAWSConfig() clientId = %s\n", config.clientId.c_str());
+	Serial.printf("SDCardController::ReadAWSConfig() endpoint = %s\n", config.endpoint.c_str());
+	Serial.printf("SDCardController::ReadAWSConfig() rootCa = \n%s\n", config.rootCa.c_str());
+	Serial.printf("SDCardController::ReadAWSConfig() deviceCert = \n%s\n", config.deviceCert.c_str());
+	Serial.printf("SDCardController::ReadAWSConfig() privateKey = \n%s\n", config.privateKey.c_str());
 	return config;
 }
 

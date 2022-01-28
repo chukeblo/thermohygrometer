@@ -23,14 +23,7 @@ void setup()
     char* password = const_cast<char *>(settings.password.c_str());
     NetworkController* network_controller = new NetworkController(ssid, password);
     bool result = network_controller->Prepare();
-    M5.Lcd.printf("NetworkController::Prepare() result = %d\n", result);
-
     sAWSConfig config = SDCardController::ReadAWSConfig();
-    M5.Lcd.printf("clientId = %s\n", config.clientId.c_str());
-    M5.Lcd.printf("endpoint = %s\n", config.endpoint.c_str());
-    M5.Lcd.printf("rootCa = %s\n", config.rootCa.c_str());
-    M5.Lcd.printf("deviceCert = %s\n", config.deviceCert.c_str());
-    M5.Lcd.printf("privateKey = %s\n", config.privateKey.c_str());
 
     CreateTasks();
 
