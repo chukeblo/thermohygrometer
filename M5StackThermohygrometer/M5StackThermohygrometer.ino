@@ -19,11 +19,9 @@ void setup()
     Wire.begin();
 
     sNetworkSettings settings = SDCardController::ReadNetworkSettings();
-    char* ssid = const_cast<char*>(settings.ssid.c_str());
-    char* password = const_cast<char *>(settings.password.c_str());
-    NetworkController* network_controller = new NetworkController(settings.ssid.c_str(), settings.password.c_str());
-    bool result = network_controller->Prepare();
     sAWSConfig config = SDCardController::ReadAWSConfig();
+    NetworkController* network_controller = new NetworkController(settings.ssid.c_str(), settings.password.c_str());
+    network_controller->Prepare();
 
     CreateTasks();
 
