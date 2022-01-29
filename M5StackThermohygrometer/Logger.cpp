@@ -41,7 +41,7 @@ void Logger::LogInfo(std::string class_name, std::string method_name, std::strin
 	Serial.printf("[%s] %s::%s() %s\n", kInfoTag, class_name.c_str(), method_name.c_str(), info.c_str());
 }
 
-void Logger::LogTrace(std::string class_name, std::method_name, std::string info)
+void Logger::LogTrace(std::string class_name, std::string method_name, std::string info)
 {
 	Serial.printf("[%s] %s::%s() %s\n", kTraceTag, class_name.c_str(), method_name.c_str(), info.c_str());
 }
