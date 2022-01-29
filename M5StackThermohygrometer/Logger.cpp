@@ -36,6 +36,11 @@ void Logger::Log(LogLevel level, std::string class_name, std::string method_name
 	}
 }
 
+void Logger::Log(LogLevel level, std::string class_name, std::string method_name, char* info)
+{
+	Log(level, class_name, method_name, std::string(info));
+}
+
 void Logger::LogInfo(std::string class_name, std::string method_name, std::string info)
 {
 	Serial.printf("[%s] %s::%s() %s\n", kInfoTag, class_name.c_str(), method_name.c_str(), info.c_str());

@@ -9,6 +9,7 @@ public:
 	Logger();
 	~Logger();
 	static void Log(LogLevel level, std::string class_name, std::string method_name, std::string info);
+	static void Log(LogLevel level, std::string class_name, std::string method_name, char* info);
 private:
 	static void LogInfo(std::string class_name, std::string method_name, std::string info);
 	static void LogTrace(std::string class_name, std::string method_name, std::string info);
