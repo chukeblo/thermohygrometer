@@ -25,12 +25,15 @@ const std::string kReadThermohydroData = "ReadThermohydroData";
 
 // EventHandler
 const std::string kEventHandle = "EventHandle";
+const std::string kAddEvent = "AddEvent";
 
 // JsonHandler
 const std::string kParse = "Parse";
+const std::string kExtractKeyValuePair = "ExtractKeyValuePair";
 
 // NetworkController
 const std::string kPrepare = "Prepare";
+const std::string kConnectToWiFi = "ConnectToWiFi";
 
 // SDCardController
 const std::string kReadNetworkSettings = "ReadNetworkSettings";
