@@ -1,5 +1,9 @@
 #include "EventHandler.hpp"
 
+#include <M5Stack.h>
+#include "LogConstants.hpp"
+#include "Logger.hpp"
+
 EventHandler::EventHandler()
 {
 }
@@ -34,12 +38,16 @@ void EventHandler::EventHandle()
 	case EventType::kRightButtonPressed:
 		break;
 	default:
+		Logger::Log(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type");
 		break;
 	}
 }
 
 void EventHandler::AddEvent(EventType type)
 {
+	Logger::Log(LogLevel::kTrace, kEventHandler, kAddEvent,
+		std::string("in: type=") + std::string(String((int)type).c_str())
+	);
 	event_queue_.push_back(type);
 }
 

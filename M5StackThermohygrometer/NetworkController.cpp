@@ -2,6 +2,8 @@
 
 #include <M5Stack.h>
 #include <WiFi.h>
+#include "LogConstants.hpp"
+#include "Logger.hpp"
 
 #define JST (3600L * 9)
 
@@ -15,18 +17,24 @@ NetworkController::~NetworkController()
 
 bool NetworkController::Prepare()
 {
+	Logger::Log(LogLevel::kTrace, kNetworkController, kPrepare, "in");
 	bool result = false;
 	result = ConnectToWiFi();
-	Serial.printf("network connect result = %d\n", result);
+	Logger::Log(LogLevel::kDebug, kNetworkController, kPrepare,
+		std::string("network connect result = ") + std::string(String((int)result).c_str())
+	);
 	result = SyncronizeTime();
-	Serial.printf("time sync result = %d\n", result);
+	Logger::Log(LogLevel::kDebug, kNetworkController, kPrepare,
+		std::string("time sync result = ") + std::string(String((int)result).c_str())
+	);
+	Logger::Log(LogLevel::kTrace, kNetworkController, kPrepare, "out");
 	return result;
 }
 
 bool NetworkController::ConnectToWiFi()
 {
 	WiFi.begin(ssid_, password_);
-	Serial.println("NetworkController::ConnectToWiFi() connecting...");
+	Logger::Log(LogLevel::kInfo, kNetworkController, kConnectToWiFi, "connecting...");
 
 	uint8_t status;
 	while (true)
@@ -35,16 +43,15 @@ bool NetworkController::ConnectToWiFi()
 		if (status == WL_CONNECTED)
 		{
 			is_connected_ = true;
-			Serial.println("NetworkController::ConnectToWiFi() WiFi connected");
-			Serial.printf("NetworkController::ConnectToWiFi() ssid = %s\n", ssid_);
-			Serial.printf("NetworkController::ConnectToWiFi() password = %s\n", password_);
-			IPAddress ip_address = WiFi.localIP();
-			Serial.printf("NetworkController::ConnectToWiFi() localIP = %d\n", (int32_t)ip_address);
+			Logger::Log(LogLevel::kInfo, kNetworkController, kConnectToWiFi, "connected");
+			Logger::Log(LogLevel::kDebug, kNetworkController, kConnectToWiFi,
+				std::string("ssid=") + std::string(ssid_) + std::string(",password=") + std::string(password_)
+			);
 			return true;
 		}
 		else if (status == WL_CONNECT_FAILED)
 		{
-			Serial.println("NetworkController::ConnectToWiFi() Failed in WiFi connection");
+			Logger::Log(LogLevel::kError, kNetworkController, kConnectToWiFi, "failed in WiFi connection");
 			return false;
 		}
 		delay(500);
