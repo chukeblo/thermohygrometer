@@ -51,12 +51,12 @@ void Logger::LogTrace(std::string class_name, std::string method_name, std::stri
 	Serial.printf("[%s] %s::%s() %s\n", kTraceTag, class_name.c_str(), method_name.c_str(), info.c_str());
 }
 
-void Logger::LogError(std::string class_name, std::string method_name, std::string info)
+void Logger::LogDebug(std::string class_name, std::string method_name, std::string info)
 {
 	Serial.printf("[%s] %s::%s() %s\n",kDebugTag, class_name.c_str(), method_name.c_str(), info.c_str());
 }
 
-void Logger::LogDebug(std::string class_name, std::string method_name, std::string info)
+void Logger::LogError(std::string class_name, std::string method_name, std::string info)
 {
 	Serial.printf("[%s] %s::%s() %s\n", kErrorTag, class_name.c_str(), method_name.c_str(), info.c_str());
 }
