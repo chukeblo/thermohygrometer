@@ -13,6 +13,7 @@ typedef struct
 class JsonHandler
 {
 public:
+	static std::string Serialize(std::map<std::string, std::string> jsonMap);
 	static std::map<std::string, std::string> Parse(std::string raw);
 
 private:

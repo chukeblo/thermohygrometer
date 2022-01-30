@@ -2,7 +2,6 @@
 
 #include <M5Stack.h>
 #include <stdexcept>
-#include <string>
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
@@ -16,6 +15,26 @@ static const char kSpace = ' ';
 static const char kTab = '\t';
 static const char kCarriageReturn = '\r';
 static const char kLineFeed = '\n';
+
+std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
+{
+	std::string json = "{";
+	std::map<std::string, std::string>::iterator it = jsonMap.begin();
+	bool beginning = false;
+	do
+	{
+		if (beginning) {
+			json.append(",");
+		}
+		beginning = true;
+		json.append(it->first);
+		json.append(":");
+		json.append(it->second);
+	} while (++it != jsonMap.end());
+	json.append("}");
+
+	return json;
+}
 
 std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 {
