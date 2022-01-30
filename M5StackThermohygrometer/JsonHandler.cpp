@@ -18,6 +18,7 @@ static const char kLineFeed = '\n';
 
 std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 {
+	Logger::Log(LogLevel::kTrace, kJsonHandler, kSerialize, "in");
 	std::string json = { kOpenBracket };
 	std::map<std::string, std::string>::iterator it = jsonMap.begin();
 	bool beginning = false;
@@ -32,7 +33,7 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 		json.append(it->second);
 	} while (++it != jsonMap.end());
 	json.append({ kCloseBracket });
-
+	Logger::Log(LogLevel::kDebug, kJsonHandler, kSerialize, json);
 	return json;
 }
 

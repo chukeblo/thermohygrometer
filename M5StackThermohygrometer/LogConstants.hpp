@@ -28,6 +28,7 @@ const std::string kEventHandle = "EventHandle";
 const std::string kAddEvent = "AddEvent";
 
 // JsonHandler
+const std::string kSerialize = "Serialize";
 const std::string kParse = "Parse";
 const std::string kExtractKeyValuePair = "ExtractKeyValuePair";
 
