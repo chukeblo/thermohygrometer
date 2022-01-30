@@ -18,20 +18,20 @@ static const char kLineFeed = '\n';
 
 std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 {
-	std::string json = "{";
+	std::string json = { kOpenBracket };
 	std::map<std::string, std::string>::iterator it = jsonMap.begin();
 	bool beginning = false;
 	do
 	{
 		if (beginning) {
-			json.append(",");
+			json.append({ kComma });
 		}
 		beginning = true;
 		json.append(it->first);
-		json.append(":");
+		json.append({ kColon });
 		json.append(it->second);
 	} while (++it != jsonMap.end());
-	json.append("}");
+	json.append({ kCloseBracket });
 
 	return json;
 }
