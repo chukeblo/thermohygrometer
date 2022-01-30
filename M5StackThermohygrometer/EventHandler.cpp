@@ -24,12 +24,12 @@ EventHandler* EventHandler::GetInstance()
 
 void EventHandler::EventHandle()
 {
-	EventType type = GetEvent();
-	if (type == EventType::kNone)
+	sEventData data = GetEvent();
+	if (data.type == EventType::kNone)
 	{
 		return;
 	}
-	switch (type)
+	switch (data.type)
 	{
 	case EventType::kReadEnvData:
 		break;
@@ -43,21 +43,21 @@ void EventHandler::EventHandle()
 	}
 }
 
-void EventHandler::AddEvent(EventType type)
+void EventHandler::AddEvent(sEventData data)
 {
 	Logger::Log(LogLevel::kTrace, kEventHandler, kAddEvent,
-		std::string("in: type=") + std::string(String((int)type).c_str())
+		std::string("in: type=") + std::string(String((int)data.type).c_str())
 	);
-	event_queue_.push_back(type);
+	event_queue_.push_back(data);
 }
 
-EventType EventHandler::GetEvent()
+sEventData EventHandler::GetEvent()
 {
 	if (event_queue_.empty())
 	{
-		return EventType::kNone;
+		return sEventData{ EventType::kNone, nullptr };
 	}
-	EventType type = event_queue_.front();
+	sEventData data = event_queue_.front();
 	event_queue_.pop_front();
-	return type;
+	return data;
 }

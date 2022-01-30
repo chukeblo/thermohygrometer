@@ -1,19 +1,19 @@
 #pragma once
 
 #include <list>
-#include "EventType.hpp"
+#include "EventData.hpp"
 
 class EventHandler
 {
 public:
 	static EventHandler* GetInstance();
 	void EventHandle();
-	void AddEvent(EventType type);
+	void AddEvent(sEventData data);
 
 private:
 	EventHandler();
 	~EventHandler();
-	EventType GetEvent();
+	sEventData GetEvent();
 
-	std::list<EventType> event_queue_;
+	std::list<sEventData> event_queue_;
 };
