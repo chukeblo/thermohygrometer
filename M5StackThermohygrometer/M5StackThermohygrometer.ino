@@ -1,6 +1,5 @@
 #include <M5Stack.h>
 #include <WiFi.h>
-#include <stdexcept>
 #include "AWSConfig.hpp"
 #include "ButtonInputWatcher.hpp"
 #include "EnvironmentDataCollector.hpp"

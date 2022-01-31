@@ -1,7 +1,8 @@
 #include "JsonHandler.hpp"
 
-#include <M5Stack.h>
 #include <stdexcept>
+
+#include <M5Stack.h>
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 

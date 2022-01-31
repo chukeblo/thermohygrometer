@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+
 #include "EventData.hpp"
 
 class EventHandler

@@ -1,8 +1,9 @@
 #include "SDCardController.hpp"
 
+#include <stdexcept>
+
 #include <M5Stack.h>
 #include <SD.h>
-#include <stdexcept>
 #include "JsonHandler.hpp"
 #include "LogConstants.hpp"
 #include "Logger.hpp"

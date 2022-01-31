@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "AWSConfig.hpp"
 #include "NetworkSettings.hpp"
 
