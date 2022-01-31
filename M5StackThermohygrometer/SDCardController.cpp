@@ -8,8 +8,6 @@
 #include "Logger.hpp"
 #include "SDCardConstants.hpp"
 
-static const int kMaxReadSize = 2048;
-
 sNetworkSettings SDCardController::ReadNetworkSettings()
 {
 	Logger::Log(LogLevel::kTrace, kSDCardController, kReadNetworkSettings, "in");

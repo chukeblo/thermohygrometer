@@ -6,12 +6,15 @@ class EnvironmentDataCollector
 {
 public:
 	static EnvironmentDataCollector* GetInstance();
-	void CollectData();
 
 private:
 	EnvironmentDataCollector();
 	~EnvironmentDataCollector();
 
+public:
+	void CollectData();
+
+private:
 	EnvironmentDataReader* reader_;
 	int8_t hour_;
 };

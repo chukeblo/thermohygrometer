@@ -4,16 +4,6 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
-EnvironmentDataCollector::EnvironmentDataCollector()
-{
-	reader_ = new EnvironmentDataReader();
-}
-
-EnvironmentDataCollector::~EnvironmentDataCollector()
-{
-	delete reader_;
-}
-
 EnvironmentDataCollector* EnvironmentDataCollector::GetInstance()
 {
 	static EnvironmentDataCollector* instance = nullptr;
@@ -22,6 +12,16 @@ EnvironmentDataCollector* EnvironmentDataCollector::GetInstance()
 		instance = new EnvironmentDataCollector();
 	}
 	return instance;
+}
+
+EnvironmentDataCollector::EnvironmentDataCollector()
+{
+	reader_ = new EnvironmentDataReader();
+}
+
+EnvironmentDataCollector::~EnvironmentDataCollector()
+{
+	delete reader_;
 }
 
 void EnvironmentDataCollector::CollectData()

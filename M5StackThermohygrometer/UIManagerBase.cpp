@@ -3,14 +3,6 @@
 #include "CUIManager.hpp"
 #include "GUIManager.hpp"
 
-UIManagerBase::UIManagerBase()
-{
-}
-
-UIManagerBase::~UIManagerBase()
-{
-}
-
 UIManagerBase* UIManagerBase::GetInstance(UIType type)
 {
 	static UIManagerBase* gui_manager = nullptr;
@@ -34,3 +26,12 @@ UIManagerBase* UIManagerBase::GetInstance(UIType type)
 		return nullptr;
 	}
 }
+
+UIManagerBase::UIManagerBase()
+{
+}
+
+UIManagerBase::~UIManagerBase()
+{
+}
+

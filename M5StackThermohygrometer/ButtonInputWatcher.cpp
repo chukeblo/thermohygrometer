@@ -5,8 +5,15 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
-static const uint8_t kMiddleButtonPin = 38;
-static const uint8_t kRightButtonPin = 37;
+ButtonInputWatcher* ButtonInputWatcher::GetInstance()
+{
+	static ButtonInputWatcher* instance = nullptr;
+	if (!instance)
+	{
+		instance = new ButtonInputWatcher();
+	}
+	return instance;
+}
 
 ButtonInputWatcher::ButtonInputWatcher()
 {
@@ -16,16 +23,6 @@ ButtonInputWatcher::ButtonInputWatcher()
 
 ButtonInputWatcher::~ButtonInputWatcher()
 {
-}
-
-ButtonInputWatcher* ButtonInputWatcher::GetInstance()
-{
-	static ButtonInputWatcher* instance = nullptr;
-	if (!instance)
-	{
-		instance = new ButtonInputWatcher();
-	}
-	return instance;
 }
 
 void ButtonInputWatcher::SetUpButtonInterruption()

@@ -4,14 +4,6 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
-EventHandler::EventHandler()
-{
-}
-
-EventHandler::~EventHandler()
-{
-}
-
 EventHandler* EventHandler::GetInstance()
 {
 	static EventHandler* instance = nullptr;
@@ -20,6 +12,14 @@ EventHandler* EventHandler::GetInstance()
 		instance = new EventHandler();
 	}
 	return instance;
+}
+
+EventHandler::EventHandler()
+{
+}
+
+EventHandler::~EventHandler()
+{
 }
 
 void EventHandler::EventHandle()

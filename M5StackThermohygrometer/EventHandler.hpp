@@ -7,13 +7,18 @@ class EventHandler
 {
 public:
 	static EventHandler* GetInstance();
-	void EventHandle();
-	void AddEvent(sEventData data);
 
 private:
 	EventHandler();
 	~EventHandler();
+
+public:
+	void EventHandle();
+	void AddEvent(sEventData data);
+
+private:
 	sEventData GetEvent();
 
+private:
 	std::list<sEventData> event_queue_;
 };

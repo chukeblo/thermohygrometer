@@ -6,6 +6,9 @@
 
 class SDCardController
 {
+private:
+	static const int kMaxReadSize = 2048;
+
 public:
 	static sNetworkSettings ReadNetworkSettings();
 	static sAWSConfig ReadAWSConfig();

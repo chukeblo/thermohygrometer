@@ -5,9 +5,14 @@
 
 class EnvironmentDataReader
 {
+private:
+	const int kReadSuccess = 0;
+
 public:
 	EnvironmentDataReader();
 	~EnvironmentDataReader();
+
+public:
 	sThermohydroData ReadThermohydroData();
 
 private:

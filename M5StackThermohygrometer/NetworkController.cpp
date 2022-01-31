@@ -5,8 +5,6 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
-#define JST (3600L * 9)
-
 NetworkController::NetworkController(const char* ssid, const char* password) : ssid_(ssid), password_(password), is_connected_(false)
 {
 }
@@ -63,6 +61,6 @@ bool NetworkController::SyncronizeTime()
 	if (!is_connected_) {
 		return false;
 	}
-	configTime(JST, 0, "ntp.nict.jp", "time.google.com", "ntp.jst.mfeed.ad.jp");
+	configTime(kJST, 0, "ntp.nict.jp", "time.google.com", "ntp.jst.mfeed.ad.jp");
 	return true;
 }

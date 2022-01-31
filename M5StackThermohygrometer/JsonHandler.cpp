@@ -118,7 +118,7 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 	}
 }
 
-sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
+JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
 {
 	Logger::Log(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair, std::string("in: raw=") + content);
 	if (content[index++] != kQuotationMark)

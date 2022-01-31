@@ -2,11 +2,6 @@
 
 #include <M5Stack.h>
 
-static const char* kInfoTag = "INFO";
-static const char* kTraceTag = "TRACE";
-static const char* kDebugTag = "DEBUG";
-static const char* kErrorTag= "ERROR";
-
 Logger::Logger()
 {
 }

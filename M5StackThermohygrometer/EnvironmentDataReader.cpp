@@ -3,8 +3,6 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 
-static const int kReadSuccess = 0;
-
 EnvironmentDataReader::EnvironmentDataReader()
 {
 	pressure_sensor_.init();
