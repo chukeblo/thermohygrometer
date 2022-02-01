@@ -3,28 +3,28 @@
 #include "CUIManager.hpp"
 #include "GUIManager.hpp"
 
-UIManagerBase* UIManagerBase::GetInstance(UIType type)
+UIManagerBase* UIManagerBase::GetInstance(uint6_t ui_type)
 {
 	static UIManagerBase* gui_manager = nullptr;
 	static UIManagerBase* cui_manager = nullptr;
 
-	switch (type)
+	if (ui_type & kCuiBit)
 	{
-	case UIType::kCUI:
 		if (!cui_manager)
 		{
 			cui_manager = new CUIManager();
 		}
 		return cui_manager;
-	case UIType::kGUI:
+	}
+	if (ui_type & kGuiBit)
+	{
 		if (!gui_manager)
 		{
 			gui_manager = new GUIManager();
 		}
 		return gui_manager;
-	default:
-		return nullptr;
 	}
+	return nullptr;
 }
 
 UIManagerBase::UIManagerBase()
