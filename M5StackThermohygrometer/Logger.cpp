@@ -12,19 +12,19 @@ Logger::~Logger()
 
 void Logger::Log(uint8_t level, std::string class_name, std::string method_name, std::string info)
 {
-	if (level & kInfoBit > 0)
+	if (level & kInfoBit)
 	{
 		LogInfo(class_name, method_name, info);
 	}
-	else if (level & kTraceBit > 0)
+	else if (level & kTraceBit)
 	{
 		LogTrace(class_name, method_name, info);
 	}
-	else if (level & kDebugBit > 0)
+	else if (level & kDebugBit)
 	{
 		LogDebug(class_name, method_name, info);
 	}
-	else if (level & kErrorBit > 0)
+	else if (level & kErrorBit)
 	{
 		LogError(class_name, method_name, info);
 	}
