@@ -3,7 +3,7 @@
 #include "CUIManager.hpp"
 #include "GUIManager.hpp"
 
-UIManagerBase* UIManagerBase::GetInstance(uint6_t ui_type)
+UIManagerBase* UIManagerBase::GetInstance(uint8_t ui_type)
 {
 	static UIManagerBase* gui_manager = nullptr;
 	static UIManagerBase* cui_manager = nullptr;

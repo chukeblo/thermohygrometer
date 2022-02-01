@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UIType.hpp"
+#include <cstdint>
 
 class UIManagerBase
 {
