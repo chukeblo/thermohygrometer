@@ -36,42 +36,39 @@ void ButtonInputWatcher::SetUpButtonInterruption()
 	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "out");
 }
 
-void ButtonInputWatcher::OnButtonPressed(ButtonType type)
+void ButtonInputWatcher::OnButtonPressed(uint8_t button_type)
 {
 	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kOnButtonPressed,
-		std::string("in: type=") + std::string(String((int)type).c_str())
+		std::string("in: type=") + std::string(String(button_type).c_str())
 	);
-	switch (type)
+
+	if (button_type & kMiddleButtonBit > 0)
 	{
-	case ButtonType::kMiddleButton:
 		if (!middle_button_pressed_) {
 			middle_button_pressed_ = true;
 			EventHandler::GetInstance()->AddEvent(sEventData{ EventType::kMiddleButtonPressed, nullptr });
 			middle_button_pressed_ = false;
 		}
-		break;
-	case ButtonType::kRightButton:
+	}
+	else if (button_type & kRightButtonBit > 0) {
 		if (!right_button_pressed_) {
 			right_button_pressed_ = true;
 			EventHandler::GetInstance()->AddEvent(sEventData{ EventType::kRightButtonPressed, nullptr });
 			right_button_pressed_ = false;
 		}
-		break;
-	default:
-		Logger::Log(LogLevel::kError, kButtonInputWatcher, kOnButtonPressed, "not supported button type");
-		break;
 	}
+	
 	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kOnButtonPressed,
-		std::string("out: type=") + std::string(String((int)type).c_str())
+		std::string("out: type=") + std::string(String(button_type).c_str())
 	);
 }
 
 void OnMiddleButtonPressed()
 {
-	ButtonInputWatcher::GetInstance()->OnButtonPressed(ButtonType::kMiddleButton);
+	ButtonInputWatcher::GetInstance()->OnButtonPressed(ButtonInputWatcher::kMiddleButtonBit);
 }
 
 void OnRightButtonPressed()
 {
-	ButtonInputWatcher::GetInstance()->OnButtonPressed(ButtonType::kRightButton);
+	ButtonInputWatcher::GetInstance()->OnButtonPressed(ButtonInputWatcher::kRightButtonBit);
 }
