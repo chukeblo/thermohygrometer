@@ -11,7 +11,7 @@
 
 sNetworkSettings SDCardController::ReadNetworkSettings()
 {
-	Logger::Log(LogLevel::kTrace, kSDCardController, kReadNetworkSettings, "in");
+	Logger::Log(Logger::kTraceBit, kSDCardController, kReadNetworkSettings, "in");
 	sNetworkSettings settings;
 	try
 	{
@@ -19,20 +19,20 @@ sNetworkSettings SDCardController::ReadNetworkSettings()
 		std::map<std::string, std::string> parseResult = JsonHandler::Parse(raw_text);
 		settings.ssid = parseResult[kSsidKey];
 		settings.password = parseResult[kPasswordKey];
-		Logger::Log(LogLevel::kDebug, kSDCardController, kReadNetworkSettings,
+		Logger::Log(Logger::kDebugBit, kSDCardController, kReadNetworkSettings,
 			std::string("ssid=") + settings.ssid + std::string(",password=") + settings.password
 		);
 	}
 	catch (std::invalid_argument e)
 	{
-		Logger::Log(LogLevel::kError, kSDCardController, kReadNetworkSettings, e.what());
+		Logger::Log(Logger::kErrorBit, kSDCardController, kReadNetworkSettings, e.what());
 	}
 	return settings;
 }
 
 sAWSConfig SDCardController::ReadAWSConfig()
 {
-	Logger::Log(LogLevel::kTrace, kSDCardController, kReadAWSConfig, "in");
+	Logger::Log(Logger::kTraceBit, kSDCardController, kReadAWSConfig, "in");
 	sAWSConfig config;
 	try
 	{
@@ -43,22 +43,22 @@ sAWSConfig SDCardController::ReadAWSConfig()
 		config.rootCa = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAWSRootCAFileName);
 		config.deviceCert = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kDeviceCertFileName);
 		config.privateKey = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kPrivateKeyFileName);
-		Logger::Log(LogLevel::kDebug, kSDCardController, kReadAWSConfig,
+		Logger::Log(Logger::kDebugBit, kSDCardController, kReadAWSConfig,
 			std::string("clientId=") + config.clientId + std::string(",endpoint=") + config.endpoint
 		);
-		Logger::Log(LogLevel::kDebug, kSDCardController, kReadAWSConfig,
+		Logger::Log(Logger::kDebugBit, kSDCardController, kReadAWSConfig,
 			std::string("rootCA = ") + config.rootCa
 		);
-		Logger::Log(LogLevel::kDebug, kSDCardController, kReadAWSConfig,
+		Logger::Log(Logger::kDebugBit, kSDCardController, kReadAWSConfig,
 			std::string("deviceCert = ") + config.deviceCert
 		);
-		Logger::Log(LogLevel::kDebug, kSDCardController, kReadAWSConfig,
+		Logger::Log(Logger::kDebugBit, kSDCardController, kReadAWSConfig,
 			std::string("privateKey = ") + config.privateKey
 		);
 	}
 	catch (std::invalid_argument e)
 	{
-		Logger::Log(LogLevel::kError, kSDCardController, kReadAWSConfig, e.what());
+		Logger::Log(Logger::kErrorBit, kSDCardController, kReadAWSConfig, e.what());
 	}
 	return config;
 }

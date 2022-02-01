@@ -38,14 +38,14 @@ void EventHandler::EventHandle()
 	case EventType::kRightButtonPressed:
 		break;
 	default:
-		Logger::Log(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type");
+		Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");
 		break;
 	}
 }
 
 void EventHandler::AddEvent(sEventData data)
 {
-	Logger::Log(LogLevel::kTrace, kEventHandler, kAddEvent,
+	Logger::Log(Logger::kTraceBit, kEventHandler, kAddEvent,
 		std::string("in: type=") + std::string(String((int)data.type).c_str())
 	);
 	event_queue_.push_back(data);

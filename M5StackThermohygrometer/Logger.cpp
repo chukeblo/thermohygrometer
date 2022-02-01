@@ -10,28 +10,27 @@ Logger::~Logger()
 {
 }
 
-void Logger::Log(LogLevel level, std::string class_name, std::string method_name, std::string info)
+void Logger::Log(uint8_t level, std::string class_name, std::string method_name, std::string info)
 {
-	switch (level)
+	if (level & kInfoBit > 0)
 	{
-	case LogLevel::kInfo:
 		LogInfo(class_name, method_name, info);
-		break;
-	case LogLevel::kTrace:
+	}
+	else if (level & kTraceBit > 0)
+	{
 		LogTrace(class_name, method_name, info);
-		break;
-	case LogLevel::kDebug:
+	}
+	else if (level & kDebugBit > 0)
+	{
 		LogDebug(class_name, method_name, info);
-		break;
-	case LogLevel::kError:
+	}
+	else if (level & kErrorBit > 0)
+	{
 		LogError(class_name, method_name, info);
-		break;
-	default:
-		break;
 	}
 }
 
-void Logger::Log(LogLevel level, std::string class_name, std::string method_name, char* info)
+void Logger::Log(uint8_t level, std::string class_name, std::string method_name, char* info)
 {
 	Log(level, class_name, method_name, std::string(info));
 }

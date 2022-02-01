@@ -14,10 +14,10 @@ EnvironmentDataReader::~EnvironmentDataReader()
 
 sThermohydroData EnvironmentDataReader::ReadThermohydroData()
 {
-	Logger::Log(LogLevel::kTrace, kEnvironmentDataReader, kReadThermohydroData, "in");
+	Logger::Log(Logger::kTraceBit, kEnvironmentDataReader, kReadThermohydroData, "in");
 	if (thermohydrosensor_.TryReadEnvData() != kReadSuccess)
 	{
-		Logger::Log(LogLevel::kError, kEnvironmentDataReader, kReadThermohydroData,
+		Logger::Log(Logger::kErrorBit, kEnvironmentDataReader, kReadThermohydroData,
 			"failed to read environment data"
 		);
 		return sThermohydroData{ false, 0.0, 0.0 };
@@ -25,7 +25,7 @@ sThermohydroData EnvironmentDataReader::ReadThermohydroData()
 	float temperature = thermohydrosensor_.GetCTemp();
 	float humidity = thermohydrosensor_.GetHumidity();
 
-	Logger::Log(LogLevel::kInfo, kEnvironmentDataReader, kReadThermohydroData,
+	Logger::Log(Logger::kInfoBit, kEnvironmentDataReader, kReadThermohydroData,
 		std::string("out: temp=") + std::string(String(temperature).c_str()) +
 		std::string(",humi=") + std::string(String(humidity).c_str())
 	);

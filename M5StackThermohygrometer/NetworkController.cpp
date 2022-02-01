@@ -15,24 +15,24 @@ NetworkController::~NetworkController()
 
 bool NetworkController::Prepare()
 {
-	Logger::Log(LogLevel::kTrace, kNetworkController, kPrepare, "in");
+	Logger::Log(Logger::kTraceBit, kNetworkController, kPrepare, "in");
 	bool result = false;
 	result = ConnectToWiFi();
-	Logger::Log(LogLevel::kDebug, kNetworkController, kPrepare,
+	Logger::Log(Logger::kDebugBit, kNetworkController, kPrepare,
 		std::string("network connect result = ") + std::string(String((int)result).c_str())
 	);
 	result = SyncronizeTime();
-	Logger::Log(LogLevel::kDebug, kNetworkController, kPrepare,
+	Logger::Log(Logger::kDebugBit, kNetworkController, kPrepare,
 		std::string("time sync result = ") + std::string(String((int)result).c_str())
 	);
-	Logger::Log(LogLevel::kTrace, kNetworkController, kPrepare, "out");
+	Logger::Log(Logger::kTraceBit, kNetworkController, kPrepare, "out");
 	return result;
 }
 
 bool NetworkController::ConnectToWiFi()
 {
 	WiFi.begin(ssid_, password_);
-	Logger::Log(LogLevel::kInfo, kNetworkController, kConnectToWiFi, "connecting...");
+	Logger::Log(Logger::kInfoBit, kNetworkController, kConnectToWiFi, "connecting...");
 
 	uint8_t status;
 	while (true)
@@ -41,15 +41,15 @@ bool NetworkController::ConnectToWiFi()
 		if (status == WL_CONNECTED)
 		{
 			is_connected_ = true;
-			Logger::Log(LogLevel::kInfo, kNetworkController, kConnectToWiFi, "connected");
-			Logger::Log(LogLevel::kDebug, kNetworkController, kConnectToWiFi,
+			Logger::Log(Logger::kInfoBit, kNetworkController, kConnectToWiFi, "connected");
+			Logger::Log(Logger::kDebugBit, kNetworkController, kConnectToWiFi,
 				std::string("ssid=") + std::string(ssid_) + std::string(",password=") + std::string(password_)
 			);
 			return true;
 		}
 		else if (status == WL_CONNECT_FAILED)
 		{
-			Logger::Log(LogLevel::kError, kNetworkController, kConnectToWiFi, "failed in WiFi connection");
+			Logger::Log(Logger::kErrorBit, kNetworkController, kConnectToWiFi, "failed in WiFi connection");
 			return false;
 		}
 		delay(500);

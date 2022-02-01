@@ -27,18 +27,18 @@ ButtonInputWatcher::~ButtonInputWatcher()
 
 void ButtonInputWatcher::SetUpButtonInterruption()
 {
-	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "in");
+	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kSetUpButtonInterruption, "in");
 	pinMode(kMiddleButtonPin, INPUT);
 	pinMode(kRightButtonPin, INPUT);
 
 	attachInterrupt(kMiddleButtonPin, OnMiddleButtonPressed, FALLING);
 	attachInterrupt(kRightButtonPin, OnRightButtonPressed, FALLING);
-	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "out");
+	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kSetUpButtonInterruption, "out");
 }
 
 void ButtonInputWatcher::OnButtonPressed(uint8_t button_type)
 {
-	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kOnButtonPressed,
+	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kOnButtonPressed,
 		std::string("in: type=") + std::string(String(button_type).c_str())
 	);
 
@@ -58,7 +58,7 @@ void ButtonInputWatcher::OnButtonPressed(uint8_t button_type)
 		}
 	}
 	
-	Logger::Log(LogLevel::kTrace, kButtonInputWatcher, kOnButtonPressed,
+	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kOnButtonPressed,
 		std::string("out: type=") + std::string(String(button_type).c_str())
 	);
 }
