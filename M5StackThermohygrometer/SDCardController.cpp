@@ -9,10 +9,10 @@
 #include "Logger.hpp"
 #include "SDCardConstants.hpp"
 
-sNetworkSettings SDCardController::ReadNetworkSettings()
+NetworkSettings SDCardController::ReadNetworkSettings()
 {
 	Logger::Log(Logger::kTraceBit, kSDCardController, kReadNetworkSettings, "in");
-	sNetworkSettings settings;
+	NetworkSettings settings;
 	try
 	{
 		std::string raw_text = ReadFileFromSDCard(kSDCardRootPath + kNetworkSettingsFileName);
@@ -30,10 +30,10 @@ sNetworkSettings SDCardController::ReadNetworkSettings()
 	return settings;
 }
 
-sAWSConfig SDCardController::ReadAWSConfig()
+AWSConfig SDCardController::ReadAWSConfig()
 {
 	Logger::Log(Logger::kTraceBit, kSDCardController, kReadAWSConfig, "in");
-	sAWSConfig config;
+	AWSConfig config;
 	try
 	{
 		std::string raw_text = ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAwsConfigFileName);

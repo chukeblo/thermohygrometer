@@ -11,8 +11,8 @@ private:
 	static const int kMaxReadSize = 2048;
 
 public:
-	static sNetworkSettings ReadNetworkSettings();
-	static sAWSConfig ReadAWSConfig();
+	static NetworkSettings ReadNetworkSettings();
+	static AWSConfig ReadAWSConfig();
 
 private:
 	static std::string ReadFileFromSDCard(std::string fileName);

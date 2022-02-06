@@ -17,8 +17,8 @@ void setup()
     M5.Lcd.setTextSize(2);
     Wire.begin();
 
-    sNetworkSettings settings = SDCardController::ReadNetworkSettings();
-    sAWSConfig config = SDCardController::ReadAWSConfig();
+    NetworkSettings settings = SDCardController::ReadNetworkSettings();
+    AWSConfig config = SDCardController::ReadAWSConfig();
     NetworkController* network_controller = new NetworkController(settings.ssid.c_str(), settings.password.c_str());
     network_controller->Prepare();
 

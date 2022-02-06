@@ -9,4 +9,4 @@ typedef struct AWSConfig
 	std::string rootCa;
 	std::string deviceCert;
 	std::string privateKey;
-} sAWSConfig;
+};

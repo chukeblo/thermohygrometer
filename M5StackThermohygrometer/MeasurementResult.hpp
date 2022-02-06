@@ -5,5 +5,5 @@
 typedef struct MeasurementResult
 {
     bool is_succeeded;
-    sThermohydroData thermohygro_data;
-} sMeasurementResult;
+    ThermohydroData thermohygro_data;
+};

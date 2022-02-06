@@ -12,16 +12,16 @@ EnvironmentDataMeasurer::~EnvironmentDataReader()
 {
 }
 
-sMeasurementResult EnvironmentDataMeasurer::ReadThermohydroData()
+MeasurementResult EnvironmentDataMeasurer::ReadThermohydroData()
 {
 	Logger::Log(Logger::kTraceBit, kThermohygroDataMeasurer, kReadThermohydroData, "in");
-	sThermohydroData data = thermohydrosensor_.ReadThermohygroData();
+	ThermohydroData data = thermohydrosensor_.ReadThermohygroData();
 	if (data.temperature == -1.0f && data.humidity == -1.0f)
 	{
 		Logger::Log(Logger::kErrorBit, kThermohygroDataMeasurer, kReadThermohydroData,
 			"failed to read environment data"
 		);
-		return sMeasurementResult{ false, data };
+		return MeasurementResult{ false, data };
 	}
 
 	Logger::Log(Logger::kInfoBit, kThermohygroDataMeasurer, kReadThermohydroData,
@@ -29,5 +29,5 @@ sMeasurementResult EnvironmentDataMeasurer::ReadThermohydroData()
 		std::string(",humi=") + std::string(String(data.humidity).c_str())
 	);
 
-	return sThermohydroData{ true, data };
+	return MeasurementResult { true, data };
 }

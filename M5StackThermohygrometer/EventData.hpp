@@ -5,4 +5,4 @@
 typedef struct EventData {
     EventType type;
     void* data;
-} sEventData;
+};

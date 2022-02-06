@@ -43,7 +43,7 @@ void EventHandler::EventHandle()
 	}
 }
 
-void EventHandler::AddEvent(sEventData data)
+void EventHandler::AddEvent(EventData data)
 {
 	Logger::Log(Logger::kTraceBit, kEventHandler, kAddEvent,
 		std::string("in: type=") + std::string(String((int)data.type).c_str())
@@ -55,7 +55,7 @@ sEventData EventHandler::GetEvent()
 {
 	if (event_queue_.empty())
 	{
-		return sEventData{ EventType::kNone, nullptr };
+		return EventData{ EventType::kNone, nullptr };
 	}
 	sEventData data = event_queue_.front();
 	event_queue_.pop_front();

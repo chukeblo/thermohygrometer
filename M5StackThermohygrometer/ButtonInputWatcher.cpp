@@ -46,14 +46,14 @@ void ButtonInputWatcher::OnButtonPressed(uint8_t button_type)
 	{
 		if (!middle_button_pressed_) {
 			middle_button_pressed_ = true;
-			EventHandler::GetInstance()->AddEvent(sEventData{ EventType::kMiddleButtonPressed, nullptr });
+			EventHandler::GetInstance()->AddEvent(EventData{ EventType::kMiddleButtonPressed, nullptr });
 			middle_button_pressed_ = false;
 		}
 	}
 	else if (button_type & kRightButtonBit > 0) {
 		if (!right_button_pressed_) {
 			right_button_pressed_ = true;
-			EventHandler::GetInstance()->AddEvent(sEventData{ EventType::kRightButtonPressed, nullptr });
+			EventHandler::GetInstance()->AddEvent(EventData{ EventType::kRightButtonPressed, nullptr });
 			right_button_pressed_ = false;
 		}
 	}

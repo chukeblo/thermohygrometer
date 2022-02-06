@@ -24,7 +24,7 @@ void ThermohygrometerController::CollecMeasureThermohygroData()
 		getLocalTime(&tm);
 		if (hour_ != tm.tm_hour) {
 			hour_ = tm.tm_hour;
-			sMeasurementResult result = measurer_->ReadThermohygroData();
+			MeasurementResult result = measurer_->ReadThermohygroData();
 			M5.Lcd.setCursor(0, 140);
 			M5.Lcd.printf("Temp: %2.1f 'C\nHumi: %2.0f\%\n", data.temperature, data.humidity);
 

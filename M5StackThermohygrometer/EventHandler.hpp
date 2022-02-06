@@ -15,11 +15,11 @@ private:
 
 public:
 	void EventHandle();
-	void AddEvent(sEventData data);
+	void AddEvent(EventData data);
 
 private:
 	sEventData GetEvent();
 
 private:
-	std::list<sEventData> event_queue_;
+	std::list<EventData> event_queue_;
 };
