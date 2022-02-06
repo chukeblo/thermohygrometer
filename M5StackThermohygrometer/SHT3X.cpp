@@ -5,7 +5,17 @@ SHT3X::SHT3X(uint8_t address) : address_(address), c_temp_(0), f_temp_(0), humid
 	Wire.begin();
 }
 
-uint8_t SHT3X::TryReadEnvData()
+sThermohydroData SHT3X::ReadThermohygroData()
+{
+	uint8_t result = ReadEnvData();
+	if (result != kReadSuccess)
+	{
+		return sThermohydroData { -1.0f, -1.0f };
+	}
+	return sThermohydroData { c_temp_, humidity_ };
+}
+
+uint8_t SHT3X::ReadEnvData()
 {
 	unsigned int data[6];
 
@@ -40,19 +50,4 @@ uint8_t SHT3X::TryReadEnvData()
 	humidity_ = ((((data[3] * 256.0) + data[4]) * 100) / 65535.0);
 
 	return kReadSuccess;
-}
-
-float SHT3X::GetCTemp()
-{
-	return c_temp_;
-}
-
-float SHT3X::GetFTemp()
-{
-	return f_temp_;
-}
-
-float SHT3X::GetHumidity()
-{
-	return humidity_;
 }

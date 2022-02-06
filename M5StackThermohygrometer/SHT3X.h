@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Arduino.h"
-#include "Wire.h"
+#include <Arduino.h>
+#include <Wire.h>
+#include "ThermohydroData.hpp"
 
 class SHT3X {
 private:
@@ -14,10 +15,9 @@ public:
 	SHT3X(uint8_t address = 0x44);
 
 public:
-	uint8_t TryReadEnvData(void);
-	float GetCTemp();
-	float GetFTemp();
-	float GetHumidity();
+	sThermohydroData ReadThermohygroData();
+private:
+	uint8_t ReadEnvData();
 
 private:
 	uint8_t address_;
