@@ -2,7 +2,7 @@
 
 #include <string>
 
-struct NetworkSettings
+struct WiFiSettings
 {
 	std::string ssid;
 	std::string password;
