@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "ThermohydroData.hpp"
+#include "ThermohygroData.hpp"
 
 class SHT3X {
 private:
@@ -15,7 +15,7 @@ public:
 	SHT3X(uint8_t address = 0x44);
 
 public:
-	sThermohydroData ReadThermohygroData();
+	ThermohygroData ReadThermohygroData();
 private:
 	uint8_t ReadEnvData();
 

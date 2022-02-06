@@ -2,7 +2,7 @@
 
 #include <string>
 
-typedef struct NetworkSettings
+struct NetworkSettings
 {
 	std::string ssid;
 	std::string password;

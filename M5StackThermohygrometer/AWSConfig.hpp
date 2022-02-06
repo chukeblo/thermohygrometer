@@ -2,7 +2,7 @@
 
 #include <string>
 
-typedef struct AWSConfig
+struct AWSConfig
 {
 	std::string clientId;
 	std::string endpoint;

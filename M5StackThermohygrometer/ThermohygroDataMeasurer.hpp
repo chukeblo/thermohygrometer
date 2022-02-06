@@ -3,17 +3,17 @@
 #include "SHT3X.h"
 #include "MeasurementResult.hpp"
 
-class EnvironmentDataMeasurer
+class ThermohygroDataMeasurer
 {
 private:
 	const int kReadSuccess = 0;
 
 public:
-	EnvironmentDataMeasurer();
-	~EnvironmentDataMeasurer();
+	ThermohygroDataMeasurer();
+	~ThermohygroDataMeasurer();
 
 public:
-	MeasurementResult ReadThermohydroData();
+	MeasurementResult ReadThermohygroData();
 
 private:
 	SHT3X thermohydrosensor_;

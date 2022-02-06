@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ThermohydroData.hpp"
+#include "ThermohygroData.hpp"
 
-typedef struct MeasurementResult
+struct MeasurementResult
 {
     bool is_succeeded;
-    ThermohydroData thermohygro_data;
+    ThermohygroData thermohygro_data;
 };

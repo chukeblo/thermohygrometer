@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct ThermohydroData
+struct ThermohygroData
 {
 	float temperature;
 	float humidity;

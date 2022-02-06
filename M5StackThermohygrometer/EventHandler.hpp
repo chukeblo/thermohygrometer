@@ -18,7 +18,7 @@ public:
 	void AddEvent(EventData data);
 
 private:
-	sEventData GetEvent();
+	EventData GetEvent();
 
 private:
 	std::list<EventData> event_queue_;

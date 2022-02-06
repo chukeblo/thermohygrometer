@@ -2,14 +2,10 @@
 #include <WiFi.h>
 #include "AWSConfig.hpp"
 #include "ButtonInputWatcher.hpp"
-#include "EnvironmentDataCollector.hpp"
+#include "ThermohygrometerController.hpp"
 #include "EventHandler.hpp"
 #include "NetworkController.hpp"
 #include "SDCardController.hpp"
-
-void CreateTasks() {
-    xTaskCreatePinnedToCore(StartDataCollectionTask, "DataCollectionTask", 4096, nullptr, 1, nullptr, 0);
-}
 
 void setup()
 {
@@ -21,8 +17,6 @@ void setup()
     AWSConfig config = SDCardController::ReadAWSConfig();
     NetworkController* network_controller = new NetworkController(settings.ssid.c_str(), settings.password.c_str());
     network_controller->Prepare();
-
-    CreateTasks();
 
     ButtonInputWatcher::GetInstance()->SetUpButtonInterruption();
 }

@@ -24,7 +24,7 @@ EventHandler::~EventHandler()
 
 void EventHandler::EventHandle()
 {
-	sEventData data = GetEvent();
+	EventData data = GetEvent();
 	if (data.type == EventType::kNone)
 	{
 		return;
@@ -51,13 +51,13 @@ void EventHandler::AddEvent(EventData data)
 	event_queue_.push_back(data);
 }
 
-sEventData EventHandler::GetEvent()
+EventData EventHandler::GetEvent()
 {
 	if (event_queue_.empty())
 	{
 		return EventData{ EventType::kNone, nullptr };
 	}
-	sEventData data = event_queue_.front();
+	EventData data = event_queue_.front();
 	event_queue_.pop_front();
 	return data;
 }

@@ -2,7 +2,7 @@
 
 #include "EventType.hpp"
 
-typedef struct EventData {
+struct EventData {
     EventType type;
     void* data;
 };

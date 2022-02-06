@@ -7,7 +7,7 @@
 
 ThermohygrometerController::ThermohygrometerController()
 {
-	measurer_ = new EnvironmentDataReader();
+	measurer_ = new ThermohygroDataMeasurer();
 }
 
 ThermohygrometerController::~ThermohygrometerController()
@@ -15,18 +15,19 @@ ThermohygrometerController::~ThermohygrometerController()
 	delete measurer_;
 }
 
-void ThermohygrometerController::CollecMeasureThermohygroData()
+void ThermohygrometerController::MeasureThermohygroData()
 {
 	Logger::Log(Logger::kTraceBit, kThermohygrometerController, kReadThermohygroData, "in");
 	struct tm tm;
+	int hour = -1;
 	while (true)
 	{
 		getLocalTime(&tm);
-		if (hour_ != tm.tm_hour) {
-			hour_ = tm.tm_hour;
+		if (hour != tm.tm_hour) {
+			hour = tm.tm_hour;
 			MeasurementResult result = measurer_->ReadThermohygroData();
 			M5.Lcd.setCursor(0, 140);
-			M5.Lcd.printf("Temp: %2.1f 'C\nHumi: %2.0f\%\n", data.temperature, data.humidity);
+			M5.Lcd.printf("Temp: %2.1f 'C\nHumi: %2.0f\%\n", result.thermohygro_data.temperature, result.thermohygro_data.humidity);
 
 			Logger::Log(Logger::kInfoBit, kThermohygrometerController, kReadThermohygroData,
 				std::string("time=") + std::string(String(tm.tm_hour).c_str()) + std::string(":") +
