@@ -4,9 +4,11 @@
 #include "LogConstants.hpp"
 #include "Logger.hpp"
 #include "MeasurementResult.hpp"
+#include "SettingsProvider.hpp"
 
 ThermohygrometerController::ThermohygrometerController()
 {
+	settings_ = SettingsProvider::Of();
 	measurer_ = new ThermohygroDataMeasurer();
 }
 

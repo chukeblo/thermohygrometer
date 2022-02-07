@@ -3,8 +3,16 @@
 #include "AWSSettings.hpp"
 #include "WiFiSettings.hpp"
 
-struct AWSCommunicationSettings : CommunicationSettingsBase
+class AWSCommunicationSettings : public CommunicationSettingsBase
 {
-    WiFiSettings wifi_settings;
-    AWSSettings aws_settings;
+public:
+    AWSCommunicationSettings(WiFiSettings* wifi_settings, AWSSettings* aws_settings)
+    {
+        this->wifi_settings = wifi_settings;
+        this->aws_settings = aws_settings;
+    }
+    virtual ~AWSCommunicationSettings(){}
+
+    WiFiSettings* wifi_settings;
+    AWSSettings* aws_settings;
 };

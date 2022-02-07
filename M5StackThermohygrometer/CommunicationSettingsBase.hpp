@@ -2,6 +2,8 @@
 
 #include <string>
 
-struct CommunicationSettingsBase
+class CommunicationSettingsBase
 {
+public:
+    virtual ~CommunicationSettingsBase() {}
 };
