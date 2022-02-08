@@ -16,6 +16,7 @@ EventHandler* EventHandler::GetInstance()
 
 EventHandler::EventHandler()
 {
+	gui_manager_ = UIManagerBase::GetInstance(UIManagerBase::kGuiBit);
 }
 
 EventHandler::~EventHandler()
@@ -34,8 +35,10 @@ void EventHandler::EventHandle()
 	case EventType::kReadEnvData:
 		break;
 	case EventType::kMiddleButtonPressed:
-		break;
 	case EventType::kRightButtonPressed:
+		gui_manager_->HandleEvent(data);
+		break;
+	case EventType::kMeasurementRequested:
 		break;
 	default:
 		Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");

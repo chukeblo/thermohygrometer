@@ -3,6 +3,7 @@
 #include <list>
 
 #include "EventData.hpp"
+#include "UIManagerBase.hpp"
 
 class EventHandler
 {
@@ -22,4 +23,5 @@ private:
 
 private:
 	std::list<EventData*> event_queue_;
+	UIManagerBase* gui_manager_;
 };

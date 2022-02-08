@@ -3,6 +3,6 @@ enum class EventType
 	kNone,
 	kReadEnvData,
 	kMiddleButtonPressed,
-	kRightButtonPressed
+	kRightButtonPressed,
 	kMeasurementRequested
 };
