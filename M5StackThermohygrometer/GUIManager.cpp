@@ -34,5 +34,5 @@ void GUIManager::HandleEvent(EventData* event_data)
 
 void GUIManager::NotifyMeasurementRequest()
 {
-    EventHandler::AddEvent(new EventData(EventType::kMeasurementRequested, nullptr));
+    EventHandler::GetInstance()->AddEvent(new EventData(EventType::kMeasurementRequested, nullptr));
 }
