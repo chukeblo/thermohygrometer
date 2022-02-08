@@ -4,6 +4,7 @@
 #include "EventHandler.hpp"
 #include "SDCardController.hpp"
 #include "ThermohygrometerController.hpp"
+#include "UIManagerBase.hpp"
 
 void setup()
 {
@@ -13,7 +14,7 @@ void setup()
 
     ThermohygrometerController* controller = new ThermohygrometerController();
 
-    ButtonInputWatcher::GetInstance()->SetUpButtonInterruption();
+    UIManagerBase* gui_manager = UIManagerBase::GetInstance(UIManagerBase::kGuiBit);
 }
 
 void loop()

@@ -6,23 +6,16 @@
 // 解決方法が見つかるまで左ボタンは使用しない方針で実装を進める。
 class ButtonInputWatcher
 {
-public:
-	static const uint8_t kMiddleButtonBit = 1;
-	static const uint8_t kRightButtonBit = 2;
 private:
 	const uint8_t kMiddleButtonPin = 38;
 	const uint8_t kRightButtonPin = 37;
 
 public:
-	static ButtonInputWatcher* GetInstance();
-
-private:
 	ButtonInputWatcher();
 	~ButtonInputWatcher();
 
 public:
 	void SetUpButtonInterruption();
-	void OnButtonPressed(uint8_t button_type);
 
 private:
 	bool middle_button_pressed_;

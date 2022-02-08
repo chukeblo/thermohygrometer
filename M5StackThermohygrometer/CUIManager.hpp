@@ -8,6 +8,7 @@ public:
 	CUIManager();
 	~CUIManager();
 
-private:
-
+public:
+	void Initialize() override;
+	void HandleEvent(EventData* event_data) override;
 };
