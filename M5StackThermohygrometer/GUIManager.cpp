@@ -1,5 +1,8 @@
 #include "GUIManager.hpp"
 
+#include "EventHandler.hpp"
+#include "EventType.hpp"
+
 GUIManager::GUIManager()
 {
 	Initialize();
@@ -20,10 +23,16 @@ void GUIManager::HandleEvent(EventData* event_data)
     switch (event_data->type)
     {
         case EventType::kMiddleButtonPressed:
+            NotifyMeasurementRequest();
             break;
         case EventType::kRightButtonPressed:
             break;
         default:
             break;
     }
+}
+
+void GUIManager::NotifyMeasurementRequest()
+{
+    EventHandler::AddEvent(new EventData(EventType::kMeasurementRequested, nullptr));
 }

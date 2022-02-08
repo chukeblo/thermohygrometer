@@ -4,4 +4,5 @@ enum class EventType
 	kReadEnvData,
 	kMiddleButtonPressed,
 	kRightButtonPressed
+	kMeasurementRequested
 };

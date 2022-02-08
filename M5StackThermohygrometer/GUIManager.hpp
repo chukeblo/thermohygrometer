@@ -13,6 +13,8 @@ public:
 public:
 	void Initialize() override;
 	void HandleEvent(EventData* event_data) override;
+private:
+	void NotifyMeasurementRequest();
 
 private:
 	ButtonInputWatcher* button_input_watcher_;
