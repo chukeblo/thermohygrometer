@@ -5,14 +5,14 @@ SHT3X::SHT3X(uint8_t address) : address_(address), c_temp_(0), f_temp_(0), humid
 	Wire.begin();
 }
 
-ThermohygroData SHT3X::ReadThermohygroData()
+ThermohygroData* SHT3X::ReadThermohygroData()
 {
 	uint8_t result = ReadEnvData();
 	if (result != kReadSuccess)
 	{
-		return ThermohygroData { -1.0f, -1.0f };
+		return nullptr;
 	}
-	return ThermohygroData { c_temp_, humidity_ };
+	return new ThermohygroData(c_temp_, humidity_);
 }
 
 uint8_t SHT3X::ReadEnvData()

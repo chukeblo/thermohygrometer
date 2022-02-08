@@ -15,7 +15,7 @@ public:
 	SHT3X(uint8_t address = 0x44);
 
 public:
-	ThermohygroData ReadThermohygroData();
+	ThermohygroData* ReadThermohygroData();
 private:
 	uint8_t ReadEnvData();
 

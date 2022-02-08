@@ -13,7 +13,7 @@ public:
 	~ThermohygroDataMeasurer();
 
 public:
-	MeasurementResult ReadThermohygroData();
+	MeasurementResult* ReadThermohygroData();
 
 private:
 	SHT3X thermohydrosensor_;

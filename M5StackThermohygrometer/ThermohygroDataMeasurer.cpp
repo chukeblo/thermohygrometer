@@ -12,22 +12,22 @@ ThermohygroDataMeasurer::~ThermohygroDataMeasurer()
 {
 }
 
-MeasurementResult ThermohygroDataMeasurer::ReadThermohygroData()
+MeasurementResult* ThermohygroDataMeasurer::ReadThermohygroData()
 {
 	Logger::Log(Logger::kTraceBit, kThermohygroDataMeasurer, kReadThermohygroData, "in");
-	ThermohygroData data = thermohydrosensor_.ReadThermohygroData();
-	if (data.temperature == -1.0f && data.humidity == -1.0f)
+	ThermohygroData* data = thermohydrosensor_.ReadThermohygroData();
+	if (!data)
 	{
 		Logger::Log(Logger::kErrorBit, kThermohygroDataMeasurer, kReadThermohygroData,
 			"failed to read environment data"
 		);
-		return MeasurementResult{ false, data };
+		return new MeasurementResult(false, nullptr);
 	}
 
 	Logger::Log(Logger::kInfoBit, kThermohygroDataMeasurer, kReadThermohygroData,
-		std::string("out: temp=") + std::string(String(data.temperature).c_str()) +
-		std::string(",humi=") + std::string(String(data.humidity).c_str())
+		std::string("out: temp=") + std::string(String(data->temperature).c_str()) +
+		std::string(",humi=") + std::string(String(data->humidity).c_str())
 	);
 
-	return MeasurementResult { true, data };
+	return new MeasurementResult(true, data);
 }
