@@ -5,12 +5,12 @@
 class EventData
 {
 public:
-    EventData(EventType type, void* data)
+    EventData(EventType type, void* context)
     {
         this->type = type;
-        this->data = data;
+        this->context = context;
     }
 
     EventType type;
-    void* data;
+    void* context;
 };

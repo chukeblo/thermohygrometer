@@ -41,6 +41,13 @@ void EventHandler::EventHandle()
 		Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");
 		break;
 	}
+	if (data->context)
+	{
+		delete data->context;
+		data->context = nullptr;
+	}
+	delete data;
+	data = nullptr;
 }
 
 void EventHandler::AddEvent(EventData* data)
