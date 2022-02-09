@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SHT3X.h"
-#include "MeasurementResult.hpp"
+#include "ThermohygroData.hpp"
 
 class ThermohygroDataMeasurer
 {
@@ -13,7 +13,7 @@ public:
 	~ThermohygroDataMeasurer();
 
 public:
-	MeasurementResult* ReadThermohygroData();
+	ThermohygroData* ReadThermohygroData();
 
 private:
 	SHT3X thermohydrosensor_;

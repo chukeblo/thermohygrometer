@@ -1,16 +1,22 @@
 #pragma once
 
+#include <string>
+
 #include "ThermohygroData.hpp"
 
 class MeasurementResult
 {
 public:
-    MeasurementResult(bool is_succeeded, ThermohygroData* thermohygro_data)
+    MeasurementResult(std::string time, ThermohygroData* thermohygro_data)
     {
-        this->is_succeeded = is_succeeded;
+        this->time = time;
         this->thermohygro_data = thermohygro_data;
     }
+    ~MeasurementResult()
+    {
+        delete this->thermohygro_data;
+    }
 
-    bool is_succeeded;
+    std::string time;
     ThermohygroData* thermohygro_data;
 };
