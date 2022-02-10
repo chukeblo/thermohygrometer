@@ -34,9 +34,6 @@ void ThermohygrometerController::MeasureThermohygroData()
 			ThermohygroData* data = measurer_->ReadThermohygroData();
 			if (data)
 			{
-				M5.Lcd.setCursor(0, 140);
-				M5.Lcd.printf("Temp: %2.1f 'C\nHumi: %2.0f\%\n", data->temperature, data->humidity);
-
 				std::string time_string = std::string("time=") + std::string(String(tm.tm_hour).c_str()) + std::string(":") +
 					std::string(String(tm.tm_min).c_str()) + std::string(":") + std::string(String(tm.tm_sec).c_str());
 				Logger::Log(Logger::kInfoBit, kThermohygrometerController, kReadThermohygroData,

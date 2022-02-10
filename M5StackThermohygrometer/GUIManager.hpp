@@ -3,6 +3,7 @@
 #include "UIManagerBase.hpp"
 
 #include "ButtonInputWatcher.hpp"
+#include "GUIDrawer.hpp"
 
 class GUIManager : public UIManagerBase
 {
@@ -18,4 +19,5 @@ private:
 
 private:
 	ButtonInputWatcher* button_input_watcher_;
+	GUIDrawer* gui_drawer_;
 };

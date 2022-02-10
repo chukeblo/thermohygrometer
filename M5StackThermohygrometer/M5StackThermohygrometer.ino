@@ -9,7 +9,6 @@
 void setup()
 {
     M5.begin();
-    M5.Lcd.setTextSize(2);
     Wire.begin();
 
     ThermohygrometerController* controller = new ThermohygrometerController();
