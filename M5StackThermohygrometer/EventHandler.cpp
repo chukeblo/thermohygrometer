@@ -25,32 +25,35 @@ EventHandler::~EventHandler()
 
 void EventHandler::EventHandle()
 {
-	EventData* data = GetEvent();
-	if (!data)
+	while (true)
 	{
-		return;
+		EventData* data = GetEvent();
+		if (!data)
+		{
+			return;
+		}
+		switch (data->type)
+		{
+		case EventType::kReadEnvData:
+			break;
+		case EventType::kMiddleButtonPressed:
+		case EventType::kRightButtonPressed:
+			gui_manager_->HandleEvent(data);
+			break;
+		case EventType::kMeasurementRequested:
+			break;
+		default:
+			Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");
+			break;
+		}
+		if (data->context)
+		{
+			delete data->context;
+			data->context = nullptr;
+		}
+		delete data;
+		data = nullptr;
 	}
-	switch (data->type)
-	{
-	case EventType::kReadEnvData:
-		break;
-	case EventType::kMiddleButtonPressed:
-	case EventType::kRightButtonPressed:
-		gui_manager_->HandleEvent(data);
-		break;
-	case EventType::kMeasurementRequested:
-		break;
-	default:
-		Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");
-		break;
-	}
-	if (data->context)
-	{
-		delete data->context;
-		data->context = nullptr;
-	}
-	delete data;
-	data = nullptr;
 }
 
 void EventHandler::AddEvent(EventData* data)
