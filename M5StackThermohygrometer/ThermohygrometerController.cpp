@@ -5,7 +5,7 @@
 #include "EventHandler.hpp"
 #include "EventType.hpp"
 #include "LogConstants.hpp"
-#include "Logger.hpp"
+#include "LogData.hpp"
 #include "MeasurementResult.hpp"
 #include "SettingsProvider.hpp"
 #include "ThermohygroData.hpp"
@@ -23,7 +23,9 @@ ThermohygrometerController::~ThermohygrometerController()
 
 void ThermohygrometerController::MeasureThermohygroData()
 {
-	Logger::Log(Logger::kTraceBit, kThermohygrometerController, kReadThermohygroData, "in");
+	LogData* log_data = new LogData(LogLevel::kTrace, kThermohygrometerController, kReadThermohygroData, "in");
+	EventHandler* event_handler = EventHandler::GetInstance();
+	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 	struct tm tm;
 	int hour = -1;
 	while (true)
@@ -36,19 +38,21 @@ void ThermohygrometerController::MeasureThermohygroData()
 			{
 				std::string time_string = std::string("time=") + std::string(String(tm.tm_hour).c_str()) + std::string(":") +
 					std::string(String(tm.tm_min).c_str()) + std::string(":") + std::string(String(tm.tm_sec).c_str());
-				Logger::Log(Logger::kInfoBit, kThermohygrometerController, kReadThermohygroData,
+				log_data = new LogData(LogLevel::kInfo, kThermohygrometerController, kReadThermohygroData,
 					time_string + std::string(",temp=") + std::string(String(data->temperature).c_str()) +
 					std::string(",humi=") + std::string(String(data->humidity).c_str())
 				);
+				event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 				MeasurementResult* result = new MeasurementResult(time_string, data);
-				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, result));
+				event_handler->AddEvent(new EventData(EventType::kReadEnvData, result));
 			}
 		}
 		M5.Lcd.setCursor(100, 100);
 		M5.Lcd.printf("%02d:%02d:%02d", tm.tm_hour, tm.tm_min, tm.tm_sec);
 		delay(1000);
 	}
-	Logger::Log(Logger::kErrorBit, kThermohygrometerController, kReadThermohygroData,
+	log_data = new LogData(LogLevel::kError, kThermohygrometerController, kReadThermohygroData,
 		"accidentally exit from the collection data task thread"
 	);
+	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 }

@@ -5,9 +5,10 @@
 #include <string>
 
 #include "AWSCommunicationSettings.hpp"
+#include "EventHandler.hpp"
 #include "JsonHandler.hpp"
 #include "LogConstants.hpp"
-#include "Logger.hpp"
+#include "LogData.hpp"
 #include "SDCardConstants.hpp"
 #include "SDCardController.hpp"
 
@@ -23,7 +24,8 @@ ThermohygrometerSettings* SettingsProvider::ReadThermohygrometerSettings()
     std::string communication_type = thermohygrometer_settings_map[kCommunicationTypeKey];
     if (communication_type != kAWSType)
     {
-        Logger::Log(Logger::kErrorBit, kSettingsProvider, kReadThermohygrometerSettings, "not supported communication type");
+        LogData* log_data = new LogData(LogLevel::kError, kSettingsProvider, kReadThermohygrometerSettings, "not supported communication type");
+        EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         return nullptr;
     }
     CommunicationSettingsBase* communication_settings = ReadCommunicationSettings(communication_type);
@@ -44,7 +46,9 @@ CommunicationSettingsBase* SettingsProvider::ReadCommunicationSettings(std::stri
 
 WiFiSettings* SettingsProvider::ReadWiFiSettings()
 {
-    Logger::Log(Logger::kTraceBit, kSettingsProvider, kReadWiFiSettings, "in");
+    LogData* log_data = new LogData(LogLevel::kTrace, kSettingsProvider, kReadWiFiSettings, "in");
+    EventHandler* event_handler = EventHandler::GetInstance();
+    event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
     std::string ssid = "";
     std::string password = "";
     try
@@ -53,13 +57,15 @@ WiFiSettings* SettingsProvider::ReadWiFiSettings()
         std::map<std::string, std::string> wifi_settings_map = JsonHandler::Parse(raw_wifi_settings);
         ssid = wifi_settings_map[kSsidKey];
         password = wifi_settings_map[kPasswordKey];
-        Logger::Log(Logger::kDebugBit, kSettingsProvider, kReadWiFiSettings,
+        log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadWiFiSettings,
             std::string("ssid=") + ssid + std::string(",password=") + password
         );
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
     }
     catch (std::invalid_argument e)
     {
-        Logger::Log(Logger::kErrorBit, kSettingsProvider, kReadWiFiSettings, e.what());
+        log_data = new LogData(LogLevel::kError, kSettingsProvider, kReadWiFiSettings, e.what());
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         return nullptr;
     }
     return new WiFiSettings(ssid, password);
@@ -67,7 +73,9 @@ WiFiSettings* SettingsProvider::ReadWiFiSettings()
 
 AWSSettings* SettingsProvider::ReadAWSSettings()
 {
-    Logger::Log(Logger::kTraceBit, kSettingsProvider, kReadAWSSettings, "in");
+    LogData* log_data = new LogData(LogLevel::kTrace, kSettingsProvider, kReadAWSSettings, "in");
+    EventHandler* event_handler = EventHandler::GetInstance();
+    event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
     std::string client_id = "";
     std::string endpoint = "";
     std::string port = "";
@@ -84,22 +92,27 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
         root_ca = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAWSRootCAFileName);
         device_certificate = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kDeviceCertFileName);
         private_key = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kPrivateKeyFileName);
-        Logger::Log(Logger::kDebugBit, kSettingsProvider, kReadAWSSettings,
+        log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
             std::string("clientId=") + client_id + std::string(",endpoint=") + endpoint + std::string(",port=") + port
         );
-        Logger::Log(Logger::kDebugBit, kSettingsProvider, kReadAWSSettings,
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+        log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
             std::string("rootCA = ") + root_ca
         );
-        Logger::Log(Logger::kDebugBit, kSettingsProvider, kReadAWSSettings,
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+        log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
             std::string("deviceCert = ") + device_certificate
         );
-        Logger::Log(Logger::kDebugBit, kSettingsProvider, kReadAWSSettings,
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+        log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
             std::string("privateKey = ") + private_key
         );
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
     }
     catch (std::invalid_argument e)
     {
-        Logger::Log(Logger::kErrorBit, kSettingsProvider, kReadAWSSettings, e.what());
+        log_data = new LogData(LogLevel::kError, kSettingsProvider, kReadAWSSettings, e.what());
+        event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         return nullptr;
     }
 

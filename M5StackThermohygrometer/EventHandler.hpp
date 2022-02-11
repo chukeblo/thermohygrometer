@@ -24,4 +24,5 @@ private:
 private:
 	std::list<EventData*> event_queue_;
 	UIManagerBase* gui_manager_;
+	UIManagerBase* cui_manager_;
 };

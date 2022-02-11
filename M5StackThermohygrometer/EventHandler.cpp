@@ -2,7 +2,7 @@
 
 #include <M5Stack.h>
 #include "LogConstants.hpp"
-#include "Logger.hpp"
+#include "LogData.hpp"
 
 EventHandler* EventHandler::GetInstance()
 {
@@ -17,6 +17,7 @@ EventHandler* EventHandler::GetInstance()
 EventHandler::EventHandler()
 {
 	gui_manager_ = UIManagerBase::GetInstance(UIManagerBase::kGuiBit);
+	cui_manager_ = UIManagerBase::GetInstance(UIManagerBase::kCuiBit);
 }
 
 EventHandler::~EventHandler()
@@ -42,8 +43,12 @@ void EventHandler::EventHandle()
 			break;
 		case EventType::kMeasurementRequested:
 			break;
+		case EventType::kLogDataGenerated:
+			cui_manager_->HandleEvent(data);
+			break;
 		default:
-			Logger::Log(Logger::kErrorBit, kEventHandle, kEventHandle, "not supported event type");
+			LogData* log_data = new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type");
+			AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 			break;
 		}
 		if (data->context)
@@ -58,9 +63,10 @@ void EventHandler::EventHandle()
 
 void EventHandler::AddEvent(EventData* data)
 {
-	Logger::Log(Logger::kTraceBit, kEventHandler, kAddEvent,
+	LogData* log_data = new LogData(LogLevel::kTrace, kEventHandler, kAddEvent,
 		std::string("in: type=") + std::string(String((int)data->type).c_str())
 	);
+	event_queue_.push_back(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 	event_queue_.push_back(data);
 }
 

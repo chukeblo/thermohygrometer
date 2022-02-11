@@ -3,7 +3,7 @@
 #include <M5Stack.h>
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
-#include "Logger.hpp"
+#include "LogData.hpp"
 
 ButtonInputWatcher::ButtonInputWatcher()
 {
@@ -17,13 +17,16 @@ ButtonInputWatcher::~ButtonInputWatcher()
 
 void ButtonInputWatcher::SetUpButtonInterruption()
 {
-	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kSetUpButtonInterruption, "in");
+	LogData* log_data = new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "in");
+	EventHandler* event_handler = EventHandler::GetInstance();
+	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 	pinMode(kMiddleButtonPin, INPUT);
 	pinMode(kRightButtonPin, INPUT);
 
 	attachInterrupt(kMiddleButtonPin, OnMiddleButtonPressed, FALLING);
 	attachInterrupt(kRightButtonPin, OnRightButtonPressed, FALLING);
-	Logger::Log(Logger::kTraceBit, kButtonInputWatcher, kSetUpButtonInterruption, "out");
+	log_data = new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "out");
+	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 }
 
 void OnMiddleButtonPressed()
