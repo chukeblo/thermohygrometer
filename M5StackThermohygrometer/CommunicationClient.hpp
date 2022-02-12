@@ -1,13 +1,13 @@
 #pragma once
 
-class NetworkController
+class CommunicationClient
 {
 private:
 	const long kJST = 3600L * 9;
 
 public:
-	NetworkController(const char* ssid, const char* password);
-	~NetworkController();
+	CommunicationClient(const char* ssid, const char* password);
+	~CommunicationClient();
 
 public:
 	bool Prepare();
