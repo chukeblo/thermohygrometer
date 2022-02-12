@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SHT3X.h"
-#include "ThermohygroData.hpp"
 
 class ThermohygroDataMeasurer
 {

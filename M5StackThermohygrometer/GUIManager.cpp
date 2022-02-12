@@ -1,7 +1,6 @@
 #include "GUIManager.hpp"
 
 #include "EventHandler.hpp"
-#include "EventType.hpp"
 
 GUIManager::GUIManager()
 {

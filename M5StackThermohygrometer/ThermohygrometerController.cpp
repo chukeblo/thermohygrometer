@@ -1,14 +1,11 @@
 #include "ThermohygrometerController.hpp"
 
 #include <M5Stack.h>
-#include "EventData.hpp"
 #include "EventHandler.hpp"
-#include "EventType.hpp"
 #include "LogConstants.hpp"
 #include "LogData.hpp"
 #include "MeasurementResult.hpp"
 #include "SettingsProvider.hpp"
-#include "ThermohygroData.hpp"
 
 ThermohygrometerController::ThermohygrometerController()
 {
