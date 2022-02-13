@@ -3,6 +3,7 @@
 #include <list>
 
 #include "EventData.hpp"
+#include "ThermohygrometerController.hpp"
 #include "UIManagerBase.hpp"
 
 class EventHandler
@@ -23,6 +24,7 @@ private:
 
 private:
 	std::list<EventData*> event_queue_;
+	ThermohygrometerController* thermohygrometer_controller_;
 	UIManagerBase* gui_manager_;
 	UIManagerBase* cui_manager_;
 };
