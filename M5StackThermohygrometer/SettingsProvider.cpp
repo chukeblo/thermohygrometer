@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <string>
 
-#include "AWSCommunicationSettings.hpp"
 #include "EventHandler.hpp"
 #include "JsonHandler.hpp"
 #include "LogConstants.hpp"
@@ -28,20 +27,20 @@ ThermohygrometerSettings* SettingsProvider::ReadThermohygrometerSettings()
         EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         return nullptr;
     }
-    CommunicationSettingsBase* communication_settings = ReadCommunicationSettings(communication_type);
-    return new ThermohygrometerSettings(communication_type, communication_settings);
+    AWSCommunicationSettings* aws_communication_settings = ReadAWSCommunicationSettings(communication_type);
+    return new ThermohygrometerSettings(communication_type, aws_communication_settings);
 }
 
-CommunicationSettingsBase* SettingsProvider::ReadCommunicationSettings(std::string communication_type)
+AWSCommunicationSettings* SettingsProvider::ReadAWSCommunicationSettings(std::string communication_type)
 {
-    CommunicationSettingsBase* communication_settings = nullptr;
+    AWSCommunicationSettings* aws_communication_settings = nullptr;
     if (communication_type == kAWSType)
     {
         WiFiSettings* wifi_settings = ReadWiFiSettings();
         AWSSettings* aws_settings = ReadAWSSettings();
-        communication_settings =  new AWSCommunicationSettings(wifi_settings, aws_settings);
+        aws_communication_settings =  new AWSCommunicationSettings(wifi_settings, aws_settings);
     }
-    return communication_settings;
+    return aws_communication_settings;
 }
 
 WiFiSettings* SettingsProvider::ReadWiFiSettings()

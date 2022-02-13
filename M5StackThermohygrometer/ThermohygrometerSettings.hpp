@@ -2,17 +2,17 @@
 
 #include <string>
 
-#include "CommunicationSettingsBase.hpp"
+#include "AWSCommunicationSettings.hpp"
 
 class ThermohygrometerSettings
 {
 public:
-    ThermohygrometerSettings(std::string communication_type, CommunicationSettingsBase* communication_settings)
+    ThermohygrometerSettings(std::string communication_type, AWSCommunicationSettings* aws_communication_settings)
     {
         this->communication_type = communication_type;
-        this->communication_settings = communication_settings;
+        this->aws_communication_settings = aws_communication_settings;
     }
 
     std::string communication_type;
-    CommunicationSettingsBase* communication_settings;
+    AWSCommunicationSettings* aws_communication_settings;
 };
