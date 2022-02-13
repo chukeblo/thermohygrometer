@@ -1,8 +1,6 @@
 #include <M5Stack.h>
 #include <WiFi.h>
-#include "ButtonInputWatcher.hpp"
 #include "EventHandler.hpp"
-#include "SDCardController.hpp"
 #include "ThermohygrometerController.hpp"
 #include "UIManagerBase.hpp"
 
@@ -13,7 +11,7 @@ void setup()
 
     ThermohygrometerController* controller = new ThermohygrometerController();
 
-    UIManagerBase* gui_manager = UIManagerBase::GetInstance(UIManagerBase::kGuiBit);
+    UIManagerBase* gui_manager = UIManagerBase::GetInstance(UIManagerType::kGuiManagerType);
 }
 
 void loop()

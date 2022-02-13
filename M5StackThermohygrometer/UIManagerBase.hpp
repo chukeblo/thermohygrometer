@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include "EventData.hpp"
+#include "UIManagerType.hpp"
 
 class UIManagerBase
 {
@@ -11,7 +12,7 @@ public:
     static const uint8_t kGuiBit = 2;
 
 public:
-    static UIManagerBase* GetInstance(uint8_t ui_type);
+    static UIManagerBase* GetInstance(UIManagerType ui_type);
 
 public:
     UIManagerBase();

@@ -16,8 +16,8 @@ EventHandler* EventHandler::GetInstance()
 
 EventHandler::EventHandler()
 {
-	gui_manager_ = UIManagerBase::GetInstance(UIManagerBase::kGuiBit);
-	cui_manager_ = UIManagerBase::GetInstance(UIManagerBase::kCuiBit);
+	gui_manager_ = UIManagerBase::GetInstance(UIManagerType::kGuiManagerType);
+	cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
 }
 
 EventHandler::~EventHandler()
