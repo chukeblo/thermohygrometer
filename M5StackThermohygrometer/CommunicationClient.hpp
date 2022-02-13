@@ -1,12 +1,18 @@
 #pragma once
 
+#include <string>
+
+#include <WiFiClientSecure.h>
+#include "src/PubSubClient/PubSubClient.h"
+#include "AWSCommunicationSettings.hpp"
+
 class CommunicationClient
 {
 private:
 	const long kJST = 3600L * 9;
 
 public:
-	CommunicationClient(const char* ssid, const char* password);
+	CommunicationClient(AWSCommunicationSettings* settings);
 	~CommunicationClient();
 
 public:
@@ -17,7 +23,7 @@ private:
 	bool SyncronizeTime();
 
 private:
-	const char* ssid_;
-	const char* password_;
-	bool is_connected_;
+	AWSCommunicationSettings* settings_;
+	PubSubClient* mqtt_client_;
+	WiFiClientSecure* http_client_;
 };

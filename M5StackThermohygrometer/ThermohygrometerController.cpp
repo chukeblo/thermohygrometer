@@ -10,11 +10,13 @@
 ThermohygrometerController::ThermohygrometerController()
 {
 	settings_ = SettingsProvider::Of();
+	client_ = new CommunicationClient(settings_->aws_communication_settings);
 	measurer_ = new ThermohygroDataMeasurer();
 }
 
 ThermohygrometerController::~ThermohygrometerController()
 {
+	delete client_;
 	delete measurer_;
 }
 
