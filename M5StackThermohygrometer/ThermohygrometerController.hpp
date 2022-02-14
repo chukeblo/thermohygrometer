@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "CommunicationClient.hpp"
 #include "ThermohygroDataMeasurer.hpp"
 #include "ThermohygrometerSettings.hpp"
@@ -12,6 +14,8 @@ public:
 
 public:
 	void MeasureThermohygroData();
+private:
+	std::string GetStringTimeFrom(struct tm* tm);
 
 private:
 	ThermohygrometerSettings* settings_;

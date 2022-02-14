@@ -6,6 +6,8 @@ void setup()
 {
     M5.begin();
     Wire.begin();
+
+    EventHandler::GetInstance()->Initialize();
 }
 
 void loop()

@@ -16,6 +16,7 @@ private:
 	~EventHandler();
 
 public:
+  void Initialize();
 	void EventHandle();
 	void AddEvent(EventData* data);
 

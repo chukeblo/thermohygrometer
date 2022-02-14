@@ -4,6 +4,7 @@
 #include "LogConstants.hpp"
 #include "LogData.hpp"
 
+
 EventHandler* EventHandler::GetInstance()
 {
 	static EventHandler* instance = nullptr;
@@ -16,13 +17,17 @@ EventHandler* EventHandler::GetInstance()
 
 EventHandler::EventHandler()
 {
-	thermohygrometer_controller_ = new ThermohygrometerController();
-	gui_manager_ = UIManagerBase::GetInstance(UIManagerType::kGuiManagerType);
-	cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
 }
 
 EventHandler::~EventHandler()
 {
+}
+
+void EventHandler::Initialize()
+{
+  thermohygrometer_controller_ = new ThermohygrometerController();
+  gui_manager_ = UIManagerBase::GetInstance(UIManagerType::kGuiManagerType);
+  cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
 }
 
 void EventHandler::EventHandle()
@@ -43,6 +48,7 @@ void EventHandler::EventHandle()
 			gui_manager_->HandleEvent(data);
 			break;
 		case EventType::kMeasurementRequested:
+			thermohygrometer_controller_->MeasureThermohygroData();
 			break;
 		case EventType::kLogDataGenerated:
 			cui_manager_->HandleEvent(data);
