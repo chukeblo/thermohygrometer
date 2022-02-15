@@ -45,3 +45,7 @@ Thumbs.db
 # Arduino output #
 ##################
 *ArduinoOutput/
+
+# Private Data Dirs #
+#####################
+*AwsCerts/
