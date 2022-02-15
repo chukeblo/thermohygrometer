@@ -42,7 +42,6 @@ void EventHandler::EventHandle()
 		switch (data->type)
 		{
 		case EventType::kReadEnvData:
-			break;
 		case EventType::kMiddleButtonPressed:
 		case EventType::kRightButtonPressed:
 			gui_manager_->HandleEvent(data);
