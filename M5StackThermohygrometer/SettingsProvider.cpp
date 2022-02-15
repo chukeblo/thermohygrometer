@@ -75,7 +75,6 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
     LogData* log_data = new LogData(LogLevel::kTrace, kSettingsProvider, kReadAWSSettings, "in");
     EventHandler* event_handler = EventHandler::GetInstance();
     event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-    std::string client_id = "";
     std::string endpoint = "";
     std::string port = "";
     std::string root_ca = "";
@@ -85,14 +84,13 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
     {
         std::string raw_aws_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAwsSettingsFileName);
         std::map<std::string, std::string> aws_settings_map = JsonHandler::Parse(raw_aws_settings);
-        client_id = aws_settings_map[kClientIdKey];
         endpoint = aws_settings_map[kEndpointKey];
         port = aws_settings_map[kPortKey];
-        root_ca = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAWSRootCAFileName);
-        device_certificate = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kDeviceCertFileName);
-        private_key = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kPrivateKeyFileName);
+        root_ca = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kRootCaPath]);
+        device_certificate = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kDeviceCertPath]);
+        private_key = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kPrivateKeyPath]);
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            std::string("clientId=") + client_id + std::string(",endpoint=") + endpoint + std::string(",port=") + port
+            std::string(",endpoint=") + endpoint + std::string(",port=") + port
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
@@ -115,5 +113,5 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
         return nullptr;
     }
 
-    return new AWSSettings(client_id, endpoint, port, root_ca, device_certificate, private_key);
+    return new AWSSettings(endpoint, port, root_ca, device_certificate, private_key);
 }

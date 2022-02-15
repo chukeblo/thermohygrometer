@@ -25,10 +25,9 @@ const std::string kPasswordKey = "password";
 // file name
 const std::string kAwsDocsFilePath = "aws_docs/";
 const std::string kAwsSettingsFileName = "aws_settings.json";
-const std::string kAWSRootCAFileName = "AmazonRootCAxxxx.pem";
-const std::string kDeviceCertFileName = "xxxx-certificate.pem.crt";
-const std::string kPrivateKeyFileName = "xxxx-private.pem.key";
 // keys
-const std::string kClientIdKey = "clientId";
 const std::string kEndpointKey = "endpoint";
 const std::string kPortKey = "port";
+const std::string kRootCaPath = "rootCaPath";
+const std::string kDeviceCertPath = "deviceCertPath";
+const std::string kPrivateKeyPath = "privateKeyPath";
