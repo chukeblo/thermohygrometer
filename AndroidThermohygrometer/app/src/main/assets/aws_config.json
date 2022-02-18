@@ -1,0 +1,7 @@
+{
+  "endpoint": "hoge.iot.REGION.amazonaws.com",
+  "port": "8883",
+  "rootCaPath": "hoge.pem",
+  "deviceCertPath": "hoge-certificate.pem.crt",
+  "privateKeyPath": "hoge-private.pem.key"
+}
