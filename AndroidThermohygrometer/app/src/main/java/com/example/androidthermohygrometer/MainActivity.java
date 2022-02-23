@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.androidthermohygrometer.databinding.ActivityMainBinding;
+import com.example.androidthermohygrometer.models.AwsConnectionResources;
+import com.example.androidthermohygrometer.models.AwsSettings;
 import com.github.mikephil.charting.charts.LineChart;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        AwsConnectionResources resources = AwsConnectionResourcesProvider.ProvideAwsSettings(getApplicationContext());
     }
 }
