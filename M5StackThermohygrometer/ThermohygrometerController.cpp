@@ -16,6 +16,7 @@ ThermohygrometerController::ThermohygrometerController()
 
 ThermohygrometerController::~ThermohygrometerController()
 {
+	delete settings_;
 	delete client_;
 	delete measurer_;
 }

@@ -7,6 +7,7 @@ CUIManager::CUIManager()
 
 CUIManager::~CUIManager()
 {
+    delete console_logger_;
 }
 
 void CUIManager::Initialize()

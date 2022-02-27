@@ -12,6 +12,10 @@ public:
         this->communication_type = communication_type;
         this->aws_communication_settings = aws_communication_settings;
     }
+    ~ThermohygrometerSettings()
+    {
+        delete aws_communication_settings;
+    }
 
     std::string communication_type;
     AWSCommunicationSettings* aws_communication_settings;

@@ -9,6 +9,8 @@ GUIManager::GUIManager()
 
 GUIManager::~GUIManager()
 {
+    delete button_input_watcher_;
+    delete gui_drawer_;
 }
 
 void GUIManager::Initialize()
