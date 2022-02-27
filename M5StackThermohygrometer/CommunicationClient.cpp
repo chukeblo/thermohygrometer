@@ -1,5 +1,7 @@
 #include "CommunicationClient.hpp"
 
+#include <stdio.h>
+
 #include <M5Stack.h>
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
@@ -37,6 +39,35 @@ bool CommunicationClient::Prepare()
 	log_data = new LogData(LogLevel::kTrace, kCommunicationClient, kPrepare, "out");
 	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 	return result;
+}
+
+static void MqttCallback(char* topic, byte* payload, unsigned int length)
+{
+	char tmp[length] = {};
+	for (int i = 0; i < length; i++)
+	{
+		tmp[i] = (char)payload[i];
+	}
+	LogData* log_data = new LogData(LogLevel::kDebug, kCommunicationClient, "MqttCallback",
+		std::string("received topic = ") + std::string(topic) + std::string(", payload = ") + std::string(tmp)
+	);
+	EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+}
+
+void CommunicationClient::SendThermohygroData(MeasurementResult* result)
+{
+	mqtt_client_->setCallback(MqttCallback);
+
+	while (!mqtt_client_->connected())
+	{
+		if (ConnectToAws()) {
+			break;
+		}
+		delay(10);
+	}
+
+	std::string publish_message = result->ToString();
+	mqtt_client_->publish("pub1", publish_message.c_str());
 }
 
 bool CommunicationClient::ConnectToWiFi()
@@ -78,4 +109,28 @@ bool CommunicationClient::SyncronizeTime()
 	}
 	configTime(kJST, 0, "ntp.nict.jp", "time.google.com", "ntp.jst.mfeed.ad.jp");
 	return true;
+}
+
+bool CommunicationClient::SetUpMqttClient()
+{
+	http_client_->setCACert(settings_->aws_settings->root_ca.c_str());
+	http_client_->setCertificate(settings_->aws_settings->device_certificate.c_str());
+	http_client_->setPrivateKey(settings_->aws_settings->private_key.c_str());
+	mqtt_client_->setServer(atoi(settings_->aws_settings->endpoint.c_str()), atoi(settings_->aws_settings->port.c_str()));
+}
+
+bool CommunicationClient::ConnectToAws()
+{
+	if (mqtt_client_->connect("M5StackThermohygrometer"));
+	{
+		LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "connected to aws");
+		EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		return true;
+	}
+
+	LogData* log_data = new LogData(LogLevel::kError, kCommunicationClient, "SendThermohygroData",
+		std::string("Failed to connect to aws: error state = ") + std::string(String(mqtt_client_->state()).c_str())
+	);
+	EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	return false;
 }

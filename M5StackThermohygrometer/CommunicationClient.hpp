@@ -5,6 +5,7 @@
 #include <WiFiClientSecure.h>
 #include "src/PubSubClient/PubSubClient.h"
 #include "AWSCommunicationSettings.hpp"
+#include "MeasurementResult.hpp"
 
 class CommunicationClient
 {
@@ -17,10 +18,13 @@ public:
 
 public:
 	bool Prepare();
+	void SendThermohygroData(MeasurementResult* result);
 
 private:
 	bool ConnectToWiFi();
 	bool SyncronizeTime();
+	bool SetUpMqttClient();
+	bool ConnectToAws();
 
 private:
 	AWSCommunicationSettings* settings_;
