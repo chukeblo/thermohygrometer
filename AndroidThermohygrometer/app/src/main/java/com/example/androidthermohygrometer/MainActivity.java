@@ -30,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         lineChart = binding.lineChart;
 
+        prepareChart();
+
+        AwsConnectionResources resources = AwsConnectionResourcesProvider.ProvideAwsSettings(getApplicationContext());
+    }
+
+    private void prepareChart() {
         lineChart.setDrawGridBackground(true);
         lineChart.getDescription().setEnabled(true);
         XAxis xAxis = lineChart.getXAxis();
@@ -43,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
         lineChart.getAxisRight().setEnabled(false);
 
         setData();
-
-        AwsConnectionResources resources = AwsConnectionResourcesProvider.ProvideAwsSettings(getApplicationContext());
     }
 
     private void setData() {
