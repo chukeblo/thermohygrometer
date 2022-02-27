@@ -7,16 +7,13 @@
 class MeasurementResult
 {
 public:
-    MeasurementResult(std::string time, ThermohygroData* thermohygro_data)
-    {
-        this->time = time;
-        this->thermohygro_data = thermohygro_data;
-    }
-    ~MeasurementResult()
-    {
-        delete this->thermohygro_data;
-    }
+    MeasurementResult(std::string time, ThermohygroData* thermohygro_data);
+    ~MeasurementResult();
 
+public:
+    std::string ToString();
+
+public:
     std::string time;
     ThermohygroData* thermohygro_data;
 };
