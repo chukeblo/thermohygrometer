@@ -57,11 +57,6 @@ void EventHandler::EventHandle()
 			AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 			break;
 		}
-		if (data->context)
-		{
-			delete data->context;
-			data->context = nullptr;
-		}
 		delete data;
 		data = nullptr;
 	}

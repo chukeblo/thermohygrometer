@@ -10,7 +10,13 @@ public:
         this->type = type;
         this->context = context;
     }
+    ~EventData() {
+        if (this->context != nullptr) {
+            delete this->context;
+        }
+    }
 
+public:
     EventType type;
     void* context;
 };
