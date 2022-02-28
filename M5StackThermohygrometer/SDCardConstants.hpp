@@ -25,10 +25,3 @@ const std::string kPasswordKey = "password";
 // file name
 const std::string kAwsDocsFilePath = "aws_docs/";
 const std::string kAwsSettingsFileName = "aws_settings.json";
-// keys
-const std::string kClientIdKey = "clientId";
-const std::string kEndpointKey = "endpoint";
-const std::string kPortKey = "port";
-const std::string kRootCaPath = "rootCaPath";
-const std::string kDeviceCertPath = "deviceCertPath";
-const std::string kPrivateKeyPath = "privateKeyPath";

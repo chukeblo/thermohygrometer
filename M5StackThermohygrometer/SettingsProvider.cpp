@@ -78,30 +78,24 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
     try
     {
         std::string raw_aws_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAwsSettingsFileName);
-        std::map<std::string, std::string> aws_settings_map = JsonHandler::Parse(raw_aws_settings);
-        std::string clientId = aws_settings_map[kClientIdKey];
-        std::string endpoint = aws_settings_map[kEndpointKey];
-        std::string port = aws_settings_map[kPortKey];
-        std::string root_ca = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kRootCaPath]);
-        std::string device_certificate = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kDeviceCertPath]);
-        std::string private_key = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + aws_settings_map[kPrivateKeyPath]);
+        AWSSettings* aws_settings = AWSSettings::FromString(raw_aws_settings);
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            std::string(",endpoint=") + endpoint + std::string(",port=") + port
+            std::string(",endpoint=") + aws_settings->endpoint + std::string(",port=") + aws_settings->port
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            std::string("rootCA = ") + root_ca
+            std::string("rootCA = ") + aws_settings->root_ca
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            std::string("deviceCert = ") + device_certificate
+            std::string("deviceCert = ") + aws_settings->device_certificate
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            std::string("privateKey = ") + private_key
+            std::string("privateKey = ") + aws_settings->private_key
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-        return new AWSSettings(clientId, endpoint, port, root_ca, device_certificate, private_key);
+        return aws_settings;
     }
     catch (std::invalid_argument e)
     {

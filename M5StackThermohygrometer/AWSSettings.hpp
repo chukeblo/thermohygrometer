@@ -5,17 +5,14 @@
 class AWSSettings
 {
 public:
-	AWSSettings(std::string clientId, std::string endpoint, std::string port, std::string root_ca, std::string device_certificate, std::string private_key)
-	{
-		this->clientId = clientId;
-		this->endpoint = endpoint;
-		this->port = port;
-		this->root_ca = root_ca;
-		this->device_certificate = device_certificate;
-		this->private_key = private_key;
-	}
+	AWSSettings(std::string client_id, std::string endpoint, std::string port, std::string root_ca, std::string device_certificate, std::string private_key);
+	~AWSSettings();
 
-	std::string clientId;
+public:
+	static AWSSettings* FromString(std::string json);
+
+public:
+	std::string client_id;
 	std::string endpoint;
 	std::string port;
 	std::string root_ca;
