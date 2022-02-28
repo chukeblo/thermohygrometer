@@ -17,9 +17,6 @@ const std::string kAWSType = "aws";
 // WiFi Settings
 // file name
 const std::string kWiFiSettingsFileName = "wifi_settings.json";
-// keys
-const std::string kSsidKey = "ssid";
-const std::string kPasswordKey = "password";
 
 // AWS Docs
 // file name

@@ -48,26 +48,22 @@ WiFiSettings* SettingsProvider::ReadWiFiSettings()
     LogData* log_data = new LogData(LogLevel::kTrace, kSettingsProvider, kReadWiFiSettings, "in");
     EventHandler* event_handler = EventHandler::GetInstance();
     event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-    std::string ssid = "";
-    std::string password = "";
     try
     {
         std::string raw_wifi_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kWiFiSettingsFileName);
-        std::map<std::string, std::string> wifi_settings_map = JsonHandler::Parse(raw_wifi_settings);
-        ssid = wifi_settings_map[kSsidKey];
-        password = wifi_settings_map[kPasswordKey];
+        WiFiSettings* wifi_settings = WiFiSettings::FromString(raw_wifi_settings);
         log_data = new LogData(LogLevel::kDebug, kSettingsProvider, kReadWiFiSettings,
-            std::string("ssid=") + ssid + std::string(",password=") + password
+            std::string("ssid=") + wifi_settings->ssid + std::string(",password=") + wifi_settings->password
         );
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+        return wifi_settings;
     }
     catch (std::invalid_argument e)
     {
         log_data = new LogData(LogLevel::kError, kSettingsProvider, kReadWiFiSettings, e.what());
         event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-        return nullptr;
     }
-    return new WiFiSettings(ssid, password);
+    return nullptr;
 }
 
 AWSSettings* SettingsProvider::ReadAWSSettings()
