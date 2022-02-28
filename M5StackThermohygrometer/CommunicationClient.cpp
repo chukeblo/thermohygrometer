@@ -121,7 +121,7 @@ bool CommunicationClient::SetUpMqttClient()
 
 bool CommunicationClient::ConnectToAws()
 {
-	if (mqtt_client_->connect("M5StackThermohygrometer"));
+	if (mqtt_client_->connect(settings_->aws_settings->clientId.c_str()));
 	{
 		LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "connected to aws");
 		EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
