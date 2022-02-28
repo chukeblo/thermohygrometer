@@ -5,6 +5,9 @@
 #include "LogConstants.hpp"
 #include "LogData.hpp"
 
+const uint8_t kMiddleButtonPin = 38;
+const uint8_t kRightButtonPin = 37;
+
 ButtonInputWatcher::ButtonInputWatcher()
 {
 	middle_button_pressed_ = false;
