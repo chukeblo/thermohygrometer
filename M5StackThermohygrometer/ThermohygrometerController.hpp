@@ -14,6 +14,7 @@ public:
 
 public:
 	void MeasureThermohygroData();
+	void ConnectToMqttServer();
 private:
 	std::string GetStringTimeFrom(struct tm* tm);
 

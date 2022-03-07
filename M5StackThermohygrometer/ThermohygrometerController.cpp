@@ -42,6 +42,12 @@ void ThermohygrometerController::MeasureThermohygroData()
 	}
 }
 
+void ThermohygrometerController::ConnectToMqttServer()
+{
+	MeasurementResult* result = new MeasurementResult("00:00:00", new ThermohygroData(20.0f, 40.0f));
+	client_->SendThermohygroData(result);
+}
+
 std::string ThermohygrometerController::GetStringTimeFrom(struct tm* tm)
 {
 	return std::string("time=") + std::string(String(tm->tm_hour).c_str()) + std::string(":") +
