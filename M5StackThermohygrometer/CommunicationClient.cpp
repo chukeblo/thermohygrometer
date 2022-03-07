@@ -48,7 +48,7 @@ static void MqttCallback(char* topic, byte* payload, unsigned int length)
 	{
 		tmp[i] = (char)payload[i];
 	}
-	LogData* log_data = new LogData(LogLevel::kDebug, kCommunicationClient, "MqttCallback",
+	LogData* log_data = new LogData(LogLevel::kDebug, kCommunicationClient, kMqttCallback,
 		std::string("received topic = ") + std::string(topic) + std::string(", payload = ") + std::string(tmp)
 	);
 	EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
@@ -62,21 +62,18 @@ void CommunicationClient::SendThermohygroData(MeasurementResult* result)
 	while (!mqtt_client_->connected())
 	{
 		if (ConnectToAws()) {
-			LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "connected to mqtt server");
+			LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData, "connected to mqtt server");
 			EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-      mqtt_client_->subscribe("/pub1", 0);
 		}
 		delay(2000);
 	}
 
-  LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "connection preparation done.");
-  EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-  
 	mqtt_client_->loop();
-	std::string publish_message = result->ToString();
-	mqtt_client_->publish("pub1", publish_message.c_str());
-  log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "published message to aws");
-  EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	std::string message = result->ToString();
+	mqtt_client_->publish(settings_->aws_settings->topic.c_str(), message.c_str());
+	LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData,
+		std::string("published message to aws. topic=") + settings_->aws_settings->topic + std::string(", message=") + message);
+	EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 }
 
 bool CommunicationClient::ConnectToWiFi()
@@ -130,14 +127,14 @@ bool CommunicationClient::SetUpMqttClient()
 
 bool CommunicationClient::ConnectToAws()
 {
-	if (mqtt_client_->connect("M5StackThermohygrometer"))
+	if (mqtt_client_->connect(settings_->aws_settings->client_id.c_str()));
 	{
-		LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, "SendThermohygroData", "connected to aws");
+		LogData* log_data = new LogData(LogLevel::kInfo, kCommunicationClient, kConnectToAws, "connected to aws");
 		EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 		return true;
 	}
 
-	LogData* log_data = new LogData(LogLevel::kError, kCommunicationClient, "SendThermohygroData",
+	LogData* log_data = new LogData(LogLevel::kError, kCommunicationClient, kConnectToAws,
 		std::string("Failed to connect to aws: error state = ") + std::string(String(mqtt_client_->state()).c_str())
 	);
 	EventHandler::GetInstance()->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
