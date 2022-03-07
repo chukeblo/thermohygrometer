@@ -5,7 +5,7 @@
 class AWSSettings
 {
 public:
-	AWSSettings(std::string client_id, std::string endpoint, std::string port, std::string root_ca, std::string device_certificate, std::string private_key);
+	AWSSettings(std::string client_id, std::string endpoint, std::string port, std::string root_ca, std::string device_certificate, std::string private_key, std::string topic);
 	~AWSSettings();
 
 public:
@@ -18,4 +18,5 @@ public:
 	std::string root_ca;
 	std::string device_certificate;
 	std::string private_key;
+	std::string topic;
 };
