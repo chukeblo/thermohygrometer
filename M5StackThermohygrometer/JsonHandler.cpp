@@ -24,18 +24,20 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 	EventHandler* event_handler = EventHandler::GetInstance();
 	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
 	std::string json = { kOpenBracket };
-	std::map<std::string, std::string>::iterator it = jsonMap.begin();
-	bool beginning = false;
-	do
+	bool is_beginning = false;
+	for (auto it = jsonMap.begin(); it != jsonMap.end(); it++)
 	{
-		if (beginning) {
+		if (is_beginning) {
 			json.append({ kComma });
 		}
-		beginning = true;
+		is_beginning = true;
+		json.append({ kQuotationMark });
 		json.append(it->first);
-		json.append({ kColon });
+		json.append({ kQuotationMark });
+		json.append({ kColon, kQuotationMark });
 		json.append(it->second);
-	} while (++it != jsonMap.end());
+		json.append({ kQuotationMark });
+	}
 	json.append({ kCloseBracket });
 	log_data = new LogData(LogLevel::kDebug, kJsonHandler, kSerialize, json);
 	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
