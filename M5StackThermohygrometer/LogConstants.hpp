@@ -18,6 +18,11 @@ const std::string kThermohygroDataMeasurer = "ThermohygroDataMeasurer";
 const std::string kSetUpButtonInterruption = "SetUpButtonInterruption";
 const std::string kOnButtonPressed = "OnButtonPressed";
 
+// CommunicationClient
+const std::string kConnectToAws = "ConnectToAws";
+const std::string kMqttCallback = "MqttCallback";
+const std::string kSendThrmohygroData = "SendThermohygroData";
+
 // EventHandler
 const std::string kEventHandle = "EventHandle";
 const std::string kAddEvent = "AddEvent";
