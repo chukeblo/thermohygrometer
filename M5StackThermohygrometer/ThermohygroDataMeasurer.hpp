@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "SHT3X.h"
 
 class ThermohygroDataMeasurer
@@ -12,8 +14,13 @@ public:
 	~ThermohygroDataMeasurer();
 
 public:
-	ThermohygroData* ReadThermohygroData();
+	void ReadThermohygroData();
+
+private:
+	std::string GetStringTimeFrom(struct tm* tm);
 
 private:
 	SHT3X thermohydrosensor_;
 };
+
+void StartMeasureTask(void* context);
