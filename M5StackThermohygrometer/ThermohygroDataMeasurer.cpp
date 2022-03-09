@@ -27,7 +27,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 			if (data)
 			{
 				MeasurementResult* result = new MeasurementResult(GetStringTimeFrom(&tm), data);
-				event_handler->AddEvent(new EventData(EventType::kReadEnvData, (void*)result));
+				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, (void*)result));
 			}
 		}
 		delay(1000);
@@ -42,6 +42,6 @@ std::string ThermohygroDataMeasurer::GetStringTimeFrom(struct tm* tm)
 
 void StartMeasureTask(void* context)
 {
-	ThermohygroDataMeasurer* measurer = static_cast<ThermohygroDataMeasurer>(context);
+	ThermohygroDataMeasurer* measurer = static_cast<ThermohygroDataMeasurer*>(context);
 	measurer->ReadThermohygroData();
 }
