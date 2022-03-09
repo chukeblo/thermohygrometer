@@ -1,5 +1,7 @@
 #include "TaskManager.hpp"
 
+#include "ThermohygroDataMeasurer.hpp"
+
 static const int kMeasureTaskCore = 0;
 static const int kMeasureTaskPriority = 0;
 static const std::string kMeasureTask = "MeasureTask";
