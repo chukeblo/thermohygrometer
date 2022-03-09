@@ -3,6 +3,8 @@
 #include <map>
 #include <string>
 
+#include <M5Stack.h>
+
 class TaskManager
 {
 public:
@@ -13,7 +15,7 @@ private:
     ~TaskManager();
 
 public:
-    bool CreateTask(std::string task_method, void* context = nullptr);
+    bool CreateTask(std::string task_method, void* context);
     bool DeleteTask(std::string task_method);
 
 private:

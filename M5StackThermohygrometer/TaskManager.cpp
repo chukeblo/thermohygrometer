@@ -16,14 +16,13 @@ TaskManager* TaskManager::GetInstance()
 
 TaskManager::TaskManager()
 {
-    measure_task_handler_ = TaskHandle_t
 }
 
 TaskManager::~TaskManager()
 {
 }
 
-bool TaskManager::CreateTask(std::string task_method, void* context = nullptr)
+bool TaskManager::CreateTask(std::string task_method, void* context)
 {
     if (task_method.empty())
     {
