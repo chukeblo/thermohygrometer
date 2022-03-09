@@ -62,7 +62,7 @@ void EventHandler::EventHandle()
 void EventHandler::AddEvent(EventData* data)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kEventHandler, kAddEvent,
-		std::string("in: type=") + std::string(String((int)data->type).c_str())
+		"in: type=" + std::string(String((int)data->type).c_str())
 	));
 	event_queue_.push_back(data);
 }

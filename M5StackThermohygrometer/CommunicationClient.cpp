@@ -26,11 +26,11 @@ bool CommunicationClient::Prepare()
 	bool result = false;
 	result = ConnectToWiFi();
 	ConsoleLogger::Log(new LogData(LogLevel::kDebug, kCommunicationClient, kPrepare,
-		std::string("network connect result = ") + std::string(String((int)result).c_str())
+		"network connect result=" + std::string(String((int)result).c_str())
 	));
 	result = SyncronizeTime();
 	ConsoleLogger::Log(new LogData(LogLevel::kDebug, kCommunicationClient, kPrepare,
-		std::string("time sync result = ") + std::string(String((int)result).c_str())
+		"time sync result=" + std::string(String((int)result).c_str())
 	));
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kCommunicationClient, kPrepare, "out"));
 	return result;
@@ -38,13 +38,13 @@ bool CommunicationClient::Prepare()
 
 static void MqttCallback(char* topic, byte* payload, unsigned int length)
 {
-	char tmp[length] = {};
+	char payload_char_array[length] = {};
 	for (int i = 0; i < length; i++)
 	{
-		tmp[i] = (char)payload[i];
+		payload_char_array[i] = (char)payload[i];
 	}
 	ConsoleLogger::Log(new LogData(LogLevel::kDebug, kCommunicationClient, kMqttCallback,
-		std::string("received topic = ") + std::string(topic) + std::string(", payload = ") + std::string(tmp)
+		"received topic=" + std::string(topic) + ", payload=" + payload_char_array
 	));
 }
 
@@ -65,7 +65,7 @@ void CommunicationClient::SendThermohygroData(MeasurementResult* result)
 	std::string message = result->ToString();
 	mqtt_client_->publish(settings_->aws_settings->topic.c_str(), message.c_str());
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData,
-		std::string("published message to aws. topic=") + settings_->aws_settings->topic + std::string(", message=") + message));
+		"published message to aws. topic=" + settings_->aws_settings->topic + ", message=" + message));
 }
 
 bool CommunicationClient::ConnectToWiFi()
@@ -81,8 +81,7 @@ bool CommunicationClient::ConnectToWiFi()
 		{
 			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kConnectToWiFi, "connected"));
 			ConsoleLogger::Log(new LogData(LogLevel::kDebug, kCommunicationClient, kConnectToWiFi,
-				std::string("ssid=") + settings_->wifi_settings->ssid +
-				std::string(",password=") + settings_->wifi_settings->password
+				"ssid=" + settings_->wifi_settings->ssid + ",password=" + settings_->wifi_settings->password
 			));
 			return true;
 		}
@@ -121,7 +120,7 @@ bool CommunicationClient::ConnectToAws()
 	}
 
 	ConsoleLogger::Log(new LogData(LogLevel::kError, kCommunicationClient, kConnectToAws,
-		std::string("Failed to connect to aws: error state = ") + std::string(String(mqtt_client_->state()).c_str())
+		"Failed to connect to aws: error state=" + std::string(String(mqtt_client_->state()).c_str())
 	));
 	return false;
 }

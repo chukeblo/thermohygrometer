@@ -43,7 +43,7 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 
 std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 {
-	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kParse, std::string("in: raw=") + raw));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kParse, "in: raw=" + raw));
 	if (raw.empty())
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse, "given json string is empty"));
@@ -57,8 +57,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 	if (raw[count++] != kOpenBracket)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
-			std::string("Json element does not start with open bracket ( { ): count=") +
-			std::string(String(count).c_str())
+			"Json element does not start with open bracket ( { ): count=" + std::string(String(count).c_str())
 		));
 		throw std::invalid_argument("does not start with open bracket ( '{' )");
 	}
@@ -77,7 +76,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 	if (raw[count] != kCloseBracket)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
-			std::string("Json element does not end with close bracket ( } ): count=") +
+			"Json element does not end with close bracket ( } ): count=" +
 			std::string(String(count).c_str())
 		));
 		throw std::invalid_argument("does not end with close bracket ( '}' )");
@@ -86,7 +85,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 	if (count != raw.length() - 1)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
-			std::string("Json body must end with close bracket ( } ): count=") +
+			"Json body must end with close bracket ( } ): count=" +
 			std::string(String(count).c_str())
 		));
 		throw std::invalid_argument("should end with close bracket ( '}' )");
@@ -124,12 +123,11 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 
 JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
 {
-	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair, std::string("in: raw=") + content));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair, "in: raw=" + content));
 	if (content[index++] != kQuotationMark)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-			std::string("Key does not start with quotation ( \" ): count=") +
-			std::string(String(index).c_str())
+			"Key does not start with quotation ( \" ): count=" + std::string(String(index).c_str())
 		));
 		throw std::invalid_argument("key does not start with open quotation ( \" )");
 	}
@@ -140,8 +138,7 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 		if (content[index] == kEndOfString)
 		{
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-				std::string("Json body incorrectly comes to the end: count=") +
-				std::string(String(index).c_str())
+				"Json body incorrectly comes to the end: count=" + std::string(String(index).c_str())
 			));
 			throw std::invalid_argument("incorrectly comes to the end of json string");
 		}
@@ -156,8 +153,7 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	if (content[index++] != kColon)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-			std::string("Key and value must be divided with colon ( : ): count") +
-			std::string(String(index).c_str())
+			"Key and value must be divided with colon ( : ): count" + std::string(String(index).c_str())
 		));
 		throw std::invalid_argument("key and value should be divided with colon ( : )");
 	}
@@ -165,8 +161,7 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	if (content[index++] != kQuotationMark)
 	{
 		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-			std::string("Value does not start with quotation ( \" ): count=") +
-			std::string(String(index).c_str())
+			"Value does not start with quotation ( \" ): count=" + std::string(String(index).c_str())
 		));
 		throw std::invalid_argument("value does not start with open quotation ( \" )");
 	}
@@ -177,8 +172,7 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 		if (content[index] == kEndOfString)
 		{
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-				std::string("Json body incorrectly comes to the end: count=") +
-				std::string(String(index).c_str())
+				"Json body incorrectly comes to the end: count=" + std::string(String(index).c_str())
 			));
 			throw std::invalid_argument("incorrectly comes to the end of json string");
 		}
@@ -190,8 +184,7 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 		value[value_index++] = content[index++];
 	}
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
-		std::string("out: key=") + std::string(key) + std::string(",value=") +
-		std::string(value) + std::string(",count=") + std::string(String(index + 1).c_str())
+		"out: key=" + std::string(key) + ",value=" + value + ",count=" + std::string(String(index + 1).c_str())
 	));
 	return sKeyValuePairResult{ std::string(key), std::string(value), index + 1 };
 }

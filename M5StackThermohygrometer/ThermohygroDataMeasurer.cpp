@@ -43,8 +43,8 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 
 std::string ThermohygroDataMeasurer::GetStringTimeFrom(struct tm* tm)
 {
-	return std::string("time=") + std::string(String(tm->tm_hour).c_str()) + std::string(":") +
-			std::string(String(tm->tm_min).c_str()) + std::string(":") + std::string(String(tm->tm_sec).c_str());
+	return "time=" + std::string(String(tm->tm_hour).c_str()) + ":" +
+			std::string(String(tm->tm_min).c_str()) + ":" + std::string(String(tm->tm_sec).c_str());
 }
 
 void StartMeasureTask(void* context)
