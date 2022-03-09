@@ -1,9 +1,8 @@
 #include "EventHandler.hpp"
 
 #include <M5Stack.h>
+#include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
-#include "LogData.hpp"
-
 
 EventHandler* EventHandler::GetInstance()
 {
@@ -51,12 +50,8 @@ void EventHandler::EventHandle()
 		case EventType::kMeasurementRequested:
 			thermohygrometer_controller_->MeasureThermohygroData();
 			break;
-		case EventType::kLogDataGenerated:
-			cui_manager_->HandleEvent(data);
-			break;
 		default:
-			LogData* log_data = new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type");
-			AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));
 			break;
 		}
 		delete data;
@@ -66,10 +61,9 @@ void EventHandler::EventHandle()
 
 void EventHandler::AddEvent(EventData* data)
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kEventHandler, kAddEvent,
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kEventHandler, kAddEvent,
 		std::string("in: type=") + std::string(String((int)data->type).c_str())
-	);
-	event_queue_.push_back(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	));
 	event_queue_.push_back(data);
 }
 

@@ -1,9 +1,9 @@
 #include "ThermohygrometerController.hpp"
 
 #include <M5Stack.h>
+#include "ConsoleLogger.hpp"
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
-#include "LogData.hpp"
 #include "MeasurementResult.hpp"
 #include "SettingsProvider.hpp"
 
@@ -23,23 +23,9 @@ ThermohygrometerController::~ThermohygrometerController()
 
 void ThermohygrometerController::MeasureThermohygroData()
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kThermohygrometerController, kReadThermohygroData, "in");
-	EventHandler* event_handler = EventHandler::GetInstance();
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kThermohygrometerController, kReadThermohygroData, "in"));
 	struct tm tm;
 	getLocalTime(&tm);
-	ThermohygroData* data = measurer_->ReadThermohygroData();
-	if (data)
-	{
-		std::string time_string = GetStringTimeFrom(&tm);
-		log_data = new LogData(LogLevel::kInfo, kThermohygrometerController, kReadThermohygroData,
-			time_string + std::string(",temp=") + std::string(String(data->temperature).c_str()) +
-			std::string(",humi=") + std::string(String(data->humidity).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
-		MeasurementResult* result = new MeasurementResult(time_string, data);
-		event_handler->AddEvent(new EventData(EventType::kReadEnvData, result));
-	}
 }
 
 void ThermohygrometerController::ConnectToMqttServer()

@@ -7,5 +7,4 @@ enum class EventType
 	kMiddleButtonPressed,
 	kRightButtonPressed,
 	kMeasurementRequested,
-	kLogDataGenerated
 };

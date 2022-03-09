@@ -1,9 +1,9 @@
 #include "ButtonInputWatcher.hpp"
 
 #include <M5Stack.h>
+#include "ConsoleLogger.hpp"
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
-#include "LogData.hpp"
 
 const uint8_t kMiddleButtonPin = 38;
 const uint8_t kRightButtonPin = 37;
@@ -20,16 +20,13 @@ ButtonInputWatcher::~ButtonInputWatcher()
 
 void ButtonInputWatcher::SetUpButtonInterruption()
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "in");
-	EventHandler* event_handler = EventHandler::GetInstance();
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "in"));
 	pinMode(kMiddleButtonPin, INPUT);
 	pinMode(kRightButtonPin, INPUT);
 
 	attachInterrupt(kMiddleButtonPin, OnMiddleButtonPressed, FALLING);
 	attachInterrupt(kRightButtonPin, OnRightButtonPressed, FALLING);
-	log_data = new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "out");
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kButtonInputWatcher, kSetUpButtonInterruption, "out"));
 }
 
 void OnMiddleButtonPressed()

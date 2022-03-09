@@ -2,6 +2,11 @@
 
 #include <M5Stack.h>
 
+const char* kInfoTag = "INFO";
+const char* kTraceTag = "TRACE";
+const char* kDebugTag = "DEBUG";
+const char* kErrorTag = "ERROR";
+
 ConsoleLogger::ConsoleLogger()
 {
 }

@@ -3,9 +3,9 @@
 #include <stdexcept>
 
 #include <M5Stack.h>
+#include "ConsoleLogger.hpp"
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
-#include "LogData.hpp"
 
 static const char kOpenBracket = '{';
 static const char kCloseBracket = '}';
@@ -20,9 +20,7 @@ static const char kLineFeed = '\n';
 
 std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kJsonHandler, kSerialize, "in");
-	EventHandler* event_handler = EventHandler::GetInstance();
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kSerialize, "in"));
 	std::string json = { kOpenBracket };
 	bool is_beginning = false;
 	for (auto it = jsonMap.begin(); it != jsonMap.end(); it++)
@@ -39,21 +37,16 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 		json.append({ kQuotationMark });
 	}
 	json.append({ kCloseBracket });
-	log_data = new LogData(LogLevel::kDebug, kJsonHandler, kSerialize, json);
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kDebug, kJsonHandler, kSerialize, json));
 	return json;
 }
 
 std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kJsonHandler, kParse, std::string("in: raw=") + raw);
-	EventHandler* event_handler = EventHandler::GetInstance();
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kParse, std::string("in: raw=") + raw));
 	if (raw.empty())
 	{
-		
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kParse, "given json string is empty");
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse, "given json string is empty"));
 		throw std::invalid_argument("json string has no characters");
 	}
 
@@ -63,11 +56,10 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 	count = SkipBlankAndNewLineCharacters(raw, count);
 	if (raw[count++] != kOpenBracket)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kParse,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
 			std::string("Json element does not start with open bracket ( { ): count=") +
 			std::string(String(count).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("does not start with open bracket ( '{' )");
 	}
 	while (true)
@@ -84,21 +76,19 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 	count = SkipBlankAndNewLineCharacters(raw, count);
 	if (raw[count] != kCloseBracket)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kParse,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
 			std::string("Json element does not end with close bracket ( } ): count=") +
 			std::string(String(count).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("does not end with close bracket ( '}' )");
 	}
 	count = SkipBlankAndNewLineCharacters(raw, count);
 	if (count != raw.length() - 1)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kParse,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kParse,
 			std::string("Json body must end with close bracket ( } ): count=") +
 			std::string(String(count).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("should end with close bracket ( '}' )");
 	}
 
@@ -134,16 +124,13 @@ int JsonHandler::SkipBlankAndNewLineCharacters(std::string content, int index)
 
 JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string content, int index)
 {
-	LogData* log_data = new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair, std::string("in: raw=") + content);
-	EventHandler* event_handler = EventHandler::GetInstance();
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair, std::string("in: raw=") + content));
 	if (content[index++] != kQuotationMark)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
 			std::string("Key does not start with quotation ( \" ): count=") +
 			std::string(String(index).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("key does not start with open quotation ( \" )");
 	}
 	char key[100];
@@ -152,11 +139,10 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	{
 		if (content[index] == kEndOfString)
 		{
-			log_data = new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+			ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
 				std::string("Json body incorrectly comes to the end: count=") +
 				std::string(String(index).c_str())
-			);
-			event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+			));
 			throw std::invalid_argument("incorrectly comes to the end of json string");
 		}
 		if (content[index] == kQuotationMark)
@@ -169,21 +155,19 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	index = SkipIfBlankCharacters(content, ++index);
 	if (content[index++] != kColon)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
 			std::string("Key and value must be divided with colon ( : ): count") +
 			std::string(String(index).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("key and value should be divided with colon ( : )");
 	}
 	index = SkipIfBlankCharacters(content, index);
 	if (content[index++] != kQuotationMark)
 	{
-		log_data = new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
 			std::string("Value does not start with quotation ( \" ): count=") +
 			std::string(String(index).c_str())
-		);
-		event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+		));
 		throw std::invalid_argument("value does not start with open quotation ( \" )");
 	}
 	char value[100];
@@ -192,11 +176,10 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	{
 		if (content[index] == kEndOfString)
 		{
-			log_data = new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+			ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
 				std::string("Json body incorrectly comes to the end: count=") +
 				std::string(String(index).c_str())
-			);
-			event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+			));
 			throw std::invalid_argument("incorrectly comes to the end of json string");
 		}
 		if (content[index] == kQuotationMark)
@@ -206,10 +189,9 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 		}
 		value[value_index++] = content[index++];
 	}
-	log_data = new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
+	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
 		std::string("out: key=") + std::string(key) + std::string(",value=") +
 		std::string(value) + std::string(",count=") + std::string(String(index + 1).c_str())
-	);
-	event_handler->AddEvent(new EventData(EventType::kLogDataGenerated, (void*)log_data));
+	));
 	return sKeyValuePairResult{ std::string(key), std::string(value), index + 1 };
 }
