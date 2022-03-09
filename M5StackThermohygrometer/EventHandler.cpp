@@ -48,7 +48,6 @@ void EventHandler::EventHandle()
 			thermohygrometer_controller_->ConnectToMqttServer();
 			break;
 		case EventType::kMeasurementRequested:
-			thermohygrometer_controller_->MeasureThermohygroData();
 			break;
 		default:
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));

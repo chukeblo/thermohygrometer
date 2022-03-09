@@ -45,5 +45,5 @@ const std::string kReadCommunicationSettings = "CommunicationSettings";
 const std::string kReadWiFiSettings = "ReadWiFiSettings";
 const std::string kReadAWSSettings = "ReadAWSSettings";
 
-// Thermohygrometer Module
+// ThermohygroDataMeasurer
 const std::string kReadThermohygroData = "ReadThermohygroData";
