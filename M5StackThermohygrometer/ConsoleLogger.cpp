@@ -32,6 +32,7 @@ void ConsoleLogger::Log(LogData* log_data)
         LogError(log_data->class_name, log_data->method_name, log_data->info);
         break;
     }
+    delete log_data;
 }
 
 void ConsoleLogger::LogInfo(std::string class_name, std::string method_name, std::string info)
