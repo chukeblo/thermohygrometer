@@ -6,6 +6,7 @@
 const std::string kM5StackThermoHygrometer = "M5StackThermoHygrometer";
 const std::string kButtonInputWatcher = "ButtonInputWatcher";
 const std::string kEventHandler = "EventHandler";
+const std::string kGUIManager = "GUIManager";
 const std::string kJsonHandler = "JsonHandler";
 const std::string kCommunicationClient = "CommunicationClient";
 const std::string kSDCardController = "SDCardController";
@@ -26,6 +27,9 @@ const std::string kSendThrmohygroData = "SendThermohygroData";
 // EventHandler
 const std::string kEventHandle = "EventHandle";
 const std::string kAddEvent = "AddEvent";
+
+// GUIManager
+const std::string kCheckIfButtonsPressed = "CheckIfButtonsPressed";
 
 // JsonHandler
 const std::string kSerialize = "Serialize";

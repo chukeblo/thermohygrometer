@@ -2,7 +2,6 @@
 
 #include "UIManagerBase.hpp"
 
-#include "ButtonInputWatcher.hpp"
 #include "GUIDrawer.hpp"
 
 class GUIManager : public UIManagerBase
@@ -14,10 +13,10 @@ public:
 public:
 	void Initialize() override;
 	void HandleEvent(EventData* event_data) override;
+	void CheckIfButtonsPressed();
 private:
 	void NotifyMeasurementRequest();
 
 private:
-	ButtonInputWatcher* button_input_watcher_;
 	GUIDrawer* gui_drawer_;
 };
