@@ -16,5 +16,5 @@ ThermohygroData* ThermohygroData::CopyWith(ThermohygroData* base)
 	{
 		return nullptr;
 	}
-	return new ThermohygroData((base->temperature, base->humidity));
+	return new ThermohygroData(base->temperature, base->humidity);
 }
