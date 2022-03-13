@@ -11,6 +11,7 @@ public:
     ~MeasurementResult();
 
 public:
+    static MeasurementResult* CopyWith(MeasurementResult* base);
     std::string ToString();
 
 public:

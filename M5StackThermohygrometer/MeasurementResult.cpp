@@ -20,6 +20,15 @@ MeasurementResult::~MeasurementResult()
     delete this->thermohygro_data;
 }
 
+MeasurementResult* MeasurementResult::CopyWith(MeasurementResult* base)
+{
+    if (!base)
+    {
+        return nullptr;
+    }
+    return new MeasurementResult(base->time, ThermohygroData::CopyWith(base->thermohygro_data));
+}
+
 std::string MeasurementResult::ToString()
 {
     std::map<std::string, std::string> jsonMap;
