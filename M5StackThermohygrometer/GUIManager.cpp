@@ -19,17 +19,17 @@ GUIManager::~GUIManager()
 void GUIManager::CheckIfButtonsPressed()
 {
     M5.update();
-    if (BtnA.wasPressed())
+    if (M5.BtnA.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "left button has been pressed."));
         view_controller_->OnButtonPressed(ButtonType::kLeftButton);
     }
-    else if (BtnB.wasPressed())
+    else if (M5.BtnB.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "middle button has been pressed."));
         view_controller_->OnButtonPressed(ButtonType::kMiddleButton);
     }
-    else if (BtnC.wasPressed())
+    else if (M5.BtnC.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "right button has been pressed."));
         view_controller_->OnButtonPressed(ButtonType::kRightButton);
