@@ -4,6 +4,7 @@
 
 #include "EventData.hpp"
 #include "ThermohygrometerController.hpp"
+#include "GUIManager.hpp"
 #include "UIManagerBase.hpp"
 
 class EventHandler
@@ -16,7 +17,7 @@ private:
 	~EventHandler();
 
 public:
-  void Initialize();
+	void Initialize();
 	void EventHandle();
 	void AddEvent(EventData* data);
 
@@ -26,6 +27,6 @@ private:
 private:
 	std::list<EventData*> event_queue_;
 	ThermohygrometerController* thermohygrometer_controller_;
-	UIManagerBase* gui_manager_;
+	GUIManager* gui_manager_;
 	UIManagerBase* cui_manager_;
 };

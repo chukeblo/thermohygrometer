@@ -25,7 +25,7 @@ EventHandler::~EventHandler()
 void EventHandler::Initialize()
 {
   thermohygrometer_controller_ = new ThermohygrometerController();
-  gui_manager_ = UIManagerBase::GetInstance(UIManagerType::kGuiManagerType);
+  gui_manager_ = new GUIManager();
   cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
 }
 

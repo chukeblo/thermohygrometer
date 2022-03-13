@@ -1,22 +1,18 @@
 #pragma once
 
-#include "UIManagerBase.hpp"
+#include "MeasurementResult.hpp"
+#include "ViewController.hpp"
 
-#include "GUIDrawer.hpp"
-
-class GUIManager : public UIManagerBase
+class GUIManager
 {
 public:
 	GUIManager();
-	~GUIManager() override;
+	~GUIManager();
 
 public:
-	void Initialize() override;
-	void HandleEvent(EventData* event_data) override;
 	void CheckIfButtonsPressed();
-private:
-	void NotifyMeasurementRequest();
+	void NotifyMeasurementResult(MeasurementResult* result);
 
 private:
-	GUIDrawer* gui_drawer_;
+	ViewController* view_controller_;
 };
