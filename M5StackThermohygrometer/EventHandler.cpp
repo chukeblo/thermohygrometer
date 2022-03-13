@@ -41,8 +41,7 @@ void EventHandler::EventHandle()
 		switch (data->type)
 		{
 		case EventType::kReadEnvData:
-		case EventType::kMiddleButtonPressed:
-			gui_manager_->HandleEvent(data);
+			gui_manager_->NotifyMeasurementResult((MeasurementResult*)(data->context));
 			break;
 		case EventType::kRightButtonPressed:
 			thermohygrometer_controller_->ConnectToMqttServer();
