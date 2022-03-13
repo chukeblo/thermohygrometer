@@ -8,11 +8,14 @@ const std::string kButtonInputWatcher = "ButtonInputWatcher";
 const std::string kEventHandler = "EventHandler";
 const std::string kGUIManager = "GUIManager";
 const std::string kJsonHandler = "JsonHandler";
+const std::string kLatestResultViewState = "LatestResultViewState";
 const std::string kCommunicationClient = "CommunicationClient";
+const std::string kResultListViewState = "ResultListViewState";
 const std::string kSDCardController = "SDCardController";
 const std::string kSettingsProvider = "SettingsProvider";
 const std::string kThermohygrometerController = "ThermohygrometerController";
 const std::string kThermohygroDataMeasurer = "ThermohygroDataMeasurer";
+const std::string kViewController = "ViewController";
 
 // Method Names
 // ButtonInputWatcher
@@ -51,3 +54,14 @@ const std::string kReadAWSSettings = "ReadAWSSettings";
 
 // ThermohygroDataMeasurer
 const std::string kReadThermohygroData = "ReadThermohygroData";
+
+// ViewController
+const std::string kChangeState = "ChangeState";
+
+// ViewStates
+const std::string kInitialize = "Initialize";
+const std::string kFinalize = "Finalize";
+const std::string kOnMeasureEnvData = "OnMeasureEnvData";
+const std::string kDoRightButtonAction = "DoRightButtonAction";
+const std::string kDoMiddleButtonAction = "DoMiddleButtonAction";
+const std::string kDoLeftButtonAction = "DoLeftButtonAction";
