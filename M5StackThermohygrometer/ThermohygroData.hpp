@@ -9,7 +9,7 @@ public:
 public:
 	static ThermohygroData* CopyWith(ThermohygroData* base);
 
-private:
+public:
 	float temperature;
 	float humidity;
 };
