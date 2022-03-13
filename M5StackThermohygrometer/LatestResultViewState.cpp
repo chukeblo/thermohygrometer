@@ -3,6 +3,14 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
+LatestResultViewState::LatestResultViewState()
+{
+}
+
+LatestResultViewState::~LatestResultViewState()
+{
+}
+
 void LatestResultViewState::Initialize(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kInitialize, "in"));
@@ -17,7 +25,7 @@ void LatestResultViewState::Finalize(GUIContext* context)
 void LatestResultViewState::OnMeasureEnvData(GUIContext* context, MeasurementResult* result)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kOnMeasureEnvData, "in"));
-	context->AddDisplayData(result)
+	context->AddDisplayData(result);
 	context->DisplayMeasurementResult();
 }
 

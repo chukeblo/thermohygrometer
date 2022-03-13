@@ -1,5 +1,6 @@
 #include "ViewController.hpp"
 
+#include <M5Stack.h>
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
@@ -8,7 +9,7 @@ ViewController::ViewController()
     state_ = ViewState::GetInstance(ViewType::kLatestResultView);
 }
 
-ViewController::~ViewControler()
+ViewController::~ViewController()
 {
     state_ = nullptr;
 }
@@ -21,10 +22,10 @@ void ViewController::OnButtonPressed(ButtonType type)
         state_->DoRightButtonAction(this);
         break;
     case ButtonType::kMiddleButton:
-        state->DoMiddleButtonAction(this);
+        state_->DoMiddleButtonAction(this);
         break;
     case ButtonType::kLeftButton:
-        state->DoLeftButtonAction(this);
+        state_->DoLeftButtonAction(this);
         break;
     default:
         break;
@@ -33,7 +34,7 @@ void ViewController::OnButtonPressed(ButtonType type)
 
 void ViewController::OnMeasureEnvData(MeasurementResult* result)
 {
-    state_->OnMeasureEnvData(this, result)
+    state_->OnMeasureEnvData(this, result);
 }
 
 void ViewController::ChangeState(ViewType type)

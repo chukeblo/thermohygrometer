@@ -3,6 +3,14 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
+ResultListViewState::ResultListViewState()
+{
+}
+
+ResultListViewState::~ResultListViewState()
+{
+}
+
 void ResultListViewState::Initialize(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kInitialize, "in"));

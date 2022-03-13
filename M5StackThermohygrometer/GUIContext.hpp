@@ -4,7 +4,6 @@
 
 #include "ButtonType.hpp"
 #include "MeasurementResult.hpp"
-#include "ViewState.hpp"
 #include "ViewType.hpp"
 
 class GUIContext

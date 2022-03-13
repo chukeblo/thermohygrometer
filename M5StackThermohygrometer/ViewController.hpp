@@ -2,11 +2,13 @@
 
 #include "GUIContext.hpp"
 
+#include "ViewState.hpp"
+
 class ViewController : public GUIContext
 {
 public:
     ViewController();
-    ~ViewControler() override;
+    ~ViewController() override;
 
 public:
     void OnButtonPressed(ButtonType type) override;

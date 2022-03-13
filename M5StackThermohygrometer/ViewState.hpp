@@ -8,7 +8,7 @@ class ViewState
 public:
     static ViewState* GetInstance(ViewType type);
 
-private:
+public:
     ViewState() {}
     virtual ~ViewState() {}
 
