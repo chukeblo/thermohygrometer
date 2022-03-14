@@ -1,6 +1,9 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include "EventHandler.hpp"
+#include "GUIManager.hpp"
+
+GUIManager* gui_manager = new GUIManager();
 
 void setup()
 {
@@ -13,5 +16,6 @@ void setup()
 void loop()
 {
     EventHandler::GetInstance()->EventHandle();
+    gui_manager->CheckIfButtonsPressed();
     delay(10);
 }
