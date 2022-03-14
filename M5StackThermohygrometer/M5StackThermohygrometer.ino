@@ -12,6 +12,7 @@ void setup()
     Wire.begin();
 
     event_handler->Initialize();
+    event_handler->SetGUIManager(gui_manager);
 }
 
 void loop()

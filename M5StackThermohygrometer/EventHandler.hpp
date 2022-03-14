@@ -18,6 +18,7 @@ private:
 
 public:
 	void Initialize();
+	void SetGUIManager(GUIManager* gui_manager);
 	void EventHandle();
 	void AddEvent(EventData* data);
 
