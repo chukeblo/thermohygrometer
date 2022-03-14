@@ -3,6 +3,7 @@
 #include "EventHandler.hpp"
 #include "GUIManager.hpp"
 
+EventHandler* event_handler = EventHandler::GetInstance();
 GUIManager* gui_manager = new GUIManager();
 
 void setup()
@@ -10,12 +11,12 @@ void setup()
     M5.begin();
     Wire.begin();
 
-    EventHandler::GetInstance()->Initialize();
+    event_handler->Initialize();
 }
 
 void loop()
 {
-    EventHandler::GetInstance()->EventHandle();
+    event_handler->EventHandle();
     gui_manager->CheckIfButtonsPressed();
     delay(10);
 }
