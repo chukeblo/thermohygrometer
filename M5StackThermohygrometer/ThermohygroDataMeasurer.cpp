@@ -17,6 +17,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 {
 	struct tm tm;
 	getLocalTime(&tm);
+	int prev_send_hours = tm.tm_hour;
 	int prev_measure_minutes = -1;
 
 	while (true)
@@ -36,6 +37,14 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 				));
 				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, (void*)result));
 			}
+		}
+		if (tm.tm_hour != prev_send_hours)
+		{
+			prev_send_hours = tm.tm_hour;
+			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kThermohygroDataMeasurer, kReadThermohygroData,
+				"sending environment data has been requested. time=" + GetStringTimeFrom(&tm)
+			));
+			EventHandler::GetInstance()->AddEvent(new EventData(EventType::kSendEnvDataRequested, nullptr));
 		}
 		delay(1000);
 	}
