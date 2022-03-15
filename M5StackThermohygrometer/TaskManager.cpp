@@ -1,5 +1,7 @@
 #include "TaskManager.hpp"
 
+#include "ConsoleLogger.hpp"
+#include "LogConstants.hpp"
 #include "ThermohygroDataMeasurer.hpp"
 
 static const int kMeasureTaskCore = 0;
@@ -26,8 +28,12 @@ TaskManager::~TaskManager()
 
 bool TaskManager::CreateTask(std::string task_method, void* context)
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kDebug, kTaskManager, kCreateTask,
+        "task method = \"" + task_method + "\""
+    ));
     if (task_method.empty())
     {
+        ConsoleLogger::Log(new LogData(LogLevel::kError, kTaskManager, kCreateTask, "task method name must be specified."));
         return false;
     }
 
@@ -36,13 +42,20 @@ bool TaskManager::CreateTask(std::string task_method, void* context)
         xTaskCreatePinnedToCore(StartMeasureTask, kMeasureTask.c_str(), 4096, context, kMeasureTaskPriority, &measure_task_handler_, kMeasureTaskCore);
         return true;
     }
+    ConsoleLogger::Log(new LogData(LogLevel::kError, kCreateTask, kCreateTask,
+        "no matched task was found with given task method name: \"" + task_method + "\""
+    ));
     return false;
 }
 
 bool TaskManager::DeleteTask(std::string task_method)
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kDebug, kTaskManager, kDeleteTask,
+        "task method = \"" + task_method + "\""
+    ));
     if (task_method.empty())
     {
+        ConsoleLogger::Log(new LogData(LogLevel::kError, kTaskManager, kDeleteTask, "task method name must be specified."));
         return false;
     }
 
@@ -51,5 +64,8 @@ bool TaskManager::DeleteTask(std::string task_method)
         vTaskDelete(measure_task_handler_);
         return true;
     }
+    ConsoleLogger::Log(new LogData(LogLevel::kError, kCreateTask, kDeleteTask,
+        "no matched task was found with given task method name: \"" + task_method + "\""
+    ));
     return false;
 }

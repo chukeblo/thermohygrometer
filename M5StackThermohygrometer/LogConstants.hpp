@@ -13,6 +13,7 @@ const std::string kMeasurementResultManager = "MeasurementResultManager";
 const std::string kResultListViewState = "ResultListViewState";
 const std::string kSDCardController = "SDCardController";
 const std::string kSettingsProvider = "SettingsProvider";
+const std::string kTaskManager = "TaskManager";
 const std::string kThermohygroDataMeasurer = "ThermohygroDataMeasurer";
 const std::string kThermohygrometerController = "ThermohygrometerController";
 const std::string kViewController = "ViewController";
@@ -50,6 +51,10 @@ const std::string kReadThermohygrometerSettings = "ReadThermohygrometerSettings"
 const std::string kReadCommunicationSettings = "CommunicationSettings";
 const std::string kReadWiFiSettings = "ReadWiFiSettings";
 const std::string kReadAWSSettings = "ReadAWSSettings";
+
+// TaskManager
+const std::string kCreateTask = "CreateTask";
+const std::string kDeleteTask = "DeleteTask";
 
 // ThermohygroDataMeasurer
 const std::string kReadThermohygroData = "ReadThermohygroData";
