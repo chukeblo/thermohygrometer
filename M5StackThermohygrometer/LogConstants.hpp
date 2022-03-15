@@ -61,6 +61,10 @@ const std::string kReadThermohygroData = "ReadThermohygroData";
 
 // ViewController
 const std::string kChangeState = "ChangeState";
+const std::string kScrollUp = "ScrollUp";
+const std::string kScrollDown = "ScrollDown";
+const std::string kDisplayLatestResult = "DisplayLatestResult";
+const std::string kDisplayResultList = "DisplayResultList";
 
 // ViewStates
 const std::string kInitialize = "Initialize";

@@ -53,18 +53,22 @@ void ViewController::ChangeState(ViewType type)
 
 void ViewController::ScrollUp()
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollUp, "in"));
     current_cursor_--;
 }
 
 void ViewController::ScrollDown()
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollDown, "in"));
     current_cursor_++;
 }
 
 void ViewController::DisplayLatestResult()
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayLatestResult, "in"));
 }
 
 void ViewController::DisplayResultList()
 {
+    ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayResultList, "in"));
 }
