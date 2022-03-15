@@ -4,25 +4,20 @@
 
 // Class Names
 const std::string kM5StackThermoHygrometer = "M5StackThermoHygrometer";
-const std::string kButtonInputWatcher = "ButtonInputWatcher";
+const std::string kCommunicationClient = "CommunicationClient";
 const std::string kEventHandler = "EventHandler";
 const std::string kGUIManager = "GUIManager";
 const std::string kJsonHandler = "JsonHandler";
 const std::string kLatestResultViewState = "LatestResultViewState";
 const std::string kMeasurementResultManager = "MeasurementResultManager";
-const std::string kCommunicationClient = "CommunicationClient";
 const std::string kResultListViewState = "ResultListViewState";
 const std::string kSDCardController = "SDCardController";
 const std::string kSettingsProvider = "SettingsProvider";
-const std::string kThermohygrometerController = "ThermohygrometerController";
 const std::string kThermohygroDataMeasurer = "ThermohygroDataMeasurer";
+const std::string kThermohygrometerController = "ThermohygrometerController";
 const std::string kViewController = "ViewController";
 
 // Method Names
-// ButtonInputWatcher
-const std::string kSetUpButtonInterruption = "SetUpButtonInterruption";
-const std::string kOnButtonPressed = "OnButtonPressed";
-
 // CommunicationClient
 const std::string kConnectToAws = "ConnectToAws";
 const std::string kMqttCallback = "MqttCallback";
