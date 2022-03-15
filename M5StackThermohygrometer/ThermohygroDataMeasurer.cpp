@@ -4,6 +4,7 @@
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
 #include "MeasurementResult.hpp"
+#include "MeasurementResultManager.hpp"
 
 // 温湿度測定実施のインターバル[minutes]
 static const int kMeasureIntervalMins = 15;
@@ -41,7 +42,8 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 					", temperature=" + std::string(String(result->thermohygro_data->temperature).c_str()) +
 					", humidity=" + std::string(String(result->thermohygro_data->humidity).c_str())
 				));
-				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, (void*)result));
+				MeasurementResultManager::GetInstance()->AddMeasurementResult(result);
+				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, nullptr));
 			}
 		}
 		if (IsTimeForSendingEnvData(tm.tm_hour))

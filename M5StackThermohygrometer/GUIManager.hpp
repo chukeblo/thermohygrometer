@@ -1,6 +1,5 @@
 #pragma once
 
-#include "MeasurementResult.hpp"
 #include "ViewController.hpp"
 
 class GUIManager
@@ -11,7 +10,7 @@ public:
 
 public:
 	void CheckIfButtonsPressed();
-	void NotifyMeasurementResult(MeasurementResult* result);
+	void NotifyEnvDataMeasured();
 
 private:
 	ViewController* view_controller_;

@@ -14,7 +14,7 @@ LatestResultViewState::~LatestResultViewState()
 void LatestResultViewState::Initialize(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kInitialize, "in"));
-	context->DisplayMeasurementResult();
+	context->DisplayLatestResult();
 }
 
 void LatestResultViewState::Finalize(GUIContext* context)
@@ -22,11 +22,10 @@ void LatestResultViewState::Finalize(GUIContext* context)
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kFinalize, "in"));
 }
 
-void LatestResultViewState::OnMeasureEnvData(GUIContext* context, MeasurementResult* result)
+void LatestResultViewState::OnMeasureEnvData(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kOnMeasureEnvData, "in"));
-	context->AddDisplayData(result);
-	context->DisplayMeasurementResult();
+	context->DisplayLatestResult();
 }
 
 void LatestResultViewState::DoRightButtonAction(GUIContext* context)

@@ -2,6 +2,7 @@
 
 #include "GUIContext.hpp"
 
+#include "MeasurementResultManager.hpp"
 #include "ViewState.hpp"
 
 class ViewController : public GUIContext
@@ -12,15 +13,15 @@ public:
 
 public:
     void OnButtonPressed(ButtonType type) override;
-    void OnMeasureEnvData(MeasurementResult* result) override;
+    void OnMeasureEnvData() override;
     void ChangeState(ViewType type) override;
     void ScrollUp() override;
     void ScrollDown() override;
-    void AddDisplayData(MeasurementResult* result) override;
-    void DisplayMeasurementResult() override;
+    void DisplayLatestResult() override;
+    void DisplayResultList() override;
 
 private:
     ViewState* state_;
-    std::list<MeasurementResult*> results_;
+    MeasurementResultManager* result_manager_;
     int current_cursor_;
 };

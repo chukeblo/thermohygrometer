@@ -9,6 +9,7 @@ const std::string kEventHandler = "EventHandler";
 const std::string kGUIManager = "GUIManager";
 const std::string kJsonHandler = "JsonHandler";
 const std::string kLatestResultViewState = "LatestResultViewState";
+const std::string kMeasurementResultManager = "MeasurementResultManager";
 const std::string kCommunicationClient = "CommunicationClient";
 const std::string kResultListViewState = "ResultListViewState";
 const std::string kSDCardController = "SDCardController";
@@ -38,6 +39,9 @@ const std::string kCheckIfButtonsPressed = "CheckIfButtonsPressed";
 const std::string kSerialize = "Serialize";
 const std::string kParse = "Parse";
 const std::string kExtractKeyValuePair = "ExtractKeyValuePair";
+
+// MeasurementResultManager
+const std::string kAddMeasurementResult = "AddMeasurementResult";
 
 // CommunicationClient
 const std::string kPrepare = "Prepare";

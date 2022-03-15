@@ -14,6 +14,7 @@ ResultListViewState::~ResultListViewState()
 void ResultListViewState::Initialize(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kInitialize, "in"));
+	context->DisplayResultList();
 }
 
 void ResultListViewState::Finalize(GUIContext* context)
@@ -21,10 +22,9 @@ void ResultListViewState::Finalize(GUIContext* context)
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kFinalize, "in"));
 }
 
-void ResultListViewState::OnMeasureEnvData(GUIContext* context, MeasurementResult* result)
+void ResultListViewState::OnMeasureEnvData(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kOnMeasureEnvData, "in"));
-	context->AddDisplayData(result);
 }
 
 void ResultListViewState::DoRightButtonAction(GUIContext* context)

@@ -7,6 +7,7 @@
 ViewController::ViewController()
 {
     state_ = ViewState::GetInstance(ViewType::kLatestResultView);
+    result_manager_ = MeasurementResultManager::GetInstance();
 }
 
 ViewController::~ViewController()
@@ -32,9 +33,9 @@ void ViewController::OnButtonPressed(ButtonType type)
     }
 }
 
-void ViewController::OnMeasureEnvData(MeasurementResult* result)
+void ViewController::OnMeasureEnvData()
 {
-    state_->OnMeasureEnvData(this, result);
+    state_->OnMeasureEnvData(this);
 }
 
 void ViewController::ChangeState(ViewType type)
@@ -60,11 +61,10 @@ void ViewController::ScrollDown()
     current_cursor_++;
 }
 
-void ViewController::AddDisplayData(MeasurementResult* result)
+void ViewController::DisplayLatestResult()
 {
-    results_.push_front(MeasurementResult::CopyWith(result));
 }
 
-void ViewController::DisplayMeasurementResult()
+void ViewController::DisplayResultList()
 {
 }

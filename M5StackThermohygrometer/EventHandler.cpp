@@ -45,7 +45,7 @@ void EventHandler::EventHandle()
 		switch (data->type)
 		{
 		case EventType::kReadEnvData:
-			gui_manager_->NotifyMeasurementResult((MeasurementResult*)(data->context));
+			gui_manager_->NotifyEnvDataMeasured();
 			break;
 		case EventType::kSendEnvDataRequested:
 			break;

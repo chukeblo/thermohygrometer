@@ -4,7 +4,6 @@
 #include "ButtonType.hpp"
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
-#include "MeasurementResult.hpp"
 
 GUIManager::GUIManager()
 {
@@ -36,7 +35,7 @@ void GUIManager::CheckIfButtonsPressed()
     }
 }
 
-void GUIManager::NotifyMeasurementResult(MeasurementResult* result)
+void GUIManager::NotifyEnvDataMeasured()
 {
-    view_controller_->OnMeasureEnvData(result);
+    view_controller_->OnMeasureEnvData();
 }
