@@ -7,7 +7,7 @@
 #include "MeasurementResultManager.hpp"
 
 // 温湿度測定実施のインターバル[minutes]
-static const int kMeasureIntervalMins = 15;
+static const int kMeasureIntervalMins = 1;
 // 測定結果送信実施のインターバル[hours]
 static const int kSendingIntervalHours = 1;
 
@@ -44,6 +44,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 				));
 				MeasurementResultManager::GetInstance()->AddMeasurementResult(result);
 				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, nullptr));
+				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kSendEnvDataRequested, nullptr));
 			}
 		}
 		if (IsTimeForSendingEnvData(tm.tm_hour))

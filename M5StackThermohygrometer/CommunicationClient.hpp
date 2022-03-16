@@ -13,7 +13,10 @@ private:
 	const long kJST = 3600L * 9;
 
 public:
-	CommunicationClient(AWSCommunicationSettings* settings);
+	static CommunicationClient* GetInstance();
+
+private:
+	CommunicationClient();
 	~CommunicationClient();
 
 public:

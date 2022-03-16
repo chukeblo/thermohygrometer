@@ -24,8 +24,12 @@ EventHandler::~EventHandler()
 
 void EventHandler::Initialize()
 {
-  	thermohygrometer_controller_ = new ThermohygrometerController();
   	cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
+}
+
+void EventHandler::SetCommunicationClient(CommunicationClient* communication_client)
+{
+	communication_client_ = communication_client;
 }
 
 void EventHandler::SetGUIManager(GUIManager* gui_manager)
@@ -48,6 +52,7 @@ void EventHandler::EventHandle()
 			gui_manager_->NotifyEnvDataMeasured();
 			break;
 		case EventType::kSendEnvDataRequested:
+			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().front());
 			break;
 		default:
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));

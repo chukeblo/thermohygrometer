@@ -6,10 +6,21 @@
 #include "ConsoleLogger.hpp"
 #include "EventHandler.hpp"
 #include "LogConstants.hpp"
+#include "SettingsProvider.hpp"
 
-CommunicationClient::CommunicationClient(AWSCommunicationSettings* settings)
+CommunicationClient* CommunicationClient::GetInstance()
 {
-	settings_ = settings;
+	static CommunicationClient* instance = nullptr;
+	if (!instance)
+	{
+		instance = new CommunicationClient();
+	}
+	return instance;
+}
+
+CommunicationClient::CommunicationClient()
+{
+	settings_ = SettingsProvider::Of()->aws_communication_settings;
 	http_client_ = new WiFiClientSecure();
 	mqtt_client_ = new PubSubClient(*http_client_);
 	Prepare();
