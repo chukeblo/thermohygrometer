@@ -1,14 +1,13 @@
 package com.example.androidthermohygrometer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.androidthermohygrometer.databinding.ActivityMainBinding;
-import com.example.androidthermohygrometer.models.AwsConnectionResources;
-import com.example.androidthermohygrometer.models.AwsSettings;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -32,14 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         prepareChart();
 
-        AwsConnectionResources resources = AwsConnectionResourcesProvider.ProvideAwsSettings(getApplicationContext());
+        binding.startButton.setOnClickListener(view ->
+                startService(new Intent(getBaseContext(), AwsIotCommunicationService.class)));
     }
 
     private void prepareChart() {
         lineChart.setDrawGridBackground(true);
         lineChart.getDescription().setEnabled(true);
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.enableAxisLineDashedLine(10.0f, 10.0f,0.0f);
+        xAxis.enableAxisLineDashedLine(10.0f, 10.0f, 0.0f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         YAxis yAxis = lineChart.getAxisLeft();
         yAxis.setAxisMaximum(150.0f);

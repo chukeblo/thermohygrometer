@@ -10,11 +10,11 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 public class AwsConnectionResourcesProvider {
-    private static final String TAG = "SettingsProvider";
+    private static final String TAG = "AwsConnRscsProvider";
     private static final String SETTINGS_PATH = "aws_config.json";
     private static final String AWS_CONFIG_DIR = "aws_certs/";
 
-    static AwsConnectionResources ProvideAwsSettings(Context context) {
+    static AwsConnectionResources ProvideAwsConnectionResources(Context context) {
         try {
             String settingsJson = AssetsReader.ReadAssetFileFrom(context, SETTINGS_PATH);
             Log.d(TAG, settingsJson);

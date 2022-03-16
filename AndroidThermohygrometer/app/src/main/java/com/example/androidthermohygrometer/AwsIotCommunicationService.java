@@ -8,75 +8,72 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.amazonaws.mobileconnectors.iot.AWSIotKeystoreHelper;
+import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
+import com.amazonaws.mobileconnectors.iot.AWSIotMqttNewMessageCallback;
+import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.example.androidthermohygrometer.models.AwsSettings;
-import com.google.gson.Gson;
+import com.example.androidthermohygrometer.models.AwsConnectionResources;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.security.KeyStore;
+import java.util.Arrays;
 
 public class AwsIotCommunicationService extends Service {
     private AWSIotMqttManager mqttManager;
-    private AwsSettings awsSettings = null;
-    private InputStream inputStream = null;
-    private BufferedReader bufferedReader = null;
+    private AwsConnectionResources awsConnectionResources = null;
+    private KeyStore keyStore;
+    private boolean isConnected = false;
 
-    private static final String SETTINGS_FILENAME = "aws_config.json";
+    private static final String TAG = "AwsIotCommService";
     private static final String CLIENT_ID = "M5StackThermohygrometer";
     private static final String CERT_ID = "m5stack_thermohygrometer_cert";
     private static final String KEY_STORE_NAME = "m5stack_thermohygrometer_key_store";
     private static final String KEY_STORE_PASSWORD = "m5stack_thermohygrometer_key_store_password";
+    private static final String AWS_CERTS_DIR_PATH = "aws_certs/";
 
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i(TAG, "onCreate: in");
 
-        String settingsJson = assetsFileToString(SETTINGS_FILENAME);
-        Gson gson = new Gson();
-        awsSettings = gson.fromJson(settingsJson, AwsSettings.class);
+        awsConnectionResources = AwsConnectionResourcesProvider.ProvideAwsConnectionResources(getApplicationContext());
 
-        if (awsSettings != null) {
-            mqttManager = new AWSIotMqttManager(CLIENT_ID, Region.getRegion(Regions.US_EAST_1), awsSettings.getEndpoint());
+        if (awsConnectionResources != null) {
+            mqttManager = new AWSIotMqttManager(CLIENT_ID, Region.getRegion(Regions.US_EAST_1), awsConnectionResources.getEndpoint());
         }
         String keyStorePath = getFilesDir().getAbsolutePath();
         if (!AWSIotKeystoreHelper.isKeystorePresent(keyStorePath, KEY_STORE_NAME)) {
             saveCertificateAndPrivateKey(keyStorePath);
         }
-        KeyStore keyStore = AWSIotKeystoreHelper.getIotKeystore(CERT_ID, keyStorePath, KEY_STORE_NAME, KEY_STORE_PASSWORD);
-        mqttManager.connect(keyStore, (status, throwable) -> Log.d("AwsIotCommunicationSvc", "AWSMqttClientStatusChanged."));
+        keyStore = AWSIotKeystoreHelper.getIotKeystore(CERT_ID, keyStorePath, KEY_STORE_NAME, KEY_STORE_PASSWORD);
+        mqttManager.connect(keyStore, new AWSIotMqttClientStatusCallback() {
+            @Override
+            public void onStatusChanged(AWSIotMqttClientStatus status, Throwable throwable) {
+                Log.d(TAG, "onStatusChanged: status=" + status);
+                isConnected = status == AWSIotMqttClientStatus.Connected;
+            }
+        });
+
+        while (!isConnected) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        mqttManager.subscribeToTopic("envdata", AWSIotMqttQos.QOS0, new AWSIotMqttNewMessageCallback() {
+            @Override
+            public void onMessageArrived(String topic, byte[] data) {
+                Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + Arrays.toString(data));
+            }
+        });
     }
 
     private void saveCertificateAndPrivateKey(String keyStorePath) {
-        String deviceCert = assetsFileToString(awsSettings.getDeviceCertPath());
-        String privateKey = assetsFileToString(awsSettings.getPrivateKeyPath());
+        String deviceCert = awsConnectionResources.getDeviceCert();
+        String privateKey = awsConnectionResources.getPrivateKey();
         AWSIotKeystoreHelper.saveCertificateAndPrivateKey(CERT_ID, deviceCert, privateKey, keyStorePath, KEY_STORE_NAME, KEY_STORE_PASSWORD);
-    }
-
-    private String assetsFileToString(String filePath) {
-        StringBuilder assetsText = new StringBuilder();
-        try {
-            inputStream = getApplicationContext().getAssets().open(filePath);
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String tmp;
-            while ((tmp = bufferedReader.readLine()) != null) {
-                assetsText.append(tmp);
-            }
-        } catch (IOException e) {
-            System.out.println("exception occurred in reading asset file. filePath="+ filePath + ",reason=" + e.getMessage());
-        } finally {
-            if (inputStream != null) {
-                inputStream = null;
-            }
-            if (bufferedReader != null) {
-                bufferedReader = null;
-            }
-        }
-        return assetsText.toString();
     }
 
     @Override
