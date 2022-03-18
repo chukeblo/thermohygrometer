@@ -1,9 +1,11 @@
 package com.example.androidthermohygrometer;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private LineChart lineChart;
+    private MeasurementResultReceiver receiver;
+
+    private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
         lineChart = binding.lineChart;
 
         prepareChart();
+
+        receiver = new MeasurementResultReceiver((result -> {
+            // TODO: add codes to add received data to chart
+            Log.d("MeasurementResultCb", "onMeasurementResult: ");
+        }));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_NAME);
+        registerReceiver(receiver, intentFilter);
 
         binding.startButton.setOnClickListener(view ->
                 startService(new Intent(getBaseContext(), AwsIotCommunicationService.class)));

@@ -16,7 +16,6 @@ import com.amazonaws.regions.Regions;
 import com.example.androidthermohygrometer.models.AwsConnectionResources;
 
 import java.security.KeyStore;
-import java.util.Arrays;
 
 public class AwsIotCommunicationService extends Service {
     private AWSIotMqttManager mqttManager;
@@ -25,10 +24,12 @@ public class AwsIotCommunicationService extends Service {
     private boolean isConnected = false;
 
     private static final String TAG = "AwsIotCommService";
-    private static final String CLIENT_ID = "M5StackThermohygrometer";
+    private static final String CLIENT_ID = "AndroidThermohygrometer";
     private static final String CERT_ID = "m5stack_thermohygrometer_cert";
     private static final String KEY_STORE_NAME = "m5stack_thermohygrometer_key_store";
     private static final String KEY_STORE_PASSWORD = "m5stack_thermohygrometer_key_store_password";
+    private static final String SUBSCRIBE_TOPIC_NAME = "envdata";
+    private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
 
     @Override
     public void onCreate() {
@@ -57,8 +58,13 @@ public class AwsIotCommunicationService extends Service {
                 e.printStackTrace();
             }
         }
-        mqttManager.subscribeToTopic("envdata", AWSIotMqttQos.QOS0, (topic, data) -> {
-            Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + Arrays.toString(data));
+        mqttManager.subscribeToTopic(SUBSCRIBE_TOPIC_NAME, AWSIotMqttQos.QOS0, (topic, data) -> {
+            String message = new String(data);
+            Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + message);
+            Intent intent = new Intent();
+            intent.putExtra("json", message);
+            intent.setAction(ACTION_NAME);
+            getBaseContext().sendBroadcast(intent);
         });
     }
 
