@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import com.amazonaws.mobileconnectors.iot.AWSIotKeystoreHelper;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
-import com.amazonaws.mobileconnectors.iot.AWSIotMqttNewMessageCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
@@ -30,7 +29,6 @@ public class AwsIotCommunicationService extends Service {
     private static final String CERT_ID = "m5stack_thermohygrometer_cert";
     private static final String KEY_STORE_NAME = "m5stack_thermohygrometer_key_store";
     private static final String KEY_STORE_PASSWORD = "m5stack_thermohygrometer_key_store_password";
-    private static final String AWS_CERTS_DIR_PATH = "aws_certs/";
 
     @Override
     public void onCreate() {
@@ -47,12 +45,9 @@ public class AwsIotCommunicationService extends Service {
             saveCertificateAndPrivateKey(keyStorePath);
         }
         keyStore = AWSIotKeystoreHelper.getIotKeystore(CERT_ID, keyStorePath, KEY_STORE_NAME, KEY_STORE_PASSWORD);
-        mqttManager.connect(keyStore, new AWSIotMqttClientStatusCallback() {
-            @Override
-            public void onStatusChanged(AWSIotMqttClientStatus status, Throwable throwable) {
-                Log.d(TAG, "onStatusChanged: status=" + status);
-                isConnected = status == AWSIotMqttClientStatus.Connected;
-            }
+        mqttManager.connect(keyStore, (status, throwable) -> {
+            Log.d(TAG, "onStatusChanged: status=" + status);
+            isConnected = status == AWSIotMqttClientStatusCallback.AWSIotMqttClientStatus.Connected;
         });
 
         while (!isConnected) {
@@ -62,11 +57,8 @@ public class AwsIotCommunicationService extends Service {
                 e.printStackTrace();
             }
         }
-        mqttManager.subscribeToTopic("envdata", AWSIotMqttQos.QOS0, new AWSIotMqttNewMessageCallback() {
-            @Override
-            public void onMessageArrived(String topic, byte[] data) {
-                Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + Arrays.toString(data));
-            }
+        mqttManager.subscribeToTopic("envdata", AWSIotMqttQos.QOS0, (topic, data) -> {
+            Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + Arrays.toString(data));
         });
     }
 
