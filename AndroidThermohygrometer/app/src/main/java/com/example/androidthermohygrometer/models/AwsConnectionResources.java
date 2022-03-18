@@ -7,6 +7,14 @@ public class AwsConnectionResources {
     private String deviceCert;
     private String privateKey;
 
+    public AwsConnectionResources(String endpoint, String port, String rootCa, String deviceCert, String privateKey) {
+        this.endpoint = endpoint;
+        this.port = port;
+        this.rootCa = rootCa;
+        this.deviceCert = deviceCert;
+        this.privateKey = privateKey;
+    }
+
     public String getEndpoint() { return this.endpoint; }
 
     public void setEndpoint(String endpoint) { this.endpoint = endpoint; }

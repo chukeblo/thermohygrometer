@@ -23,13 +23,13 @@ public class AwsConnectionResourcesProvider {
             String rootCa = AssetsReader.ReadAssetFileFrom(context, AWS_CONFIG_DIR + settings.getRootCaPath());
             String deviceCert = AssetsReader.ReadAssetFileFrom(context, AWS_CONFIG_DIR + settings.getDeviceCertPath());
             String privateKey = AssetsReader.ReadAssetFileFrom(context, AWS_CONFIG_DIR + settings.getPrivateKeyPath());
-            AwsConnectionResources resources = new AwsConnectionResources();
-            resources.setEndpoint(settings.getEndpoint());
-            resources.setPort(settings.getPort());
-            resources.setRootCa(rootCa);
-            resources.setDeviceCert(deviceCert);
-            resources.setPrivateKey(privateKey);
-            return resources;
+            return new AwsConnectionResources(
+                    settings.getEndpoint(),
+                    settings.getPort(),
+                    rootCa,
+                    deviceCert,
+                    privateKey
+            );
         } catch (IOException e) {
             Log.e(TAG, e.toString());
         }
