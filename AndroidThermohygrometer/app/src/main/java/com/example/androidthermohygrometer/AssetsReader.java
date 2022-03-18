@@ -12,7 +12,7 @@ public class AssetsReader {
         StringBuilder settingsJson = new StringBuilder();
         String tmp;
         while ((tmp = reader.readLine()) != null) {
-            settingsJson.append(tmp + "\n");
+            settingsJson.append(tmp).append("\n");
         }
         return settingsJson.toString();
     }
