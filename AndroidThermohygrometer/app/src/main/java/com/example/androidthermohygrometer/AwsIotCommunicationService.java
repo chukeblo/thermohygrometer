@@ -24,7 +24,6 @@ public class AwsIotCommunicationService extends Service {
     private boolean isConnected = false;
 
     private static final String TAG = "AwsIotCommService";
-    private static final String CLIENT_ID = "AndroidThermohygrometer";
     private static final String CERT_ID = "m5stack_thermohygrometer_cert";
     private static final String KEY_STORE_NAME = "m5stack_thermohygrometer_key_store";
     private static final String KEY_STORE_PASSWORD = "m5stack_thermohygrometer_key_store_password";
@@ -39,7 +38,7 @@ public class AwsIotCommunicationService extends Service {
         awsConnectionResources = AwsConnectionResourcesProvider.ProvideAwsConnectionResources(getApplicationContext());
 
         if (awsConnectionResources != null) {
-            mqttManager = new AWSIotMqttManager(CLIENT_ID, Region.getRegion(Regions.US_EAST_1), awsConnectionResources.getEndpoint());
+            mqttManager = new AWSIotMqttManager(awsConnectionResources.getClientId(), Region.getRegion(Regions.US_EAST_1), awsConnectionResources.getEndpoint());
         }
         String keyStorePath = getFilesDir().getAbsolutePath();
         if (!AWSIotKeystoreHelper.isKeystorePresent(keyStorePath, KEY_STORE_NAME)) {

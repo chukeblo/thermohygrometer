@@ -1,6 +1,6 @@
 {
+  "clientId": "AndroidThermohygrometer",
   "endpoint": "a173nwsyyt709l",
-  "port": "8883",
   "rootCaPath": "AmazonRootCA1.pem",
   "deviceCertPath": "5c1d8dff120f7de45a8fb8c86c5d32656fb1f6220e3ebc273a8eb22fb1b11512-certificate.pem.crt",
   "privateKeyPath": "5c1d8dff120f7de45a8fb8c86c5d32656fb1f6220e3ebc273a8eb22fb1b11512-private.pem.key"

@@ -24,8 +24,8 @@ public class AwsConnectionResourcesProvider {
             String deviceCert = AssetsReader.ReadAssetFileFrom(context, AWS_CONFIG_DIR + settings.getDeviceCertPath());
             String privateKey = AssetsReader.ReadAssetFileFrom(context, AWS_CONFIG_DIR + settings.getPrivateKeyPath());
             return new AwsConnectionResources(
+                    settings.getClientId(),
                     settings.getEndpoint(),
-                    settings.getPort(),
                     rootCa,
                     deviceCert,
                     privateKey

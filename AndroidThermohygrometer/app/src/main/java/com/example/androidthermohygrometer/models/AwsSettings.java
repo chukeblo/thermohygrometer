@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class AwsSettings {
 
+    @SerializedName("clientId")
+    private String clientId;
     @SerializedName("endpoint")
     private String endpoint;
-    @SerializedName("port")
-    private String port;
     @SerializedName("rootCaPath")
     private String rootCaPath;
     @SerializedName("deviceCertPath")
@@ -15,20 +15,20 @@ public class AwsSettings {
     @SerializedName("privateKeyPath")
     private String privateKeyPath;
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setPort(String clientId) {
+        this.clientId = clientId;
+    }
+
     public String getEndpoint() {
         return endpoint;
     }
 
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
     }
 
     public String getRootCaPath() {
