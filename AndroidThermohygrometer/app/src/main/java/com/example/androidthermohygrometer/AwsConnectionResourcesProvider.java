@@ -26,6 +26,7 @@ public class AwsConnectionResourcesProvider {
             return new AwsConnectionResources(
                     settings.getClientId(),
                     settings.getEndpoint(),
+                    settings.getTopic(),
                     rootCa,
                     deviceCert,
                     privateKey

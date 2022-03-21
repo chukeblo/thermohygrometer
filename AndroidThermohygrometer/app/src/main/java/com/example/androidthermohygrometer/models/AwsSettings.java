@@ -8,6 +8,8 @@ public class AwsSettings {
     private String clientId;
     @SerializedName("endpoint")
     private String endpoint;
+    @SerializedName("topic")
+    private String topic;
     @SerializedName("rootCaPath")
     private String rootCaPath;
     @SerializedName("deviceCertPath")
@@ -30,6 +32,10 @@ public class AwsSettings {
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
     }
+
+    public String getTopic() { return this.topic; }
+
+    public void setTopic(String topic) { this.topic = topic; }
 
     public String getRootCaPath() {
         return rootCaPath;

@@ -27,7 +27,6 @@ public class AwsIotCommunicationService extends Service {
     private static final String CERT_ID = "m5stack_thermohygrometer_cert";
     private static final String KEY_STORE_NAME = "m5stack_thermohygrometer_key_store";
     private static final String KEY_STORE_PASSWORD = "m5stack_thermohygrometer_key_store_password";
-    private static final String SUBSCRIBE_TOPIC_NAME = "envdata";
     private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
 
     @Override
@@ -57,7 +56,7 @@ public class AwsIotCommunicationService extends Service {
                 e.printStackTrace();
             }
         }
-        mqttManager.subscribeToTopic(SUBSCRIBE_TOPIC_NAME, AWSIotMqttQos.QOS0, (topic, data) -> {
+        mqttManager.subscribeToTopic(awsConnectionResources.getTopic(), AWSIotMqttQos.QOS0, (topic, data) -> {
             String message = new String(data);
             Log.i(TAG, "onMessageArrived: topic=" + topic + ", data=" + message);
             Intent intent = new Intent();

@@ -3,13 +3,15 @@ package com.example.androidthermohygrometer.models;
 public class AwsConnectionResources {
     private String clientId;
     private String endpoint;
+    private String topic;
     private String rootCa;
     private String deviceCert;
     private String privateKey;
 
-    public AwsConnectionResources(String clientId, String endpoint, String rootCa, String deviceCert, String privateKey) {
+    public AwsConnectionResources(String clientId, String endpoint, String topic, String rootCa, String deviceCert, String privateKey) {
         this.clientId = clientId;
         this.endpoint = endpoint;
+        this.topic = topic;
         this.rootCa = rootCa;
         this.deviceCert = deviceCert;
         this.privateKey = privateKey;
@@ -22,6 +24,10 @@ public class AwsConnectionResources {
     public String getEndpoint() { return this.endpoint; }
 
     public void setEndpoint(String endpoint) { this.endpoint = endpoint; }
+
+    public String getTopic() { return this.topic; }
+
+    public void setTopic(String topic) { this.topic = topic; }
 
     public String getRootCa() { return this.rootCa; }
 
