@@ -17,7 +17,7 @@ void setup()
     Wire.begin();
 
     event_handler->Initialize();
-    event_handler->SetCommunicationClient(CommunicationClient::GetInstance());
+    event_handler->SetCommunicationClient(new CommunicationClient());
     event_handler->SetGUIManager(gui_manager);
 
     ThermohygroDataMeasurer* thermohygrodata_measurer = new ThermohygroDataMeasurer();

@@ -8,16 +8,6 @@
 #include "LogConstants.hpp"
 #include "SettingsProvider.hpp"
 
-CommunicationClient* CommunicationClient::GetInstance()
-{
-	static CommunicationClient* instance = nullptr;
-	if (!instance)
-	{
-		instance = new CommunicationClient();
-	}
-	return instance;
-}
-
 CommunicationClient::CommunicationClient()
 {
 	settings_ = SettingsProvider::Of()->aws_communication_settings;

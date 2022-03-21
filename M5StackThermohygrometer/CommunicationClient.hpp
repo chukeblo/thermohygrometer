@@ -13,9 +13,6 @@ private:
 	const long kJST = 3600L * 9;
 
 public:
-	static CommunicationClient* GetInstance();
-
-private:
 	CommunicationClient();
 	~CommunicationClient();
 
