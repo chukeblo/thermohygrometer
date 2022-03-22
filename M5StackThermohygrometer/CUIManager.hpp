@@ -10,5 +10,5 @@ public:
 
 public:
 	void Initialize() override;
-	void HandleEvent(EventData* event_data) override;
+	void HandleEvent(EventType type) override;
 };

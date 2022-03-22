@@ -13,9 +13,9 @@ void CUIManager::Initialize()
 {
 }
 
-void CUIManager::HandleEvent(EventData* event_data)
+void CUIManager::HandleEvent(EventType type)
 {
-    switch (event_data->type)
+    switch (type)
     {
     default:
         break;

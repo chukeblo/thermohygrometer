@@ -2,6 +2,7 @@
 
 #include "ConsoleLogger.hpp"
 #include "EventHandler.hpp"
+#include "EventType.hpp"
 #include "LogConstants.hpp"
 #include "MeasurementResult.hpp"
 #include "MeasurementResultManager.hpp"
@@ -43,8 +44,8 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 					", humidity=" + std::string(String(result->thermohygro_data->humidity).c_str())
 				));
 				MeasurementResultManager::GetInstance()->AddMeasurementResult(result);
-				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kReadEnvData, nullptr));
-				EventHandler::GetInstance()->AddEvent(new EventData(EventType::kSendEnvDataRequested, nullptr));
+				EventHandler::GetInstance()->AddEvent(EventType::kReadEnvData);
+				EventHandler::GetInstance()->AddEvent(EventType::kSendEnvDataRequested);
 			}
 		}
 		if (IsTimeForSendingEnvData(tm.tm_hour))
@@ -52,7 +53,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kThermohygroDataMeasurer, kReadThermohygroData,
 				"sending environment data has been requested. time=" + GetStringTimeFrom(&tm)
 			));
-			EventHandler::GetInstance()->AddEvent(new EventData(EventType::kSendEnvDataRequested, nullptr));
+			EventHandler::GetInstance()->AddEvent(EventType::kSendEnvDataRequested);
 		}
 		delay(1000);
 	}

@@ -41,13 +41,11 @@ void EventHandler::EventHandle()
 {
 	while (true)
 	{
-		EventData* data = GetEvent();
-		if (!data)
+		EventType type = GetEvent();
+		switch (type)
 		{
+		case EventType::kNone:
 			return;
-		}
-		switch (data->type)
-		{
 		case EventType::kReadEnvData:
 			gui_manager_->NotifyEnvDataMeasured();
 			break;
@@ -58,26 +56,24 @@ void EventHandler::EventHandle()
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));
 			break;
 		}
-		delete data;
-		data = nullptr;
 	}
 }
 
-void EventHandler::AddEvent(EventData* data)
+void EventHandler::AddEvent(EventType type)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kEventHandler, kAddEvent,
-		"in: type=" + std::string(String((int)data->type).c_str())
+		"in: type=" + std::string(String((int)type).c_str())
 	));
-	event_queue_.push_back(data);
+	event_queue_.push_back(type);
 }
 
-EventData* EventHandler::GetEvent()
+EventType EventHandler::GetEvent()
 {
 	if (event_queue_.empty())
 	{
-		return nullptr;
+		return EventType::kNone;
 	}
-	EventData* data = event_queue_.front();
+	EventType type = event_queue_.front();
 	event_queue_.pop_front();
-	return data;
+	return type;
 }

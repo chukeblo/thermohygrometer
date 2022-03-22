@@ -2,6 +2,7 @@
 
 enum class EventType
 {
+	kNone,
 	kReadEnvData,
 	kSendEnvDataRequested
 };
