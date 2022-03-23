@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private MeasurementResultReceiver receiver;
 
     private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
-    private static final int DATASET_NUM = 2;
-    private static final String[] LABELS = new String[] {"temperature", "humidity"};
-    private static final int[] COLORS = new int[] {Color.RED, Color.BLUE};
+    private static final int MAX_LABEL_COUNTS = 2;
+    private static final String[] LABELS = {"temperature", "humidity"};
+    private static final int[] COLORS = {Color.RED, Color.BLUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        for (int i = 0; i < DATASET_NUM; i++) {
+        for (int i = 0; i < MAX_LABEL_COUNTS; i++) {
             ILineDataSet dataSet = lineData.getDataSetByIndex(i);
             if (dataSet == null) {
                 dataSet = createLineDataSet(LABELS[i], COLORS[i]);
