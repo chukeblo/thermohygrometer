@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidthermohygrometer.databinding.ActivityMainBinding;
+import com.example.androidthermohygrometer.models.MeasurementResult;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private MeasurementResultReceiver receiver;
 
     private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
+    private static final int DATASET_NUM = 2;
+    private static final String[] NAMES = new String[] {"temperature", "humidity"};
+    private static final int[] COLORS = new int[] {Color.RED, Color.BLUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         prepareChart();
 
         receiver = new MeasurementResultReceiver((result -> {
-            // TODO: add codes to add received data to chart
-            Log.d("MeasurementResultCb", "onMeasurementResult: ");
+            Log.d("MeasurementResultCb", "onMeasurementResult: in");
+            addChartEntry(result);
         }));
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_NAME);
@@ -60,55 +64,41 @@ public class MainActivity extends AppCompatActivity {
         yAxis.enableGridDashedLine(10.0f, 10.0f, 0.0f);
         yAxis.setDrawZeroLine(true);
         lineChart.getAxisRight().setEnabled(false);
-
-        setData();
+        lineChart.setData(new LineData());
     }
 
-    private void setData() {
+    private void addChartEntry(MeasurementResult result) {
         // Entry()を使ってLineDataSetに設定できる形に変更してarrayを新しく作成
-        int[] data = {116, 111, 112, 121, 102, 83,
-                99, 101, 74, 105, 120, 112,
-                109, 102, 107, 93, 82, 99, 110,
-        };
+        float[] data = { Float.parseFloat(result.getTemperature()), Float.parseFloat(result.getHumidity()) };
 
-        ArrayList<Entry> values = new ArrayList<>();
-
-        for (int i = 0; i < data.length; i++) {
-            values.add(new Entry(i, data[i], null, null));
+        LineData lineData = lineChart.getLineData();
+        if (lineData == null) {
+            return;
         }
 
-        LineDataSet set1;
-
-        if (lineChart.getData() != null &&
-                lineChart.getData().getDataSetCount() > 0) {
-
-            set1 = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            lineChart.getData().notifyDataChanged();
-            lineChart.notifyDataSetChanged();
-        } else {
-            set1 = new LineDataSet(values, "DataSet");
-
-            set1.setDrawIcons(false);
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-            set1.setDrawCircleHole(false);
-            set1.setValueTextSize(0f);
-            set1.setDrawFilled(true);
-            set1.setFormLineWidth(1f);
-            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            set1.setFormSize(15.f);
-
-            set1.setFillColor(Color.BLUE);
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-            dataSets.add(set1);
-
-            LineData lineData = new LineData(dataSets);
-
-            lineChart.setData(lineData);
+        for (int i = 0; i < DATASET_NUM; i++) {
+            ILineDataSet dataSet = lineData.getDataSetByIndex(i);
+            if (dataSet == null) {
+                LineDataSet lineDataSet = new LineDataSet(null, NAMES[i]);
+                lineDataSet.setDrawIcons(false);
+                lineDataSet.setColor(COLORS[i]);
+                lineDataSet.setCircleColor(COLORS[i]);
+                lineDataSet.setLineWidth(1f);
+                lineDataSet.setCircleRadius(3f);
+                lineDataSet.setDrawCircleHole(false);
+                lineDataSet.setValueTextSize(0f);
+                lineDataSet.setDrawFilled(true);
+                lineDataSet.setFormLineWidth(1f);
+                lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+                lineDataSet.setFormSize(15.f);
+                dataSet = lineDataSet;
+                lineData.addDataSet(dataSet);
+            }
+            lineData.addEntry(new Entry(dataSet.getEntryCount(), data[i]), i);
+            lineData.notifyDataChanged();
         }
+        lineChart.notifyDataSetChanged();
+        lineChart.setVisibleXRangeMaximum(50.f);
+        lineChart.moveViewToX(lineData.getEntryCount());
     }
 }
