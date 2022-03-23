@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
     private static final int DATASET_NUM = 2;
-    private static final String[] NAMES = new String[] {"temperature", "humidity"};
+    private static final String[] LABELS = new String[] {"temperature", "humidity"};
     private static final int[] COLORS = new int[] {Color.RED, Color.BLUE};
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < DATASET_NUM; i++) {
             ILineDataSet dataSet = lineData.getDataSetByIndex(i);
             if (dataSet == null) {
-                dataSet = createLineDataSet(NAMES[i], COLORS[i]);
+                dataSet = createLineDataSet(LABELS[i], COLORS[i]);
                 lineData.addDataSet(dataSet);
             }
             lineData.addEntry(new Entry(dataSet.getEntryCount(), data[i]), i);
