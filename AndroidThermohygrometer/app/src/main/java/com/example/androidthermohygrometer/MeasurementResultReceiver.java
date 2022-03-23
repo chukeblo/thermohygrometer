@@ -18,7 +18,7 @@ public class MeasurementResultReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String json = intent.getExtras().getString("json");
+        String json = intent.getExtras().getString(IntentServiceConstants.ExtraKey.MEASUREMENT_RESULT);
         MeasurementResult result = new Gson().fromJson(json, MeasurementResult.class);
         Log.d(TAG, "onReceive: time=" + result.getTime() + ",temperature=" + result.getTemperature() + ",humidity=" + result.getHumidity());
         callback.onMeasurementResult(result);

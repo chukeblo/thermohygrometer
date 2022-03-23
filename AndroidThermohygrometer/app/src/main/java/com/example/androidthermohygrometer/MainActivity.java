@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private LineChart lineChart;
     private MeasurementResultReceiver receiver;
 
-    private static final String ACTION_NAME = "RECEIVE_MEASUREMENT_RESULT";
     private static final int MAX_LABEL_COUNTS = 2;
     private static final String[] LABELS = {"temperature", "humidity"};
     private static final int[] COLORS = {Color.RED, Color.BLUE};
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             addChartEntry(result);
         }));
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_NAME);
+        intentFilter.addAction(IntentServiceConstants.ActionName.RECEIVE_MEASUREMENT_RESULT);
         registerReceiver(receiver, intentFilter);
 
         binding.startButton.setOnClickListener(view ->
