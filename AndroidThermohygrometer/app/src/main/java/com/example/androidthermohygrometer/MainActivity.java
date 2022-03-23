@@ -77,19 +77,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < DATASET_NUM; i++) {
             ILineDataSet dataSet = lineData.getDataSetByIndex(i);
             if (dataSet == null) {
-                LineDataSet lineDataSet = new LineDataSet(null, NAMES[i]);
-                lineDataSet.setDrawIcons(false);
-                lineDataSet.setColor(COLORS[i]);
-                lineDataSet.setCircleColor(COLORS[i]);
-                lineDataSet.setLineWidth(1f);
-                lineDataSet.setCircleRadius(3f);
-                lineDataSet.setDrawCircleHole(false);
-                lineDataSet.setValueTextSize(0f);
-                lineDataSet.setDrawFilled(true);
-                lineDataSet.setFormLineWidth(1f);
-                lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-                lineDataSet.setFormSize(15.f);
-                dataSet = lineDataSet;
+                dataSet = createLineDataSet(NAMES[i], COLORS[i]);
                 lineData.addDataSet(dataSet);
             }
             lineData.addEntry(new Entry(dataSet.getEntryCount(), data[i]), i);
@@ -98,5 +86,24 @@ public class MainActivity extends AppCompatActivity {
         lineChart.notifyDataSetChanged();
         lineChart.setVisibleXRangeMaximum(50.f);
         lineChart.moveViewToX(lineData.getEntryCount());
+    }
+
+    private LineDataSet createLineDataSet(String label, int color) {
+        LineDataSet lineDataSet = new LineDataSet(null, label);
+
+        // set properties for LineDataSet instance
+        lineDataSet.setDrawIcons(false);
+        lineDataSet.setColor(color);
+        lineDataSet.setCircleColor(color);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setCircleRadius(3f);
+        lineDataSet.setDrawCircleHole(false);
+        lineDataSet.setValueTextSize(0f);
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFormLineWidth(1f);
+        lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        lineDataSet.setFormSize(15.f);
+
+        return lineDataSet;
     }
 }
