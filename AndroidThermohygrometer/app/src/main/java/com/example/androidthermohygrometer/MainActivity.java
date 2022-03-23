@@ -19,8 +19,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private LineChart lineChart;
