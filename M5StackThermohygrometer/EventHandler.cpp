@@ -50,7 +50,7 @@ void EventHandler::EventHandle()
 			gui_manager_->NotifyEnvDataMeasured();
 			break;
 		case EventType::kSendEnvDataRequested:
-			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().front());
+			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
 			break;
 		default:
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));
