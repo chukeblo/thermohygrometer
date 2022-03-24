@@ -14,7 +14,7 @@ public class AwsConnectionResourcesProvider {
     private static final String SETTINGS_PATH = "aws_config.json";
     private static final String AWS_CONFIG_DIR = "aws_certs/";
 
-    static AwsConnectionResources ProvideAwsConnectionResources(Context context) {
+    public static AwsConnectionResources of(Context context) {
         try {
             String settingsJson = AssetsReader.ReadAssetFileFrom(context, SETTINGS_PATH);
             Log.d(TAG, settingsJson);

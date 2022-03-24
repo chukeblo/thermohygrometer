@@ -33,7 +33,7 @@ public class AwsIotCommunicationService extends Service {
         super.onCreate();
         Log.i(TAG, "onCreate: in");
 
-        awsConnectionResources = AwsConnectionResourcesProvider.ProvideAwsConnectionResources(getApplicationContext());
+        awsConnectionResources = AwsConnectionResourcesProvider.of(getApplicationContext());
 
         if (awsConnectionResources != null) {
             mqttManager = new AWSIotMqttManager(awsConnectionResources.getClientId(), Region.getRegion(Regions.US_EAST_1), awsConnectionResources.getEndpoint());
