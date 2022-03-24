@@ -45,8 +45,15 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addAction(IntentServiceConstants.ActionName.RECEIVE_MEASUREMENT_RESULT);
         registerReceiver(receiver, intentFilter);
 
-        binding.startButton.setOnClickListener(view ->
-                startService(new Intent(getBaseContext(), AwsIotCommunicationService.class)));
+        binding.subscribeButton.setOnClickListener(view -> {
+            Log.d("subscribeButton", "onClick: request subscribing topic");
+            startService(new Intent(getBaseContext(), AwsIotCommunicationService.class));
+        });
+
+        binding.unsubscribeButton.setOnClickListener(view -> {
+            Log.d("unsubscribeButton", "onClick: request unsubscribing topic");
+            stopService(new Intent(getBaseContext(), AwsIotCommunicationService.class));
+        });
     }
 
     private void prepareChart() {
