@@ -17,27 +17,51 @@ public class AwsConnectionResources {
         this.privateKey = privateKey;
     }
 
-    public String getClientId() { return this.clientId; }
+    public String getClientId() {
+        return this.clientId;
+    }
 
-    public void setClientId(String clientId) { this.clientId = clientId; }
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
-    public String getEndpoint() { return this.endpoint; }
+    public String getEndpoint() {
+        return this.endpoint;
+    }
 
-    public void setEndpoint(String endpoint) { this.endpoint = endpoint; }
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
 
-    public String getTopic() { return this.topic; }
+    public String getTopic() {
+        return this.topic;
+    }
 
-    public void setTopic(String topic) { this.topic = topic; }
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
-    public String getRootCa() { return this.rootCa; }
+    public String getRootCa() {
+        return this.rootCa;
+    }
 
-    public void setRootCa(String rootCa) { this.rootCa = rootCa; }
+    public void setRootCa(String rootCa) {
+        this.rootCa = rootCa;
+    }
 
-    public String getDeviceCert() { return this.deviceCert; }
+    public String getDeviceCert() {
+        return this.deviceCert;
+    }
 
-    public void setDeviceCert(String deviceCert) { this.deviceCert = deviceCert; }
+    public void setDeviceCert(String deviceCert) {
+        this.deviceCert = deviceCert;
+    }
 
-    public String getPrivateKey() { return this.privateKey; }
+    public String getPrivateKey() {
+        return this.privateKey;
+    }
 
-    public void setPrivateKey(String privateKey) { this.privateKey = privateKey; }
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
 }

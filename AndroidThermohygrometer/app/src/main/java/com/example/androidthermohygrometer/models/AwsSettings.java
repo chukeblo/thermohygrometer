@@ -33,9 +33,13 @@ public class AwsSettings {
         this.endpoint = endpoint;
     }
 
-    public String getTopic() { return this.topic; }
+    public String getTopic() {
+        return this.topic;
+    }
 
-    public void setTopic(String topic) { this.topic = topic; }
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
     public String getRootCaPath() {
         return rootCaPath;
