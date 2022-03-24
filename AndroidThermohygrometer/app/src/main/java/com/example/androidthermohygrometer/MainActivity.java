@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addChartEntry(MeasurementResult result) {
-        // Entry()を使ってLineDataSetに設定できる形に変更してarrayを新しく作成
-        float[] data = { Float.parseFloat(result.getTemperature()), Float.parseFloat(result.getHumidity()) };
+        float[] data = {Float.parseFloat(result.getTemperature()), Float.parseFloat(result.getHumidity())};
 
         LineData lineData = lineChart.getLineData();
         if (lineData == null) {
