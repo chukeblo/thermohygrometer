@@ -1,4 +1,4 @@
-#include "CommunicationClient.hpp"
+#include "CommunicationClientImpl.hpp"
 
 #include <stdio.h>
 
@@ -8,7 +8,7 @@
 #include "LogConstants.hpp"
 #include "SettingsProvider.hpp"
 
-CommunicationClient::CommunicationClient()
+CommunicationClientImpl::CommunicationClientImpl()
 {
 	settings_ = SettingsProvider::Of()->aws_communication_settings;
 	http_client_ = new WiFiClientSecure();
@@ -16,11 +16,11 @@ CommunicationClient::CommunicationClient()
 	Prepare();
 }
 
-CommunicationClient::~CommunicationClient()
+CommunicationClientImpl::~CommunicationClientImpl()
 {
 }
 
-bool CommunicationClient::Prepare()
+void CommunicationClientImpl::Prepare()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kCommunicationClient, kPrepare, "in"));
 
@@ -34,7 +34,6 @@ bool CommunicationClient::Prepare()
 		"time sync result=" + std::string(String((int)result).c_str())
 	));
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kCommunicationClient, kPrepare, "out"));
-	return result;
 }
 
 static void MqttCallback(char* topic, byte* payload, unsigned int length)
@@ -49,7 +48,7 @@ static void MqttCallback(char* topic, byte* payload, unsigned int length)
 	));
 }
 
-void CommunicationClient::SendThermohygroData(MeasurementResult* result)
+void CommunicationClientImpl::SendThermohygroData(MeasurementResult* result)
 {
 	SetUpMqttClient();
 	mqtt_client_->setCallback(&MqttCallback);
@@ -69,7 +68,7 @@ void CommunicationClient::SendThermohygroData(MeasurementResult* result)
 		"published message to aws. topic=" + settings_->aws_settings->topic + ", message=" + message));
 }
 
-bool CommunicationClient::ConnectToWiFi()
+bool CommunicationClientImpl::ConnectToWiFi()
 {
 	WiFi.begin(settings_->wifi_settings->ssid.c_str(), settings_->wifi_settings->password.c_str());
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kConnectToWiFi, "connecting..."));
@@ -95,7 +94,7 @@ bool CommunicationClient::ConnectToWiFi()
 	}
 }
 
-bool CommunicationClient::SyncronizeTime()
+bool CommunicationClientImpl::SyncronizeTime()
 {
 	if (WiFi.status() != WL_CONNECTED) {
 		return false;
@@ -104,7 +103,7 @@ bool CommunicationClient::SyncronizeTime()
 	return true;
 }
 
-bool CommunicationClient::SetUpMqttClient()
+bool CommunicationClientImpl::SetUpMqttClient()
 {
 	http_client_->setCACert(settings_->aws_settings->root_ca.c_str());
 	http_client_->setCertificate(settings_->aws_settings->device_certificate.c_str());
@@ -112,7 +111,7 @@ bool CommunicationClient::SetUpMqttClient()
 	mqtt_client_->setServer(settings_->aws_settings->endpoint.c_str(), atoi(settings_->aws_settings->port.c_str()));
 }
 
-bool CommunicationClient::ConnectToAws()
+bool CommunicationClientImpl::ConnectToAws()
 {
 	if (mqtt_client_->connect(settings_->aws_settings->client_id.c_str()));
 	{

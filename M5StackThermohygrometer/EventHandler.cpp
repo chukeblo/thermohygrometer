@@ -28,11 +28,6 @@ void EventHandler::Initialize()
   	cui_manager_ = UIManagerBase::GetInstance(UIManagerType::kCuiManagerType);
 }
 
-void EventHandler::SetCommunicationClient(CommunicationClient* communication_client)
-{
-	communication_client_ = communication_client;
-}
-
 void EventHandler::EventHandle()
 {
 	while (true)
@@ -42,9 +37,6 @@ void EventHandler::EventHandle()
 		{
 		case EventType::kNone:
 			return;
-		case EventType::kSendEnvDataRequested:
-			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
-			break;
 		default:
 			ConsoleLogger::Log(new LogData(LogLevel::kError, kEventHandle, kEventHandle, "not supported event type"));
 			break;

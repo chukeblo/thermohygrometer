@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "CommunicationClient.hpp"
 #include "SHT3X.h"
 
 class ThermohygroDataMeasurer
@@ -25,6 +26,7 @@ public:
 
 public:
 	void SetMeasureEnvDataListener(MeasureEnvDataListener* listener);
+	void SetCommunicationClient(CommunicationClient* client);
 	void ReadThermohygroData();
 
 private:
@@ -35,6 +37,7 @@ private:
 private:
 	SHT3X thermohydrosensor_;
 	MeasureEnvDataListener* measure_env_data_listener_;
+	CommunicationClient* communication_client_;
 	int next_measure_mins_;
 	int next_sending_hours_;
 };

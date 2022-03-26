@@ -1,5 +1,6 @@
 #include <M5Stack.h>
 #include <WiFi.h>
+#include "CommunicationClientImpl.hpp"
 #include "EventHandler.hpp"
 #include "GUIManager.hpp"
 #include "TaskManager.hpp"
@@ -18,10 +19,10 @@ void setup()
     Wire.begin();
 
     event_handler->Initialize();
-    event_handler->SetCommunicationClient(new CommunicationClient());
 
     ThermohygroDataMeasurer* thermohygrodata_measurer = new ThermohygroDataMeasurer();
     thermohygrodata_measurer->SetMeasureEnvDataListener(new GUIManager::MeasureEnvDataListenerImpl(gui_manager));
+    thermohygrodata_measurer->SetCommunicationClient(new CommunicationClientImpl());
     task_manager->CreateTask(kMeasureTask, (void*)thermohygrodata_measurer);
 }
 

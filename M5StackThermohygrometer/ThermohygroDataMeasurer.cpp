@@ -27,6 +27,11 @@ void ThermohygroDataMeasurer::SetMeasureEnvDataListener(MeasureEnvDataListener* 
 	measure_env_data_listener_ = listener;
 }
 
+void ThermohygroDataMeasurer::SetCommunicationClient(CommunicationClient* client)
+{
+	communication_client_ = client;
+}
+
 void ThermohygroDataMeasurer::ReadThermohygroData()
 {
 	struct tm tm;
@@ -53,7 +58,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 				{
 					measure_env_data_listener_->OnMeasureEnvData();
 				}
-				EventHandler::GetInstance()->AddEvent(EventType::kSendEnvDataRequested);
+				communication_client_->SendThermohygroData(result);
 			}
 		}
 		if (IsTimeForSendingEnvData(tm.tm_hour))
@@ -61,7 +66,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kThermohygroDataMeasurer, kReadThermohygroData,
 				"sending environment data has been requested. time=" + GetStringTimeFrom(&tm)
 			));
-			EventHandler::GetInstance()->AddEvent(EventType::kSendEnvDataRequested);
+			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
 		}
 		delay(1000);
 	}

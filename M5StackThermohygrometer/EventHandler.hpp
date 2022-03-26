@@ -2,7 +2,6 @@
 
 #include <list>
 
-#include "CommunicationClient.hpp"
 #include "EventType.hpp"
 #include "GUIManager.hpp"
 #include "UIManagerBase.hpp"
@@ -18,7 +17,6 @@ private:
 
 public:
 	void Initialize();
-	void SetCommunicationClient(CommunicationClient* communication_client);
 	void EventHandle();
 	void AddEvent(EventType type);
 
@@ -27,6 +25,5 @@ private:
 
 private:
 	std::list<EventType> event_queue_;
-	CommunicationClient* communication_client_;
 	UIManagerBase* cui_manager_;
 };
