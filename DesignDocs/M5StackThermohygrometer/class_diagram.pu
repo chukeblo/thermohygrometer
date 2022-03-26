@@ -173,24 +173,24 @@ class TaskManager {
     + DeleteTask(task_method: string): bool
 }
 
-TaskManager ..> ThermohygrodataMeasurer
+TaskManager ..> ThermohygroDataMeasurer
 
-class ThermohygrodataMeasurer {
+class ThermohygroDataMeasurer {
     - thermohygrosensor_: SHT3X
-    - measure_env_data_listener_: MeasureEnvDataListener
+    - measure_env_data_listener_: MeasureEnvDataListener*
     - communication_client_: CommunicationClient*
     - next_measure_mins_: int
     - next_sending_hours_: int
 
-    + SetMeasureEnvDataListener(listener: MeasureEnvDataListener): void
+    + SetMeasureEnvDataListener(listener: MeasureEnvDataListener*): void
     + SetCommunicationClient(client: CommunicationClient*): void
     + ReadThermohygroData(): void
 }
 
-ThermohygrodataMeasurer x--> SHT3X
-ThermohygrodataMeasurer x--> MeasurementResultManager
-ThermohygrodataMeasurer +-- MeasureEnvDataListener
-ThermohygrodataMeasurer x--> CommunicationClient
+ThermohygroDataMeasurer x--> SHT3X
+ThermohygroDataMeasurer x--> MeasurementResultManager
+ThermohygroDataMeasurer +-- MeasureEnvDataListener
+ThermohygroDataMeasurer x--> CommunicationClient
 
 abstract class MeasureEnvDataListener {
     + OnMeasureEnvData(): void
