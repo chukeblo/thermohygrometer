@@ -1,25 +1,6 @@
 @startuml class diagram
 
-Main x--> EventHandler
 Main x--> TaskManager
-
-class EventHandler {
-    - event_queue_: list<EventType>
-    - cui_manager_: UIManagerBase*
-
-    + {static} GetInstance(): EventHandler*
-    + Initialize(): void
-    + EventHandle(): void
-    + AddEvent(type: EventType): void
-    - GetEvent(): EventType
-}
-
-enum EventType {
-    kNone
-}
-
-EventHandler -- EventType
-EventHandler x--> UIManagerBase
 
 abstract class CommunicationClient {
     + {abstract} Prepare(): void
@@ -88,14 +69,14 @@ class ConsoleLogger {
 class UIManagerBase {
     + {static} GetInstance(ui_type: UIType): UIManagerBase*
     + {abstract} Initialize(): void
-    + {abstract} HandleEvent(type: EventType): void
+    + {abstract} HandleEvent(): void
 }
 
 UIManagerBase <|-- CUIManager
 
 class CUIManager {
     + Initialize(): void
-    + HandleEvent(type: EventType): void
+    + HandleEvent(): void
 }
 
 class GUIManager {
