@@ -2,7 +2,6 @@
 
 #include <cstdint>
 
-#include "EventType.hpp"
 #include "UIManagerType.hpp"
 
 class UIManagerBase
@@ -19,5 +18,5 @@ protected:
 
 public:
     virtual void Initialize() = 0;
-    virtual void HandleEvent(EventType type) = 0;
+    virtual void HandleEvent() = 0;
 };

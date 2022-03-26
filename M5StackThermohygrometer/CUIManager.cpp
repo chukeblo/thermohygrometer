@@ -13,11 +13,6 @@ void CUIManager::Initialize()
 {
 }
 
-void CUIManager::HandleEvent(EventType type)
+void CUIManager::HandleEvent()
 {
-    switch (type)
-    {
-    default:
-        break;
-    }
 }

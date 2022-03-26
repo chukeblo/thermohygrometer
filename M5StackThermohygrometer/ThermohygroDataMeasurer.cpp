@@ -1,8 +1,6 @@
 #include "ThermohygroDataMeasurer.hpp"
 
 #include "ConsoleLogger.hpp"
-#include "EventHandler.hpp"
-#include "EventType.hpp"
 #include "LogConstants.hpp"
 #include "MeasurementResult.hpp"
 #include "MeasurementResultManager.hpp"

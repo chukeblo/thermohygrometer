@@ -5,7 +5,6 @@
 #include <string>
 
 #include "ConsoleLogger.hpp"
-#include "EventHandler.hpp"
 #include "JsonHandler.hpp"
 #include "LogConstants.hpp"
 #include "SDCardConstants.hpp"

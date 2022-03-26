@@ -4,7 +4,6 @@
 
 #include <M5Stack.h>
 #include "ConsoleLogger.hpp"
-#include "EventHandler.hpp"
 #include "LogConstants.hpp"
 
 static const char kOpenBracket = '{';
