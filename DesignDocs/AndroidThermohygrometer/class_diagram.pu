@@ -1,0 +1,81 @@
+@startuml class diagram
+
+class MainActivity {
+    - receiver: MeasurementResultReceiver
+
+    # onCreate(savedInstanceState: Bundle): void
+    - prepareChart(): void
+    - addChartEntry(result: MeasurementResult): void
+    - createLineDataSet(label: String, color: int): LineDataSet
+}
+
+MainActivity x--> AwsIotCommunicationService
+MainActivity -- MeasurementResultReceiver
+MainActivity +-- MeasurementResultCallbackImpl
+
+class AwsIotCommunicationService {
+    - mqttManager: AWSIotMqttManager
+    - awsConnectionResources: AwsConnectionResources
+    - isConnected: boolean
+
+    # onCreate(): void
+    # onStartCommand(): void
+    # onDestroy(): void
+    # onBind(intent: Intent): IBinder
+    - saveCertificateAndPrivateKey(keyStorePath: String): void
+}
+
+AwsIotCommunicationService x--> AwsCommunicationResourcesProvider
+AwsIotCommunicationService o-- AwsCommunicationResources
+
+class AwsCommunicationResourcesProvider {
+    + of(context: Context): AwsCommunicationResources
+}
+
+AwsCommunicationResourcesProvider ..> AwsCommunicationResources
+AwsCommunicationResourcesProvider x--> AssetsReader
+
+class AssetsReader {
+    + {static} ReadAssetFileFrom(context: Context, path: String): String
+}
+
+class AwsCommunicationResources {
+    + clientId: String
+    + endpoint: String
+    + topic: String
+    + rootCa: String
+    + deviceCertificate: String
+    + privateKey: String
+}
+
+AwsCommunicationResources *-- AwsSettings
+
+class AwsSettings {
+    + clientId: String
+    + endpoint: String
+    + topic: String
+    + rootCaPath: String
+    + deviceCertifPath: String
+    + privateKeyPath: String
+}
+
+class MeasurementResultReceiver {
+    # onReceive(context: Context, intent: Intent): void
+}
+
+MeasurementResultReceiver +-- MeasurementResultCallback
+MeasurementResultReceiver -- MeasurementResult
+
+interface MeasurementResultCallback {
+    + onMeasurementResult(result: MeasurementResult): void
+}
+
+MeasurementResultCallbackImpl --|> MeasurementResultCallback
+
+class MeasurementResult {
+    + time: String
+    + temperature: String
+    + humidity: String
+}
+
+@enduml
