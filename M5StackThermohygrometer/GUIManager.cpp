@@ -5,14 +5,14 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
-GUIManager::GUIManager()
+GUIManager::GUIManager(GUIContext* context)
 {
-    view_controller_ = new ViewController();
+    gui_context_ = context;
 }
 
 GUIManager::~GUIManager()
 {
-    delete view_controller_;
+    delete gui_context_;
 }
 
 void GUIManager::CheckIfButtonsPressed()
@@ -21,21 +21,21 @@ void GUIManager::CheckIfButtonsPressed()
     if (M5.BtnA.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "left button has been pressed."));
-        view_controller_->OnButtonPressed(ButtonType::kLeftButton);
+        gui_context_->OnButtonPressed(ButtonType::kLeftButton);
     }
     else if (M5.BtnB.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "middle button has been pressed."));
-        view_controller_->OnButtonPressed(ButtonType::kMiddleButton);
+        gui_context_->OnButtonPressed(ButtonType::kMiddleButton);
     }
     else if (M5.BtnC.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "right button has been pressed."));
-        view_controller_->OnButtonPressed(ButtonType::kRightButton);
+        gui_context_->OnButtonPressed(ButtonType::kRightButton);
     }
 }
 
 void GUIManager::NotifyEnvDataMeasured()
 {
-    view_controller_->OnMeasureEnvData();
+    gui_context_->OnMeasureEnvData();
 }

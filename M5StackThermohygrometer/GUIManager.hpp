@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ViewController.hpp"
+#include "GUIContext.hpp"
 
 class GUIManager
 {
 public:
-	GUIManager();
+	GUIManager(GUIContext* context);
 	~GUIManager();
 
 public:
@@ -13,5 +13,5 @@ public:
 	void NotifyEnvDataMeasured();
 
 private:
-	ViewController* view_controller_;
+	GUIContext* gui_context_;
 };

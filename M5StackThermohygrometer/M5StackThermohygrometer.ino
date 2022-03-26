@@ -4,11 +4,12 @@
 #include "GUIManager.hpp"
 #include "TaskManager.hpp"
 #include "ThermohygroDataMeasurer.hpp"
+#include "ViewController.hpp"
 
 const char* kMeasureTask = "MeasureTask";
 
 EventHandler* event_handler = EventHandler::GetInstance();
-GUIManager* gui_manager = new GUIManager();
+GUIManager* gui_manager = new GUIManager(new ViewController());
 TaskManager* task_manager = TaskManager::GetInstance();
 
 void setup()
