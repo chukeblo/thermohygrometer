@@ -30,6 +30,7 @@ class SettingsProvider {
 
 SettingsProvider ..> AwsCommunicationSettings
 SettingsProvider x--> SDCardController
+SettingsProvider x--> JsonHandler
 
 class AwsCommunicationSettings {
     + wifi_settings: WiFiSettings*
@@ -56,6 +57,11 @@ class AWSSettings {
 
 class SDCardController {
     + {static} ReadFileFromSDCard(file_name: string): string
+}
+
+class JsonHandler {
+    + {static} Serialize(json_map: map<string, string>): string
+    + {static} Parse(json: string): map<string, string>
 }
 
 class ConsoleLogger {
@@ -160,11 +166,6 @@ class ResultListViewState {
 
 ResultListViewState x--> GUIContext
 
-class JsonHandler {
-    + {static} Serialize(json_map: map<string, string>): string
-    + {static} Parse(json: string): map<string, string>
-}
-
 class TaskManager {
     - measure_task_handler_: TaskHandle_t
 
@@ -230,5 +231,7 @@ class MeasurementResultManager {
     + AddMeasurementResult(result: MeasurementResult*): void
     + GetResults(): list<MeasurementResult*>
 }
+
+MeasurementResult x--> JsonHandler
 
 @enduml
