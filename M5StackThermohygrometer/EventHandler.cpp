@@ -3,6 +3,7 @@
 #include <M5Stack.h>
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
+#include "MeasurementResultManager.hpp"
 
 EventHandler* EventHandler::GetInstance()
 {
