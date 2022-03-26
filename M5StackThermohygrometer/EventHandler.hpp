@@ -19,7 +19,6 @@ private:
 public:
 	void Initialize();
 	void SetCommunicationClient(CommunicationClient* communication_client);
-	void SetGUIManager(GUIManager* gui_manager);
 	void EventHandle();
 	void AddEvent(EventType type);
 
@@ -29,6 +28,5 @@ private:
 private:
 	std::list<EventType> event_queue_;
 	CommunicationClient* communication_client_;
-	GUIManager* gui_manager_;
 	UIManagerBase* cui_manager_;
 };

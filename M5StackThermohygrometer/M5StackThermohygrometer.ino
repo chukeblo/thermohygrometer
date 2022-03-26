@@ -19,9 +19,9 @@ void setup()
 
     event_handler->Initialize();
     event_handler->SetCommunicationClient(new CommunicationClient());
-    event_handler->SetGUIManager(gui_manager);
 
     ThermohygroDataMeasurer* thermohygrodata_measurer = new ThermohygroDataMeasurer();
+    thermohygrodata_measurer->SetMeasureEnvDataListener(new GUIManager::MeasureEnvDataListenerImpl(gui_manager));
     task_manager->CreateTask(kMeasureTask, (void*)thermohygrodata_measurer);
 }
 

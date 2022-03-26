@@ -22,6 +22,11 @@ ThermohygroDataMeasurer::~ThermohygroDataMeasurer()
 {
 }
 
+void ThermohygroDataMeasurer::SetMeasureEnvDataListener(MeasureEnvDataListener* listener)
+{
+	measure_env_data_listener_ = listener;
+}
+
 void ThermohygroDataMeasurer::ReadThermohygroData()
 {
 	struct tm tm;
@@ -44,7 +49,10 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 					", humidity=" + std::string(String(result->thermohygro_data->humidity).c_str())
 				));
 				MeasurementResultManager::GetInstance()->AddMeasurementResult(result);
-				EventHandler::GetInstance()->AddEvent(EventType::kReadEnvData);
+				if (measure_env_data_listener_)
+				{
+					measure_env_data_listener_->OnMeasureEnvData();
+				}
 				EventHandler::GetInstance()->AddEvent(EventType::kSendEnvDataRequested);
 			}
 		}

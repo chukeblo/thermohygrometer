@@ -5,6 +5,16 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
+GUIManager::MeasureEnvDataListenerImpl::MeasureEnvDataListenerImpl(GUIManager* gui_manager)
+{
+    gui_manager_ = gui_manager;
+}
+
+void GUIManager::MeasureEnvDataListenerImpl::OnMeasureEnvData()
+{
+    gui_manager_->NotifyEnvDataMeasured();
+}
+
 GUIManager::GUIManager(GUIContext* context)
 {
     gui_context_ = context;

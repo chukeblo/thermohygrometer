@@ -6,6 +6,16 @@
 
 class ThermohygroDataMeasurer
 {
+public:
+	class MeasureEnvDataListener
+	{
+	public:
+		virtual ~MeasureEnvDataListener() {}
+
+	public:
+		virtual void OnMeasureEnvData() = 0;
+	};
+
 private:
 	const int kReadSuccess = 0;
 
@@ -14,6 +24,7 @@ public:
 	~ThermohygroDataMeasurer();
 
 public:
+	void SetMeasureEnvDataListener(MeasureEnvDataListener* listener);
 	void ReadThermohygroData();
 
 private:
@@ -23,6 +34,7 @@ private:
 
 private:
 	SHT3X thermohydrosensor_;
+	MeasureEnvDataListener* measure_env_data_listener_;
 	int next_measure_mins_;
 	int next_sending_hours_;
 };

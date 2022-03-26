@@ -33,11 +33,6 @@ void EventHandler::SetCommunicationClient(CommunicationClient* communication_cli
 	communication_client_ = communication_client;
 }
 
-void EventHandler::SetGUIManager(GUIManager* gui_manager)
-{
-	gui_manager_ = gui_manager;
-}
-
 void EventHandler::EventHandle()
 {
 	while (true)
@@ -47,9 +42,6 @@ void EventHandler::EventHandle()
 		{
 		case EventType::kNone:
 			return;
-		case EventType::kReadEnvData:
-			gui_manager_->NotifyEnvDataMeasured();
-			break;
 		case EventType::kSendEnvDataRequested:
 			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
 			break;
