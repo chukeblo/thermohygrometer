@@ -88,6 +88,7 @@ class CUIManager {
 class GUIManager {
     - view_controller_: ViewController*
 
+    + GetMeasureEnvDataListener(): MeasureEnvDataListenerImpl
     + CheckIfButtonsPressed(): void
     + NotifyEnvDataMeasured(): void
 }
