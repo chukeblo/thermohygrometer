@@ -56,7 +56,22 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 				{
 					measure_env_data_listener_->OnMeasureEnvData();
 				}
-				communication_client_->SendThermohygroData(result);
+				else
+				{
+					ConsoleLogger::Log(new LogData(LogLevel::kError, kThermohygroDataMeasurer, kReadThermohygroData,
+						"MeasureEnvDataListener instance is not attached"
+					));
+				}
+				if (communication_client_)
+				{
+					communication_client_->SendThermohygroData(result);
+				}
+				else
+				{
+					ConsoleLogger::Log(new LogData(LogLevel::kError, kThermohygroDataMeasurer, kReadThermohygroData,
+						"CommunicationClient instance is not attached"
+					));
+				}
 			}
 		}
 		if (IsTimeForSendingEnvData(tm.tm_hour))
@@ -64,7 +79,16 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kThermohygroDataMeasurer, kReadThermohygroData,
 				"sending environment data has been requested. time=" + GetStringTimeFrom(&tm)
 			));
-			communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
+			if (communication_client_)
+			{
+				communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
+			}
+			else
+			{
+				ConsoleLogger::Log(new LogData(LogLevel::kError, kThermohygroDataMeasurer, kReadThermohygroData,
+					"CommunicationClient instance is not attached"
+				));
+			}
 		}
 		delay(1000);
 	}
