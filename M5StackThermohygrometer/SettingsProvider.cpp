@@ -48,9 +48,7 @@ WiFiSettings* SettingsProvider::ReadWiFiSettings()
     {
         std::string raw_wifi_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kWiFiSettingsFileName);
         WiFiSettings* wifi_settings = WiFiSettings::FromString(raw_wifi_settings);
-        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadWiFiSettings,
-            "ssid=" + wifi_settings->ssid + ",password=" + wifi_settings->password
-        ));
+        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadWiFiSettings, "success"));
         return wifi_settings;
     }
     catch (std::invalid_argument e)
@@ -67,18 +65,7 @@ AWSSettings* SettingsProvider::ReadAWSSettings()
     {
         std::string raw_aws_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + kAwsSettingsFileName);
         AWSSettings* aws_settings = AWSSettings::FromString(raw_aws_settings);
-        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            ",endpoint=" + aws_settings->endpoint + ",port=" + aws_settings->port
-        ));
-        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            "rootCA = " + aws_settings->root_ca
-        ));
-        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            "deviceCert = " + aws_settings->device_certificate
-        ));
-        ConsoleLogger::Log(new LogData(LogLevel::kDebug, kSettingsProvider, kReadAWSSettings,
-            "privateKey = " + aws_settings->private_key
-        ));
+        ConsoleLogger::Log(new LogData(LogLevel::kInfo, kSettingsProvider, kReadAWSSettings, "success"));
         return aws_settings;
     }
     catch (std::invalid_argument e)
