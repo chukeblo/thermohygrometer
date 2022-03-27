@@ -42,4 +42,5 @@ void ResultListViewState::DoMiddleButtonAction(GUIContext* context)
 void ResultListViewState::DoLeftButtonAction(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoLeftButtonAction, "in"));
+	context->ScrollUp();
 }

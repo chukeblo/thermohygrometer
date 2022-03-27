@@ -67,6 +67,19 @@ void ViewController::ScrollDown()
 void ViewController::DisplayLatestResult()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayLatestResult, "in"));
+    MeasurementResult* latest_result = result_manager_->GetResults().back();
+    ConsoleLogger::Log(new LogData(LogLevel::kDebug, kViewController, kDisplayLatestResult,
+        "result: time=" + latest_result->time + 
+        ",temperature=" + std::string(String(latest_result->thermohygro_data->temperature).c_str()) +
+        ",humidity=" + std::string(String(latest_result->thermohygro_data->humidity).c_str())
+    ));
+    M5.Lcd.clear(BLACK);
+    M5.Lcd.setTextSize(3);
+    M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.setCursor(0, 0);
+    M5.Lcd.println(latest_result->time.c_str());
+    M5.Lcd.println(latest_result->thermohygro_data->temperature);
+    M5.Lcd.println(latest_result->thermohygro_data->humidity);
 }
 
 void ViewController::DisplayResultList()
