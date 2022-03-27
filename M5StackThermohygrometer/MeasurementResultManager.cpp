@@ -4,6 +4,8 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
+static const int kMaxResultCounts = 20;
+
 MeasurementResultManager* MeasurementResultManager::GetInstance()
 {
     static MeasurementResultManager* instance = nullptr;
@@ -29,10 +31,19 @@ void MeasurementResultManager::AddMeasurementResult(MeasurementResult* result)
         ", time=" + result->time + ", temperature=" + std::string(String(result->thermohygro_data->temperature).c_str()) +
         ", humidity=" + std::string(String(result->thermohygro_data->humidity).c_str())
     ));
+    if (IsFull())
+    {
+        results_.pop_front();
+    }
     results_.push_back(MeasurementResult::CopyWith(result));
 }
 
 std::list<MeasurementResult*> MeasurementResultManager::GetResults()
 {
     return results_;
+}
+
+bool MeasurementResultManager::IsFull()
+{
+    return (results_.size() >= kMaxResultCounts);
 }

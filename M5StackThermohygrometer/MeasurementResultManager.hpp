@@ -16,6 +16,8 @@ private:
 public:
     void AddMeasurementResult(MeasurementResult* result);
     std::list<MeasurementResult*> GetResults();
+private:
+    bool IsFull();
 
 private:
     std::list<MeasurementResult*> results_;
