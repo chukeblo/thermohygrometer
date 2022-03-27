@@ -39,7 +39,7 @@ bool TaskManager::CreateTask(std::string task_method, void* context)
 
     if (task_method == kMeasureTask)
     {
-        xTaskCreatePinnedToCore(StartMeasureTask, kMeasureTask.c_str(), 4096, context, kMeasureTaskPriority, &measure_task_handler_, kMeasureTaskCore);
+        xTaskCreatePinnedToCore(StartMeasureTask, kMeasureTask.c_str(), 8192, context, kMeasureTaskPriority, &measure_task_handler_, kMeasureTaskCore);
         return true;
     }
     ConsoleLogger::Log(new LogData(LogLevel::kError, kCreateTask, kCreateTask,
