@@ -72,6 +72,27 @@ class ConsoleLogger {
     - {static} LogError(class_name: string, method_name: string, info: string): void
 }
 
+ConsoleLogger ..> LogData
+note left of ConsoleLogger
+    ログ出力用のUtilityクラス
+end note
+
+class LogData {
+    + level: LogLevel
+    + class_name: string
+    + method_name: string
+    + info: string
+}
+
+LogData *-- LogLevel
+
+class LogLevel {
+    kInfo
+    kTrace
+    kDebug
+    kError
+}
+
 class UIManagerBase {
     + {static} GetInstance(ui_type: UIType): UIManagerBase*
     + {abstract} Initialize(): void
