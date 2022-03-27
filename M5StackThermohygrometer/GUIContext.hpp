@@ -3,7 +3,6 @@
 #include <list>
 
 #include "ButtonType.hpp"
-#include "MeasurementResult.hpp"
 #include "ViewType.hpp"
 
 class GUIContext
