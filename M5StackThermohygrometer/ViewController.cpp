@@ -12,6 +12,7 @@ ViewController::ViewController()
 
 ViewController::~ViewController()
 {
+    delete state_;
     state_ = nullptr;
 }
 
