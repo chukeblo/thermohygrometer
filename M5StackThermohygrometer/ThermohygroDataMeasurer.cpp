@@ -92,8 +92,20 @@ bool ThermohygroDataMeasurer::IsTimeForSendingEnvData(int current_hours)
 
 std::string ThermohygroDataMeasurer::GetStringTimeFrom(struct tm* tm)
 {
-	return std::string(String(tm->tm_hour).c_str()) + ":" +
-			std::string(String(tm->tm_min).c_str()) + ":" + std::string(String(tm->tm_sec).c_str());
+	std::string timestamp = "";
+	if (tm->tm_hour < 10)
+	{
+		timestamp += "0";
+	}
+	timestamp += std::string(String(tm->tm_hour).c_str());
+	timestamp += ":";
+	if (tm->tm_min < 10)
+	{
+		timestamp += "0";
+	}
+	timestamp += std::string(String(tm->tm_min).c_str());
+
+	return timestamp;
 }
 
 void StartMeasureTask(void* context)
