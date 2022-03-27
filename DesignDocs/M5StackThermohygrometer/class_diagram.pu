@@ -25,7 +25,7 @@ CommunicationClientImpl o-- AwsCommunicationSettings
 CommunicationClientImpl x--> SettingsProvider
 
 class SettingsProvider {
-    + {static} Of(): ThermohygrometerSettings*
+    + {static} Of(): AwsCommunicationSettings*
 }
 
 SettingsProvider ..> AwsCommunicationSettings
