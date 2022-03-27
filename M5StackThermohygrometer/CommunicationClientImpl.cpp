@@ -32,6 +32,7 @@ void CommunicationClientImpl::Prepare()
 	ConsoleLogger::Log(new LogData(LogLevel::kDebug, kCommunicationClient, kPrepare,
 		"time sync result=" + std::string(String((int)result).c_str())
 	));
+	SetUpMqttClient();
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kCommunicationClient, kPrepare, "out"));
 }
 
@@ -49,7 +50,6 @@ static void MqttCallback(char* topic, byte* payload, unsigned int length)
 
 void CommunicationClientImpl::SendThermohygroData(MeasurementResult* result)
 {
-	SetUpMqttClient();
 	mqtt_client_->setCallback(&MqttCallback);
 
 	while (!mqtt_client_->connected())
