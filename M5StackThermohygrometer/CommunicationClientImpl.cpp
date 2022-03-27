@@ -9,7 +9,7 @@
 
 CommunicationClientImpl::CommunicationClientImpl()
 {
-	settings_ = SettingsProvider::Of()->aws_communication_settings;
+	settings_ = SettingsProvider::Of();
 	http_client_ = new WiFiClientSecure();
 	mqtt_client_ = new PubSubClient(*http_client_);
 	Prepare();

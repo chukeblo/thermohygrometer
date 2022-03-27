@@ -2,15 +2,14 @@
 
 #include <string>
 
-#include "ThermohygrometerSettings.hpp"
+#include "AWSCommunicationSettings.hpp"
 
 class SettingsProvider
 {
 public:
-    static ThermohygrometerSettings* Of();
+    static AWSCommunicationSettings* Of();
 private:
-    static ThermohygrometerSettings* ReadThermohygrometerSettings();
-	static AWSCommunicationSettings* ReadAWSCommunicationSettings(std::string communication_type);
+	static AWSCommunicationSettings* ReadAWSCommunicationSettings();
     static WiFiSettings* ReadWiFiSettings();
 	static AWSSettings* ReadAWSSettings();
 };

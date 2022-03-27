@@ -10,35 +10,17 @@
 #include "SDCardConstants.hpp"
 #include "SDCardController.hpp"
 
-ThermohygrometerSettings* SettingsProvider::Of()
+AWSCommunicationSettings* SettingsProvider::Of()
 {
-    return ReadThermohygrometerSettings();
+    return ReadAWSCommunicationSettings();
 }
 
-ThermohygrometerSettings* SettingsProvider::ReadThermohygrometerSettings()
+AWSCommunicationSettings* SettingsProvider::ReadAWSCommunicationSettings()
 {
-    std::string raw_thermohygrometer_settings = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kThermohygrometerSettingsFilename);
-    std::map<std::string, std::string> thermohygrometer_settings_map = JsonHandler::Parse(raw_thermohygrometer_settings);
-    std::string communication_type = thermohygrometer_settings_map[kCommunicationTypeKey];
-    if (communication_type != kAWSType)
-    {
-        ConsoleLogger::Log(new LogData(LogLevel::kError, kSettingsProvider, kReadThermohygrometerSettings, "not supported communication type"));
-        return nullptr;
-    }
-    AWSCommunicationSettings* aws_communication_settings = ReadAWSCommunicationSettings(communication_type);
-    return new ThermohygrometerSettings(communication_type, aws_communication_settings);
-}
-
-AWSCommunicationSettings* SettingsProvider::ReadAWSCommunicationSettings(std::string communication_type)
-{
-    AWSCommunicationSettings* aws_communication_settings = nullptr;
-    if (communication_type == kAWSType)
-    {
-        WiFiSettings* wifi_settings = ReadWiFiSettings();
-        AWSSettings* aws_settings = ReadAWSSettings();
-        aws_communication_settings =  new AWSCommunicationSettings(wifi_settings, aws_settings);
-    }
-    return aws_communication_settings;
+    WiFiSettings* wifi_settings = ReadWiFiSettings();
+    AWSSettings* aws_settings = ReadAWSSettings();
+    ConsoleLogger::Log(new LogData(LogLevel::kInfo, kSettingsProvider, kReadAWSSettings, "success"));
+    return new AWSCommunicationSettings(wifi_settings, aws_settings);
 }
 
 WiFiSettings* SettingsProvider::ReadWiFiSettings()
