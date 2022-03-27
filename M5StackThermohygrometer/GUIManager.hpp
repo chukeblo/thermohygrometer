@@ -24,6 +24,7 @@ public:
 	~GUIManager();
 
 public:
+	GUIManager::MeasureEnvDataListenerImpl* GetMeasureEnvDataListener();
 	void CheckIfButtonsPressed();
 	void NotifyEnvDataMeasured();
 

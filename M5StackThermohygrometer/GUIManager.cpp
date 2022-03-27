@@ -25,6 +25,11 @@ GUIManager::~GUIManager()
     delete gui_context_;
 }
 
+GUIManager::MeasureEnvDataListenerImpl* GUIManager::GetMeasureEnvDataListener()
+{
+    return new GUIManager::MeasureEnvDataListenerImpl(this);
+}
+
 void GUIManager::CheckIfButtonsPressed()
 {
     M5.update();

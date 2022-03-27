@@ -17,7 +17,7 @@ void setup()
     Wire.begin();
 
     ThermohygroDataMeasurer* thermohygrodata_measurer = new ThermohygroDataMeasurer();
-    thermohygrodata_measurer->SetMeasureEnvDataListener(new GUIManager::MeasureEnvDataListenerImpl(gui_manager));
+    thermohygrodata_measurer->SetMeasureEnvDataListener(gui_manager->GetMeasureEnvDataListener());
     thermohygrodata_measurer->SetCommunicationClient(new CommunicationClientImpl());
     task_manager->CreateTask(kMeasureTask, (void*)thermohygrodata_measurer);
 }
