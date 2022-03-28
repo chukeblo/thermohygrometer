@@ -1,16 +1,9 @@
 #include <stdio.h>
 
-// return values from methods
-#define SUCCESS 0
-#define FAILURE 1
+#include "result_log_to_csv_converter.h"
+
 // constants for InitLogFileInfo()
 #define EXPECTED_ARGUMENT_COUNTS 3
-
-typedef struct
-{
-    FILE* input_file;
-    FILE* output_file;
-} log_file_info_t;
 
 int initialize(int argc, char* argv[], log_file_info_t* info)
 {
@@ -51,21 +44,27 @@ int finalize(log_file_info_t* info)
     info->input_file = NULL;
     fclose(info->output_file);
     info->output_file = NULL;
+    return SUCCESS;
 }
 
 
 int main(int argc, char* argv[])
 {
-    printf("result log to csv converter started.")
+    printf("result log to csv converter started.\n");
     log_file_info_t info;
     if (initialize(argc, argv, &info) == FAILURE)
     {
         printf("initialization failed.");
         return FAILURE;
     }
+    if (convert_to_csv(&info) == FAILURE)
+    {
+        printf("conversion failed.");
+        return FAILURE;
+    }
 
     finalize(&info);
 
-    printf("result log to csv converter succeeded.")
+    printf("result log to csv converter succeeded.\n");
     return SUCCESS;
 }

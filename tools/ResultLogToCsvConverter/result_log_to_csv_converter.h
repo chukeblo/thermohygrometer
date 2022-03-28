@@ -11,4 +11,6 @@ typedef struct
     FILE* output_file;
 } log_file_info_t;
 
+int convert_to_csv(log_file_info_t* info);
+
 #endif  // _RESULT_LOG_TO_CSV_CONVERTER_H_
