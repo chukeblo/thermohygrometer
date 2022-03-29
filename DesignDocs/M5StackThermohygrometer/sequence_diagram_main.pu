@@ -1,0 +1,53 @@
+@startuml main
+title Main function
+
+participant main
+participant TaskManager
+participant ThermohygroDataMeasurer
+participant GUIManager
+participant MeasureEnvDataListenerImpl
+participant CommunicationClient
+
+activate main
+group setup()
+    main -> ThermohygroDataMeasurer: create()
+    activate ThermohygroDataMeasurer
+    return
+    main -> GUIManager: create()
+    activate GUIManager
+    return
+    main -> GUIManager: GetMeasureEnvDataListener()
+    activate GUIManager
+    GUIManager -> MeasureEnvDataListenerImpl: create()
+    activate MeasureEnvDataListenerImpl
+    return
+    return
+    main -> ThermohygroDataMeasurer: SetMeasureEnvDataListener(MeasureEnvDataListener* listener)
+    activate ThermohygroDataMeasurer
+    return
+    main -> CommunicationClient: create()
+    activate CommunicationClient
+    return
+    main -> ThermohygroDataMeasurer: SetCommunicationClient(CommunicationClient* client)
+    activate ThermohygroDataMeasurer
+    return
+    main -> TaskManager: create()
+    activate TaskManager
+    return
+    main -> TaskManager: CreateTask(std::string method_name, void* context)
+    activate TaskManager
+    return
+end
+
+group loop()
+    loop
+        main -> GUIManager: CheckIfButtonsPressed()
+        activate GUIManager
+        return
+        main -> main: delay(10)
+    end
+end
+deactivate main
+
+
+@enduml
