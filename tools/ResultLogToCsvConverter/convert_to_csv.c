@@ -30,31 +30,31 @@ static int is_result_log(char* line_data)
 static int get_csv_data(char* line_data, int size, csv_data_t* data)
 {
     char* tmp = line_data + strlen(RESULT_LOG_SUFFIX);
-    int i = 0;
-    for (; tmp[i] != ','; i++)
+    int counts = 0;
+    for (; tmp[counts] != ','; counts++)
     {
-        data->time[i] = tmp[i];
+        data->time[counts] = tmp[counts];
     }
-    data->time[i] = '\0';
+    data->time[counts] = '\0';
     
-    tmp = tmp + strlen(TEMPERATURE_LABEL) + i;
-    i = 0;
+    tmp = tmp + strlen(TEMPERATURE_LABEL) + counts;
+    counts = 0;
     char temperature[10];
-    for (; tmp[i] != ','; i++)
+    for (; tmp[counts] != ','; counts++)
     {
-        temperature[i] = tmp[i];
+        temperature[counts] = tmp[counts];
     }
-    temperature[i] = '\0';
+    temperature[counts] = '\0';
     data->temperature = (double)atof(temperature);
 
-    tmp = tmp + strlen(HUMIDITY_LABEL) + i;
-    i = 0;
+    tmp = tmp + strlen(HUMIDITY_LABEL) + counts;
+    counts = 0;
     char humidity[10];
-    for (; tmp[i] != '\r' && tmp[i] != '\n'; i++)
+    for (; tmp[counts] != '\r' && tmp[counts] != '\n'; counts++)
     {
-        humidity[i] = tmp[i];
+        humidity[counts] = tmp[counts];
     }
-    humidity[i] = '\0';
+    humidity[counts] = '\0';
     data->humidity = (double)atof(humidity);
 
     return SUCCESS;
