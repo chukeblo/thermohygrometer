@@ -132,6 +132,6 @@ int convert_to_csv(log_file_info_t* info)
         }
 
         // write result log data to ouput file according to csv format
-        fprintf(info->output_file, "\"%s\",%5.2f,%5.2f\n", data.time, data.temperature, data.humidity);
+        fprintf(info->output_file, "%s,%5.2f,%5.2f\n", data.time, data.temperature, data.humidity);
     }
 }
