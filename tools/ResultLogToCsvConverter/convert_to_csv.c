@@ -130,6 +130,8 @@ int convert_to_csv(log_file_info_t* info)
             printf("failed to get csv data from line data. line data=%s\n", line_data);
             return FAILURE;
         }
-        printf("csv data: time = %s, temp = %5.2f, humi = %5.2f\n", data.time, data.temperature, data.humidity);
+
+        // write result log data to ouput file according to csv format
+        fprintf(info->output_file, "\"%s\",%5.2f,%5.2f\n", data.time, data.temperature, data.humidity);
     }
 }
