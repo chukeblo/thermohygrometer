@@ -5,11 +5,18 @@
 #include "result_log_to_csv_converter.h"
 
 #define MAX_LINE_DATA_SIZE 200
+#define TRUE 0
+#define FALSE 1
 
 // constant strings for validation
 #define RESULT_LOG_SUFFIX "[DEBUG] ThermohygroDataMeasurer::ReadThermohygroData() measurement result: time="
 #define TEMPERATURE_LABEL ", temperature="
 #define HUMIDITY_LABEL ", humidity="
+// constant values for result log data validation
+#define COLON_ASCII_CODE 0x3A
+#define ZERO_ASCII_CODE 0x30
+#define NINE_ASCII_CODE 0x39
+#define PERIOD_ASCII_CODE 0x2E
 
 typedef struct
 {
@@ -21,20 +28,45 @@ typedef struct
 static int is_result_log(char* line_data)
 {
     char* tmp = line_data;
-    if (!(tmp = strstr(tmp, RESULT_LOG_SUFFIX))) return FAILURE;
-    if (!(tmp = strstr(tmp, TEMPERATURE_LABEL))) return FAILURE;
-    if (!(tmp = strstr(tmp, HUMIDITY_LABEL))) return FAILURE;
-    return SUCCESS;
+    if (!(tmp = strstr(tmp, RESULT_LOG_SUFFIX))) return FALSE;
+    if (!(tmp = strstr(tmp, TEMPERATURE_LABEL))) return FALSE;
+    if (!(tmp = strstr(tmp, HUMIDITY_LABEL))) return FALSE;
+    return TRUE;
+}
+
+static int is_number(char data)
+{
+    if (data < ZERO_ASCII_CODE || NINE_ASCII_CODE < data) return FALSE;
+    return TRUE;
+}
+
+static int is_num_or_period(char data)
+{
+    if (is_number(data) == TRUE || data == PERIOD_ASCII_CODE) return TRUE;
+    return FALSE;
 }
 
 static int get_csv_data(char* line_data, int size, csv_data_t* data)
 {
     char* tmp = line_data + strlen(RESULT_LOG_SUFFIX);
     int counts = 0;
-    for (; tmp[counts] != ','; counts++)
-    {
-        data->time[counts] = tmp[counts];
-    }
+    
+    // check if valid time data
+    if (is_number(tmp[counts]) == FALSE) return FAILURE;
+    data->time[counts] = tmp[counts];
+    counts++;
+    if (is_number(tmp[counts]) == FALSE) return FAILURE;
+    data->time[counts] = tmp[counts];
+    counts++;
+    if(tmp[counts] != COLON_ASCII_CODE) return FAILURE;
+    data->time[counts] = tmp[counts];
+    counts++;
+    if (is_number(tmp[counts]) == FALSE) return FAILURE;
+    data->time[counts] = tmp[counts];
+    counts++;
+    if (is_number(tmp[counts]) == FALSE) return FAILURE;
+    data->time[counts] = tmp[counts];
+    counts++;
     data->time[counts] = '\0';
     
     tmp = tmp + strlen(TEMPERATURE_LABEL) + counts;
@@ -42,6 +74,11 @@ static int get_csv_data(char* line_data, int size, csv_data_t* data)
     char temperature[10];
     for (; tmp[counts] != ','; counts++)
     {
+        if (is_num_or_period(tmp[counts]) == FALSE)
+        {
+            printf("temperature value contains other character than numbers and period. data = [%c]\n", tmp[counts]);
+            return FAILURE;
+        }
         temperature[counts] = tmp[counts];
     }
     temperature[counts] = '\0';
@@ -52,6 +89,11 @@ static int get_csv_data(char* line_data, int size, csv_data_t* data)
     char humidity[10];
     for (; tmp[counts] != '\r' && tmp[counts] != '\n' && tmp[counts] != '\0'; counts++)
     {
+        if (is_num_or_period(tmp[counts]) == FALSE)
+        {
+            printf("humidity value contains other character than numbers and period. data = %c\n", humidity[counts]);
+            return FAILURE;
+        }
         humidity[counts] = tmp[counts];
     }
     humidity[counts] = '\0';
@@ -79,7 +121,7 @@ int convert_to_csv(log_file_info_t* info)
         }
 
         // skip loop if read line data is not of result log
-        if (is_result_log(line_data) == FAILURE) continue;
+        if (is_result_log(line_data) == FALSE) continue;
 
         csv_data_t data = { "", 0.0, 0.0 };
         // return failure if result log has some issue
