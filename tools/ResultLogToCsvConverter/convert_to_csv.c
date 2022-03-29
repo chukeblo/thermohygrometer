@@ -50,7 +50,7 @@ static int get_csv_data(char* line_data, int size, csv_data_t* data)
     tmp = tmp + strlen(HUMIDITY_LABEL) + counts;
     counts = 0;
     char humidity[10];
-    for (; tmp[counts] != '\r' && tmp[counts] != '\n'; counts++)
+    for (; tmp[counts] != '\r' && tmp[counts] != '\n' && tmp[counts] != '\0'; counts++)
     {
         humidity[counts] = tmp[counts];
     }
@@ -65,14 +65,24 @@ int convert_to_csv(log_file_info_t* info)
     char line_data[MAX_LINE_DATA_SIZE] = { 0 };
     for (;;)
     {
-        if (feof(info->input_file)) return SUCCESS;
         if (fgets(line_data, MAX_LINE_DATA_SIZE, info->input_file) == NULL)
         {
-            printf("failed to read data from input file.");
-            return FAILURE;
+            // return success if reaching the end of file
+            if (feof(info->input_file)) return SUCCESS;
+
+            // return failure if some error occurred
+            if (!ferror(info->input_file))
+            {
+                printf("failed to read data from input file.\n");
+                return FAILURE;
+            }
         }
+
+        // skip loop if read line data is not of result log
         if (is_result_log(line_data) == FAILURE) continue;
+
         csv_data_t data = { "", 0.0, 0.0 };
+        // return failure if result log has some issue
         if (get_csv_data(line_data, strlen(line_data), &data) == FAILURE)
         {
             printf("failed to get csv data from line data. line data=%s\n", line_data);
