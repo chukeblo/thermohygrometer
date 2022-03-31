@@ -1,0 +1,26 @@
+@startuml Measure Env Data
+title Measure Env Data
+
+participant ThermohygroDataMeasurer
+participant SHT3X
+participant MeasureEnvDataListener
+participant CommunicationClient
+
+activate ThermohygroDataMeasurer
+ThermohygroDataMeasurer -> ThermohygroDataMeasurer: 現在時刻取得()
+alt 計測タイミング
+    ThermohygroDataMeasurer -> SHT3X: ReadThermohygroData()
+    return
+    alt 計測成功
+        
+        ThermohygroDataMeasurer -> ThermohygroDataMeasurer: timestamp生成
+        ThermohygroDataMeasurer -> MeasureEnvDataListener: OnMeasureEnvData()
+        activate MeasureEnvDataListener
+        return
+        ThermohygroDataMeasurer -> CommunicationClient: SendThermohygroData(MeasurementResult* result)
+        activate CommunicationClient
+        return
+    end
+end
+
+@enduml
