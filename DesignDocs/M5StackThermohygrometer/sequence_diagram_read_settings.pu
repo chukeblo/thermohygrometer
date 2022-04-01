@@ -1,0 +1,49 @@
+@startuml Read Settings
+title Read Settings
+
+participant SettingsProvider
+participant AWSCommunicationSettings
+participant WiFiSettings
+participant AWSSettings
+participant SDCardController
+participant JsonHandler
+
+[-> SettingsProvider: Of()
+activate SettingsProvider
+
+SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+activate SDCardController
+return
+SettingsProvider -> WiFiSettings: FromString(std::string json)
+activate WiFiSettings
+WiFiSettings -> JsonHandler: Parse(std::string json)
+activate JsonHandler
+return std::map<std::string, std::string> json_map
+return WiFiSettings* wifi_settings
+
+SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+activate SDCardController
+return
+SettingsProvider -> JsonHandler: Parse(std::string json)
+activate JsonHandler
+return std::map<std::string, std::string> json_map
+SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+activate SDCardController
+return root ca
+SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+activate SDCardController
+return device certificate
+SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+activate SDCardController
+return private key
+SettingsProvider -> AWSSettings: constructor(...)
+activate AWSSettings
+return
+
+SettingsProvider -> AWSCommunicationSettings: constructor(...)
+activate AWSCommunicationSettings
+return
+
+return AWSCommunicationSettings*
+
+@enduml
