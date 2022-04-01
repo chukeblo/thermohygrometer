@@ -1,33 +1,41 @@
 @startuml Sending Result
 title Sending Result
 
-autoactivate on
-
 participant ThermohygroDataMeasurer
 participant CommunicationClientImpl
 participant AWSCommunicationSettings
 participant AWSSettings
 participant PubSubClient
 
+activate ThermohygroDataMeasurer
 ThermohygroDataMeasurer -> CommunicationClientImpl
+activate CommunicationClientImpl
 CommunicationClientImpl -> AWSCommunicationSettings: 設定情報取得()
+activate AWSCommunicationSettings
 AWSCommunicationSettings -> AWSSettings
+activate AWSSettings
 return
 return
 CommunicationClientImpl -> PubSubClient: setCACert(const char* rootCA)
+activate PubSubClient
 return
 CommunicationClientImpl -> PubSubClient: setCertificate(const char* client_ca)
+activate PubSubClient
 return
 CommunicationClientImpl -> PubSubClient: setPrivateKey(const char* private_key)
+activate PubSubClient
 return
 CommunicationClientImpl -> PubSubClient: setServer(const char* domain, uint16_t port)
+activate PubSubClient
 return
 
 loop disconnected
     CommunicationClientImpl -> PubSubClient: connect(const char* id)
+    activate PubSubClient
     return
 end
 CommunicationClientImpl -> PubSubClient: publish(char* topic, char* message)
+activate PubSubClient
 return
 return
 
