@@ -5,6 +5,8 @@ participant main
 participant TaskManager
 participant ThermohygroDataMeasurer
 participant GUIManager
+participant Button
+participant GUIContext
 participant MeasureEnvDataListenerImpl
 participant CommunicationClient
 
@@ -43,6 +45,14 @@ group loop()
     loop
         main -> GUIManager: CheckIfButtonsPressed()
         activate GUIManager
+        GUIManager -> Button: wasPressed()
+        activate Button
+        return
+        alt true
+            GUIManager -> GUIContext: OnButtonPressed(ButtonType type)
+            activate GUIContext
+            return
+        end
         return
         main -> main: delay(10)
     end
