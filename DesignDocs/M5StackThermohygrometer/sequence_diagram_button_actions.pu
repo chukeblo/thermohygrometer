@@ -1,0 +1,26 @@
+@startuml Button Actions
+title Button Actions
+
+participant GUIManager
+participant ViewController
+participant ViewState
+
+activate GUIManager
+GUIManager -> ViewController: OnButtonPressed(ButtonType type)
+activate ViewController
+alt Button A
+    ViewController -> ViewState: DoLeftButtonAction(GUIContext* context)
+    activate ViewState
+    return
+else Button B
+    ViewController -> ViewState: DoMiddleButtonAction(GUIContext* context)
+    activate ViewState
+    return
+else Button C
+    ViewController -> ViewState: DoRightButtonAction(GUIContext* context)
+    activate ViewState
+    return
+end
+return
+
+@enduml
