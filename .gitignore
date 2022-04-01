@@ -49,3 +49,8 @@ Thumbs.db
 # Private Data Dirs #
 #####################
 *AwsCerts/
+
+# Result Log to CSV Converter #
+###############################
+tools/ResultLogToCsvConverter/*.txt
+tools/ResultLogToCsvConverter/*.csv
