@@ -1,0 +1,73 @@
+@startuml Network Setup
+title Network Setup
+
+participant CommunicationClientImpl
+participant SettingsProvider
+participant AWSCommunicationSettings
+participant AWSSettings
+participant WiFi
+participant PubSubClient
+
+?-> CommunicationClientImpl: constructor()
+activate CommunicationClientImpl
+CommunicationClientImpl -> SettingsProvider: Of()
+activate SettingsProvider
+return AWSCommunicationSettings* settings
+
+CommunicationClientImpl -> WiFi: begin(const char* ssid, const char* password)
+activate WiFi
+return
+
+CommunicationClientImpl -> CommunicationClientImpl: SyncronizeTime()
+
+CommunicationClientImpl -> AWSCommunicationSettings: get root ca
+activate AWSCommunicationSettings
+AWSCommunicationSettings -> AWSSettings: get root ca
+activate AWSSettings
+return
+return
+CommunicationClientImpl -> PubSubClient: setCACert(const char* rootCA)
+activate PubSubClient
+return
+
+CommunicationClientImpl -> AWSCommunicationSettings: get device certificate
+activate AWSCommunicationSettings
+AWSCommunicationSettings -> AWSSettings: get device certificate
+activate AWSSettings
+return
+return
+CommunicationClientImpl -> PubSubClient: setCertificate(const char* client_ca)
+activate PubSubClient
+return
+
+CommunicationClientImpl -> AWSCommunicationSettings: get private key
+activate AWSCommunicationSettings
+AWSCommunicationSettings -> AWSSettings: get private key
+activate AWSSettings
+return
+return
+CommunicationClientImpl -> PubSubClient: setPrivateKey(const char* private_key)
+activate PubSubClient
+return
+
+CommunicationClientImpl -> AWSCommunicationSettings: get endpoint
+activate AWSCommunicationSettings
+AWSCommunicationSettings -> AWSSettings: get endpoint
+activate AWSSettings
+return
+return
+CommunicationClientImpl -> AWSCommunicationSettings: get port
+activate AWSCommunicationSettings
+AWSCommunicationSettings -> AWSSettings: get port
+activate AWSSettings
+return
+return
+CommunicationClientImpl -> PubSubClient: setServer(const char* domain, uint16_t port)
+activate PubSubClient
+return
+
+CommunicationClientImpl -> PubSubClient: setCallback(std::function<void(char*, uint8_t*, unsigned int)> callback)
+activate PubSubClient
+return
+
+@enduml
