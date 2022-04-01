@@ -10,28 +10,28 @@ participant CommunicationClient
 
 activate main
 group setup()
-    main -> ThermohygroDataMeasurer: create()
+    main -> ThermohygroDataMeasurer: constructor()
     activate ThermohygroDataMeasurer
     return
-    main -> GUIManager: create()
+    main -> GUIManager: constructor()
     activate GUIManager
     return
     main -> GUIManager: GetMeasureEnvDataListener()
     activate GUIManager
-    GUIManager -> MeasureEnvDataListenerImpl: create()
+    GUIManager -> MeasureEnvDataListenerImpl: constructor(GUIManager* gui_manager)
     activate MeasureEnvDataListenerImpl
     return
     return
     main -> ThermohygroDataMeasurer: SetMeasureEnvDataListener(MeasureEnvDataListener* listener)
     activate ThermohygroDataMeasurer
     return
-    main -> CommunicationClient: create()
+    main -> CommunicationClient: constructor()
     activate CommunicationClient
     return
     main -> ThermohygroDataMeasurer: SetCommunicationClient(CommunicationClient* client)
     activate ThermohygroDataMeasurer
     return
-    main -> TaskManager: create()
+    main -> TaskManager: constructor()
     activate TaskManager
     return
     main -> TaskManager: CreateTask(std::string method_name, void* context)
