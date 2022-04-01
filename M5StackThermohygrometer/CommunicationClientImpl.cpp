@@ -50,8 +50,6 @@ static void MqttCallback(char* topic, byte* payload, unsigned int length)
 
 void CommunicationClientImpl::SendThermohygroData(MeasurementResult* result)
 {
-	mqtt_client_->setCallback(&MqttCallback);
-
 	while (!mqtt_client_->connected())
 	{
 		if (ConnectToAws()) {
@@ -108,6 +106,7 @@ bool CommunicationClientImpl::SetUpMqttClient()
 	http_client_->setCertificate(settings_->aws_settings->device_certificate.c_str());
 	http_client_->setPrivateKey(settings_->aws_settings->private_key.c_str());
 	mqtt_client_->setServer(settings_->aws_settings->endpoint.c_str(), atoi(settings_->aws_settings->port.c_str()));
+	mqtt_client_->setCallback(&MqttCallback);
 }
 
 bool CommunicationClientImpl::ConnectToAws()
