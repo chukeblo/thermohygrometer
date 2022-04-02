@@ -40,7 +40,7 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 	return json;
 }
 
-std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
+std::map<std::string, JsonElement*> JsonHandler::Parse(std::string raw)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kParse, "in: raw=" + raw));
 	if (raw.empty())
@@ -49,7 +49,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 		throw std::invalid_argument("json string has no characters");
 	}
 
-	std::map<std::string, std::string> map;
+	std::map<std::string, JsonElement*> map;
 
 	int count = 0;
 	count = SkipBlankAndNewLineCharacters(raw, count);
@@ -185,5 +185,5 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
 		"out: key=" + std::string(key) + ",value=" + value + ",count=" + std::string(String(index + 1).c_str())
 	));
-	return sKeyValuePairResult{ std::string(key), std::string(value), index + 1 };
+	return sKeyValuePairResult{ std::string(key), new JsonStringElement(value), index + 1 };
 }
