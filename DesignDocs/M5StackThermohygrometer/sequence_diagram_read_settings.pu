@@ -24,20 +24,20 @@ return WiFiSettings* wifi_settings
 SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
 activate SDCardController
 return
-SettingsProvider -> JsonHandler: Parse(std::string json)
+SettingsProvider -> AWSSettings: FromString(std::string json)
+activate AWSSettings
+AWSSettings -> JsonHandler: Parse(std::string json)
 activate JsonHandler
 return std::map<std::string, std::string> json_map
-SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+AWSSettings -> SDCardController: ReadFileFromSDCard(std::string filename)
 activate SDCardController
 return root ca
-SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+AWSSettings -> SDCardController: ReadFileFromSDCard(std::string filename)
 activate SDCardController
 return device certificate
-SettingsProvider -> SDCardController: ReadFileFromSDCard(std::string filename)
+AWSSettings -> SDCardController: ReadFileFromSDCard(std::string filename)
 activate SDCardController
 return private key
-SettingsProvider -> AWSSettings: constructor(...)
-activate AWSSettings
 return
 
 SettingsProvider -> AWSCommunicationSettings: constructor(...)
