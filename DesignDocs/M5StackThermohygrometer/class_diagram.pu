@@ -181,6 +181,7 @@ class TaskManager {
     + {static} GetInstance(): TaskManager*
     + CreateTask(task_method: string, context: void*): bool
     + DeleteTask(task_method: string): bool
+    + {static} GetMeasureTaskToken(): string
 }
 
 TaskManager ..> ThermohygroDataMeasurer
