@@ -22,7 +22,7 @@ public:
 
 public:
     int data;
-}
+};
 
 class JsonStringElement : public JsonElement
 {
@@ -32,4 +32,4 @@ public:
 
 public:
     std::string data;
-}
+};
