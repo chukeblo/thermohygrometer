@@ -6,8 +6,6 @@
 #include "ThermohygroDataMeasurer.hpp"
 #include "ViewController.hpp"
 
-const char* kMeasureTask = "MeasureTask";
-
 GUIManager* gui_manager = new GUIManager(new ViewController());
 TaskManager* task_manager = TaskManager::GetInstance();
 
@@ -19,7 +17,7 @@ void setup()
     ThermohygroDataMeasurer* thermohygrodata_measurer = new ThermohygroDataMeasurer();
     thermohygrodata_measurer->SetMeasureEnvDataListener(gui_manager->GetMeasureEnvDataListener());
     thermohygrodata_measurer->SetCommunicationClient(new CommunicationClientImpl());
-    task_manager->CreateTask(kMeasureTask, (void*)thermohygrodata_measurer);
+    task_manager->CreateTask(TaskManager::GetMeasureTaskToken(), (void*)thermohygrodata_measurer);
 }
 
 void loop()
