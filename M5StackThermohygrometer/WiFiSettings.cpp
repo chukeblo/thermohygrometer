@@ -14,8 +14,10 @@ WiFiSettings::WiFiSettings(std::string ssid, std::string password)
 }
 
 WiFiSettings* WiFiSettings::FromString(std::string json) {
-    std::map<std::string, std::string> wifi_settings_map = JsonHandler::Parse(json);
-    std::string ssid = wifi_settings_map[kSsidKey];
-    std::string password = wifi_settings_map[kPasswordKey];
+    std::map<std::string, JsonElement*> wifi_settings_map = JsonHandler::Parse(json);
+    JsonStringElement* ssid_element = static_cast<JsonStringElement*>(wifi_settings_map[kSsidKey]);
+    std::string ssid = ssid_element->data;
+    JsonStringElement* password_element = static_cast<JsonStringElement*>(wifi_settings_map[kPasswordKey]);
+    std::string password = password_element->data;
     return new WiFiSettings(ssid, password);
 }

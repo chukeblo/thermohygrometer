@@ -1,5 +1,6 @@
 #include "JsonHandler.hpp"
 
+#include <cstdio>
 #include <stdexcept>
 
 #include <M5Stack.h>
@@ -40,7 +41,7 @@ std::string JsonHandler::Serialize(std::map<std::string, std::string> jsonMap)
 	return json;
 }
 
-std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
+std::map<std::string, JsonElement*> JsonHandler::Parse(std::string raw)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kParse, "in: raw=" + raw));
 	if (raw.empty())
@@ -49,7 +50,7 @@ std::map<std::string, std::string> JsonHandler::Parse(std::string raw)
 		throw std::invalid_argument("json string has no characters");
 	}
 
-	std::map<std::string, std::string> map;
+	std::map<std::string, JsonElement*> map;
 
 	int count = 0;
 	count = SkipBlankAndNewLineCharacters(raw, count);
@@ -157,33 +158,60 @@ JsonHandler::sKeyValuePairResult JsonHandler::ExtractKeyValuePair(std::string co
 		throw std::invalid_argument("key and value should be divided with colon ( : )");
 	}
 	index = SkipIfBlankCharacters(content, index);
-	if (content[index++] != kQuotationMark)
+	if (content[index] != kQuotationMark)
 	{
-		ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-			"Value does not start with quotation ( \" ): count=" + std::string(String(index).c_str())
+		char value[100];
+		int value_index = 0;
+		while (true)
+		{
+			if (content[index] == kEndOfString)
+			{
+				ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+					"Json body incorrectly comes to the end: count=" + std::string(String(index).c_str())
+				));
+				throw std::invalid_argument("incorrectly comes to the end of json string");
+			}
+			if (content[index] == kComma || content[index] == kSpace)
+			{
+				value[value_index] = kEndOfString;
+				break;
+			}
+			if (content[index] < 0x30 || 0x39 < content[index])
+			{
+				ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+					"invalid number has been found: count=" + std::string(String(index).c_str())
+				));
+				throw std::invalid_argument("invalid number has been found");
+			}
+			value[value_index++] = content[index++];
+		}
+		int int_value = atoi(value);
+		return sKeyValuePairResult{ std::string(key), new JsonNumberElement(int_value), index };
+	}
+	else
+	{
+		char value[100];
+		int value_index = 0;
+		index++;
+		while (true)
+		{
+			if (content[index] == kEndOfString)
+			{
+				ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
+					"Json body incorrectly comes to the end: count=" + std::string(String(index).c_str())
+				));
+				throw std::invalid_argument("incorrectly comes to the end of json string");
+			}
+			if (content[index] == kQuotationMark)
+			{
+				value[value_index] = kEndOfString;
+				break;
+			}
+			value[value_index++] = content[index++];
+		}
+		ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
+			"out: key=" + std::string(key) + ",value=" + value + ",count=" + std::string(String(index + 1).c_str())
 		));
-		throw std::invalid_argument("value does not start with open quotation ( \" )");
-	}
-	char value[100];
-	int value_index = 0;
-	while (true)
-	{
-		if (content[index] == kEndOfString)
-		{
-			ConsoleLogger::Log(new LogData(LogLevel::kError, kJsonHandler, kExtractKeyValuePair,
-				"Json body incorrectly comes to the end: count=" + std::string(String(index).c_str())
-			));
-			throw std::invalid_argument("incorrectly comes to the end of json string");
-		}
-		if (content[index] == kQuotationMark)
-		{
-			value[value_index] = kEndOfString;
-			break;
-		}
-		value[value_index++] = content[index++];
-	}
-	ConsoleLogger::Log(new LogData(LogLevel::kTrace, kJsonHandler, kExtractKeyValuePair,
-		"out: key=" + std::string(key) + ",value=" + value + ",count=" + std::string(String(index + 1).c_str())
-	));
-	return sKeyValuePairResult{ std::string(key), std::string(value), index + 1 };
+		return sKeyValuePairResult{ std::string(key), new JsonStringElement(value), index + 1 };
+	}	
 }

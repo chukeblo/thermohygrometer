@@ -105,7 +105,7 @@ bool CommunicationClientImpl::SetUpMqttClient()
 	http_client_->setCACert(settings_->aws_settings->root_ca.c_str());
 	http_client_->setCertificate(settings_->aws_settings->device_certificate.c_str());
 	http_client_->setPrivateKey(settings_->aws_settings->private_key.c_str());
-	mqtt_client_->setServer(settings_->aws_settings->endpoint.c_str(), atoi(settings_->aws_settings->port.c_str()));
+	mqtt_client_->setServer(settings_->aws_settings->endpoint.c_str(), settings_->aws_settings->port);
 	mqtt_client_->setCallback(&MqttCallback);
 }
 
