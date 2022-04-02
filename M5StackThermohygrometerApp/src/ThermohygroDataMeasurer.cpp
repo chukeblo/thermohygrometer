@@ -81,7 +81,7 @@ void ThermohygroDataMeasurer::ReadThermohygroData()
 			));
 			if (communication_client_)
 			{
-				communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
+				// communication_client_->SendThermohygroData(MeasurementResultManager::GetInstance()->GetResults().back());
 			}
 			else
 			{
