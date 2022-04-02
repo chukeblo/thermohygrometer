@@ -4,6 +4,10 @@
 #include "ConsoleLogger.hpp"
 #include "LogConstants.hpp"
 
+static const int kLatestDisplaySize = 3;
+static const int kListDisplaySize = 2;
+static const int kMaxDisplayNums = 5;
+
 ViewController::ViewController()
 {
     state_ = ViewState::GetInstance(ViewType::kLatestResultView);
@@ -74,7 +78,7 @@ void ViewController::DisplayLatestResult()
         ",humidity=" + std::string(String(latest_result->thermohygro_data->humidity).c_str())
     ));
     M5.Lcd.clear(BLACK);
-    M5.Lcd.setTextSize(3);
+    M5.Lcd.setTextSize(kLatestDisplaySize);
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.println(latest_result->time.c_str());
@@ -88,12 +92,12 @@ void ViewController::DisplayResultList()
     std::list<MeasurementResult*> results = result_manager_->GetResults();
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayResultList, "get result list"));
     M5.Lcd.clear(BLACK);
-    M5.Lcd.setTextSize(2);
+    M5.Lcd.setTextSize(kListDisplaySize);
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setCursor(0, 0);
     auto itr = results.begin();
     int dest = results.size();
-    int start = dest < 5 ? 0 : dest - 5;
+    int start = dest < kMaxDisplayNums ? 0 : dest - kMaxDisplayNums;
     for (int i = 0; i < start; i++) itr++;
     for (int i = start; i < dest; i++)
     {
