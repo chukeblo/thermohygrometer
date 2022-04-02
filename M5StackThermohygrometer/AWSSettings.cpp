@@ -14,7 +14,7 @@ const std::string kRootCaPathKey = "rootCaPath";
 const std::string kDeviceCertPathKey = "deviceCertPath";
 const std::string kPrivateKeyPathKey = "privateKeyPath";
 
-AWSSettings::AWSSettings(std::string client_id, std::string endpoint, std::string port, std::string root_ca, std::string device_certificate, std::string private_key, std::string topic)
+AWSSettings::AWSSettings(std::string client_id, std::string endpoint, int port, std::string root_ca, std::string device_certificate, std::string private_key, std::string topic)
 {
     this->client_id = client_id;
     this->endpoint = endpoint;
@@ -36,8 +36,8 @@ AWSSettings* AWSSettings::FromString(std::string json)
     std::string client_id = client_id_element->data;
     JsonStringElement* endpoint_element = static_cast<JsonStringElement*>(aws_settings_map[kEndpointKey]);
     std::string endpoint = endpoint_element->data;
-    JsonStringElement* port_element = static_cast<JsonStringElement*>(aws_settings_map[kPortKey]);
-    std::string port = port_element->data;
+    JsonNumberElement* port_element = static_cast<JsonNumberElement*>(aws_settings_map[kPortKey]);
+    int port = port_element->data;
     JsonStringElement* topic_element = static_cast<JsonStringElement*>(aws_settings_map[kTopicKey]);
     std::string topic = topic_element->data;
     JsonStringElement* root_ca_path_element = static_cast<JsonStringElement*>(aws_settings_map[kRootCaPathKey]);
