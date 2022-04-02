@@ -4,8 +4,8 @@
 
 #include <string>
 
+#include <PubSubClient.h>
 #include <WiFiClientSecure.h>
-#include "src/PubSubClient/PubSubClient.h"
 #include "AWSCommunicationSettings.hpp"
 
 class CommunicationClientImpl : public CommunicationClient
