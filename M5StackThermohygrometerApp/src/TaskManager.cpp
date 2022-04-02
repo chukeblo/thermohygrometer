@@ -6,7 +6,7 @@
 
 static const int kMeasureTaskCore = 0;
 static const int kMeasureTaskPriority = 0;
-static const std::string kMeasureTask = "MeasureTask";
+static const std::string kMeasureTaskToken = "MeasureTask";
 
 TaskManager* TaskManager::GetInstance()
 {
@@ -37,9 +37,9 @@ bool TaskManager::CreateTask(std::string task_method, void* context)
         return false;
     }
 
-    if (task_method == kMeasureTask)
+    if (task_method == kMeasureTaskToken)
     {
-        xTaskCreatePinnedToCore(StartMeasureTask, kMeasureTask.c_str(), 8192, context, kMeasureTaskPriority, &measure_task_handler_, kMeasureTaskCore);
+        xTaskCreatePinnedToCore(StartMeasureTask, kMeasureTaskToken.c_str(), 8192, context, kMeasureTaskPriority, &measure_task_handler_, kMeasureTaskCore);
         return true;
     }
     ConsoleLogger::Log(new LogData(LogLevel::kError, kCreateTask, kCreateTask,
@@ -59,7 +59,7 @@ bool TaskManager::DeleteTask(std::string task_method)
         return false;
     }
 
-    if (task_method == kMeasureTask)
+    if (task_method == kMeasureTaskToken)
     {
         vTaskDelete(measure_task_handler_);
         return true;
@@ -68,4 +68,9 @@ bool TaskManager::DeleteTask(std::string task_method)
         "no matched task was found with given task method name: \"" + task_method + "\""
     ));
     return false;
+}
+
+std::string TaskManager::GetMeasureTaskToken()
+{
+    return kMeasureTaskToken;
 }

@@ -36,6 +36,9 @@ group setup()
     main -> TaskManager: constructor()
     activate TaskManager
     return
+    main -> TaskManager: GetMeasureTaskToken()
+    activate TaskManager
+    return
     main -> TaskManager: CreateTask(std::string method_name, void* context)
     activate TaskManager
     return
