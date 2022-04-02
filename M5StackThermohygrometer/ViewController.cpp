@@ -85,4 +85,19 @@ void ViewController::DisplayLatestResult()
 void ViewController::DisplayResultList()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayResultList, "in"));
+    std::list<MeasurementResult*> results = result_manager_->GetResults();
+    ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kDisplayResultList, "get result list"));
+    M5.Lcd.clear(BLACK);
+    M5.Lcd.setTextSize(2);
+    M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.setCursor(0, 0);
+    auto itr = results.begin();
+    int dest = results.size();
+    int start = dest < 5 ? 0 : dest - 4;
+    for (int i = start; i < dest; i++)
+    {
+        MeasurementResult* result = *itr;
+        M5.Lcd.printf("[%s] %5.2f %5.2f\n", result->time.c_str(), result->thermohygro_data->temperature, result->thermohygro_data->humidity);
+        itr++;
+    }
 }

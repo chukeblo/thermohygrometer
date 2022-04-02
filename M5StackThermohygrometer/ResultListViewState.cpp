@@ -25,6 +25,7 @@ void ResultListViewState::Finalize(GUIContext* context)
 void ResultListViewState::OnMeasureEnvData(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kOnMeasureEnvData, "in"));
+	context->DisplayResultList();
 }
 
 void ResultListViewState::DoRightButtonAction(GUIContext* context)
