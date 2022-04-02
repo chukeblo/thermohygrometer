@@ -93,7 +93,8 @@ void ViewController::DisplayResultList()
     M5.Lcd.setCursor(0, 0);
     auto itr = results.begin();
     int dest = results.size();
-    int start = dest < 5 ? 0 : dest - 4;
+    int start = dest < 5 ? 0 : dest - 5;
+    for (int i = 0; i < start; i++) itr++;
     for (int i = start; i < dest; i++)
     {
         MeasurementResult* result = *itr;
