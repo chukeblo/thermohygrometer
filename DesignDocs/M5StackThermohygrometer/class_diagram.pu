@@ -93,19 +93,6 @@ class LogLevel {
     kError
 }
 
-class UIManagerBase {
-    + {static} GetInstance(ui_type: UIType): UIManagerBase*
-    + {abstract} Initialize(): void
-    + {abstract} HandleEvent(): void
-}
-
-UIManagerBase <|-- CUIManager
-
-class CUIManager {
-    + Initialize(): void
-    + HandleEvent(): void
-}
-
 class GUIManager {
     - view_controller_: ViewController*
 
