@@ -1,8 +1,8 @@
-#include "TaskManager.hpp"
+#include <TaskManager.hpp>
 
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
-#include "ThermohygroDataMeasurer.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
+#include <ThermohygroDataMeasurer.hpp>
 
 static const int kMeasureTaskCore = 0;
 static const int kMeasureTaskPriority = 0;
