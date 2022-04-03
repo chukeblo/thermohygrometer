@@ -1,9 +1,9 @@
-#include "GUIManager.hpp"
+#include <GUIManager.hpp>
 
 #include <M5Stack.h>
-#include "ButtonType.hpp"
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ButtonType.hpp>
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 GUIManager::MeasureEnvDataListenerImpl::MeasureEnvDataListenerImpl(GUIManager* gui_manager)
 {

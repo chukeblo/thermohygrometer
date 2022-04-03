@@ -1,7 +1,7 @@
-#include "LatestResultViewState.hpp"
+#include <LatestResultViewState.hpp>
 
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 LatestResultViewState::LatestResultViewState()
 {

@@ -2,8 +2,8 @@
 
 #include <list>
 
-#include "ButtonType.hpp"
-#include "ViewType.hpp"
+#include <ButtonType.hpp>
+#include <ViewType.hpp>
 
 class GUIContext
 {

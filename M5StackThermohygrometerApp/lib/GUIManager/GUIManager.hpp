@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GUIContext.hpp"
-#include "ThermohygroDataMeasurer.hpp"
+#include <GUIContext.hpp>
+#include <ThermohygroDataMeasurer.hpp>
 
 class GUIManager
 {

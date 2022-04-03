@@ -1,12 +1,12 @@
 #pragma once
 
-#include "ViewState.hpp"
+#include <ViewState.hpp>
 
-class ResultListViewState : public ViewState
+class LatestResultViewState : public ViewState
 {
 public:
-    ResultListViewState();
-    ~ResultListViewState() override;
+    LatestResultViewState();
+    ~LatestResultViewState() override;
 
 public:
     void Initialize(GUIContext* context) override;

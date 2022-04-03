@@ -1,7 +1,7 @@
-#include "ViewState.hpp"
+#include <ViewState.hpp>
 
-#include "LatestResultViewState.hpp"
-#include "ResultListViewState.hpp"
+#include <LatestResultViewState.hpp>
+#include <ResultListViewState.hpp>
 
 ViewState* ViewState::GetInstance(ViewType type)
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GUIContext.hpp"
-#include "ViewType.hpp"
+#include <GUIContext.hpp>
+#include <ViewType.hpp>
 
 class ViewState
 {

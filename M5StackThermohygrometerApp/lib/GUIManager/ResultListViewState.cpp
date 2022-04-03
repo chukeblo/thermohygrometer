@@ -1,7 +1,7 @@
-#include "ResultListViewState.hpp"
+#include <ResultListViewState.hpp>
 
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 ResultListViewState::ResultListViewState()
 {

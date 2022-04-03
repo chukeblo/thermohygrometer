@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GUIContext.hpp"
+#include <GUIContext.hpp>
 
-#include "MeasurementResultManager.hpp"
-#include "ViewState.hpp"
+#include <MeasurementResultManager.hpp>
+#include <ViewState.hpp>
 
 class ViewController : public GUIContext
 {

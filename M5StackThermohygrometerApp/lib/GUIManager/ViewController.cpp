@@ -1,8 +1,8 @@
-#include "ViewController.hpp"
+#include <ViewController.hpp>
 
 #include <M5Stack.h>
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 static const int kLatestDisplaySize = 3;
 static const int kListDisplaySize = 2;
