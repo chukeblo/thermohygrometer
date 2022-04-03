@@ -7,8 +7,8 @@
 #include "ConsoleLogger.hpp"
 #include "JsonHandler.hpp"
 #include "LogConstants.hpp"
-#include "SDCardConstants.hpp"
-#include "SDCardController.hpp"
+#include <SDCardConstants.hpp>
+#include <SDCardController.hpp>
 
 AWSCommunicationSettings* SettingsProvider::Of()
 {
