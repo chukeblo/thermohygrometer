@@ -1,7 +1,7 @@
 #pragma once
 
-#include "AWSSettings.hpp"
-#include "WiFiSettings.hpp"
+#include <AWSSettings.hpp>
+#include <WiFiSettings.hpp>
 
 class AWSCommunicationSettings
 {

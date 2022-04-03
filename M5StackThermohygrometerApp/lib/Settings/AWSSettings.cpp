@@ -1,8 +1,8 @@
-#include "AWSSettings.hpp"
+#include <AWSSettings.hpp>
 
 #include <map>
 
-#include "JsonHandler.hpp"
+#include <JsonHandler.hpp>
 #include <SDCardConstants.hpp>
 #include <SDCardController.hpp>
 

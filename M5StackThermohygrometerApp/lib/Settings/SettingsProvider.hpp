@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "AWSCommunicationSettings.hpp"
+#include <AWSCommunicationSettings.hpp>
 
 class SettingsProvider
 {

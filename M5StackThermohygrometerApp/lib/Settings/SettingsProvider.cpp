@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <string>
 
-#include "ConsoleLogger.hpp"
-#include "JsonHandler.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <JsonHandler.hpp>
+#include <LogConstants.hpp>
 #include <SDCardConstants.hpp>
 #include <SDCardController.hpp>
 
