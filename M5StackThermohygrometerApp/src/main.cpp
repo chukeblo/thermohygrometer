@@ -1,10 +1,10 @@
 #include <M5Stack.h>
 #include <WiFi.h>
-#include "CommunicationClientImpl.hpp"
-#include "GUIManager.hpp"
-#include "TaskManager.hpp"
-#include "ThermohygroDataMeasurer.hpp"
-#include "ViewController.hpp"
+#include <CommunicationClientImpl.hpp>
+#include <GUIManager.hpp>
+#include <TaskManager.hpp>
+#include <ThermohygroDataMeasurer.hpp>
+#include <ViewController.hpp>
 
 GUIManager* gui_manager = new GUIManager(new ViewController());
 TaskManager* task_manager = TaskManager::GetInstance();
