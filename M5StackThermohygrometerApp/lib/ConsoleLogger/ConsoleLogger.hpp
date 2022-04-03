@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "LogData.hpp"
+#include <LogData.hpp>
 
 class ConsoleLogger
 {

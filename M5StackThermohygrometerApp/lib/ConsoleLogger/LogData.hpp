@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "LogLevel.hpp"
+#include <LogLevel.hpp>
 
 class LogData
 {
