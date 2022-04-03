@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CommunicationClient.hpp"
+#include <CommunicationClient.hpp>
 
 #include <string>
 
 #include <PubSubClient.h>
 #include <WiFiClientSecure.h>
-#include "AWSCommunicationSettings.hpp"
+#include <AWSCommunicationSettings.hpp>
 
 class CommunicationClientImpl : public CommunicationClient
 {

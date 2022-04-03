@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MeasurementResult.hpp"
+#include <MeasurementResult.hpp>
 
 class CommunicationClient
 {

@@ -1,11 +1,11 @@
-#include "CommunicationClientImpl.hpp"
+#include <CommunicationClientImpl.hpp>
 
 #include <stdio.h>
 
 #include <M5Stack.h>
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
-#include "SettingsProvider.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
+#include <SettingsProvider.hpp>
 
 CommunicationClientImpl::CommunicationClientImpl()
 {
