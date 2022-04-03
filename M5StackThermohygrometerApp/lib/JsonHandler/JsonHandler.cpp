@@ -4,8 +4,8 @@
 #include <stdexcept>
 
 #include <M5Stack.h>
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 static const char kOpenBracket = '{';
 static const char kCloseBracket = '}';
