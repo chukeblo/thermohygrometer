@@ -1,4 +1,4 @@
-#include "SHT3X.h"
+#include <SHT3X.h>
 
 SHT3X::SHT3X(uint8_t address) : address_(address), c_temp_(0), f_temp_(0), humidity_(0)
 {

@@ -1,4 +1,4 @@
-#include "ThermohygroData.hpp"
+#include <ThermohygroData.hpp>
 
 ThermohygroData::ThermohygroData(float temperature, float humidity)
 {

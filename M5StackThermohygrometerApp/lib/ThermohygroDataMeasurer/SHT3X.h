@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include "ThermohygroData.hpp"
+#include <ThermohygroData.hpp>
 
 class SHT3X {
 private:

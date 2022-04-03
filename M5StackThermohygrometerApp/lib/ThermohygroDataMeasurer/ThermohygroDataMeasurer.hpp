@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "CommunicationClient.hpp"
-#include "SHT3X.h"
+#include <CommunicationClient.hpp>
+#include <SHT3X.h>
 
 class ThermohygroDataMeasurer
 {
