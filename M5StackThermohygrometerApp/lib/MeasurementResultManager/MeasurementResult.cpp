@@ -1,9 +1,9 @@
-#include "MeasurementResult.hpp"
+#include <MeasurementResult.hpp>
 
 #include <map>
 
 #include <M5Stack.h>
-#include "JsonHandler.hpp"
+#include <JsonHandler.hpp>
 
 const std::string kTimeKey = "time";
 const std::string kTemperatureKey = "temperature";

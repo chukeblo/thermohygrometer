@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "ThermohygroData.hpp"
+#include <ThermohygroData.hpp>
 
 class MeasurementResult
 {

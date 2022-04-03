@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "MeasurementResult.hpp"
+#include <MeasurementResult.hpp>
 
 class MeasurementResultManager
 {

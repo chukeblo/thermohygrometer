@@ -1,8 +1,8 @@
-#include "MeasurementResultManager.hpp"
+#include <MeasurementResultManager.hpp>
 
 #include <M5Stack.h>
-#include "ConsoleLogger.hpp"
-#include "LogConstants.hpp"
+#include <ConsoleLogger.hpp>
+#include <LogConstants.hpp>
 
 static const int kMaxResultCounts = 20;
 
