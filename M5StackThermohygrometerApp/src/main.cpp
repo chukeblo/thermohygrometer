@@ -7,7 +7,7 @@
 #include <ViewController.hpp>
 
 GUIManager* gui_manager = new GUIManager(new ViewController());
-TaskManager* task_manager = TaskManager::GetInstance();
+TaskManager* task_manager = new TaskManager();
 
 void setup()
 {
