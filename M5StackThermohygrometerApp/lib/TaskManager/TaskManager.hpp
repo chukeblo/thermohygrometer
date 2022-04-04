@@ -8,9 +8,6 @@
 class TaskManager
 {
 public:
-    static TaskManager* GetInstance();
-
-private:
     TaskManager();
     ~TaskManager();
 

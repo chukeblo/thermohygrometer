@@ -8,16 +8,6 @@ static const int kMeasureTaskCore = 0;
 static const int kMeasureTaskPriority = 0;
 static const std::string kMeasureTaskToken = "MeasureTask";
 
-TaskManager* TaskManager::GetInstance()
-{
-    static TaskManager* instance = nullptr;
-    if (!instance)
-    {
-        instance = new TaskManager();
-    }
-    return instance;
-}
-
 TaskManager::TaskManager()
 {
 }
