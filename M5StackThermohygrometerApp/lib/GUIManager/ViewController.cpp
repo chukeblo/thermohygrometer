@@ -56,7 +56,8 @@ void ViewController::ChangeState(ViewType type)
     state_ = nullptr;
     current_cursor_ = 0;
     current_start_index_ = 0;
-    current_end_index_ = 0;
+    int size = result_manager_->GetResults().size();
+    current_end_index_ = size < kMaxDisplayNums ? size : kMaxDisplayNums;
     state_ = ViewState::GetInstance(type);
     state_->Initialize(this);
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState, "out"));
