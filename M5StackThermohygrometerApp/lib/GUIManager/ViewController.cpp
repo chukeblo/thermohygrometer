@@ -8,9 +8,39 @@ static const int kLatestDisplaySize = 3;
 static const int kListDisplaySize = 2;
 static const int kMaxDisplayNums = 5;
 
+ViewController::ViewControlDelegateImpl::ViewControlDelegateImpl(ViewController* view_controller)
+{
+    view_controller_ = view_controller;
+}
+
+ViewController::ViewControlDelegateImpl::~ViewControlDelegateImpl()
+{
+}
+
+void ViewController::ViewControlDelegateImpl::CursorUp()
+{
+    view_controller_->ScrollUp();
+}
+
+void ViewController::ViewControlDelegateImpl::CursorDown()
+{
+    view_controller_->ScrollDown();
+}
+
+void ViewController::ViewControlDelegateImpl::DisplayLatestResult()
+{
+    view_controller_->DisplayLatestResult();
+}
+
+void ViewController::ViewControlDelegateImpl::DisplayResultList()
+{
+    view_controller_->DisplayResultList();
+}
+
 ViewController::ViewController()
 {
-    state_ = ViewState::GetInstance(ViewType::kLatestResultView);
+    view_control_delegate_ = new ViewController::ViewControlDelegateImpl(this);
+    state_ = ViewState::GetInstance(ViewType::kLatestResultView, view_control_delegate_);
     result_manager_ = MeasurementResultManager::GetInstance();
     current_cursor_ = 0;
     current_start_index_ = 0;
@@ -62,7 +92,7 @@ void ViewController::ChangeState(ViewType type)
     int size = result_manager_->GetResults().size();
     current_end_index_ = size < kMaxDisplayNums ? size : kMaxDisplayNums;
 
-    state_ = ViewState::GetInstance(type);
+    state_ = ViewState::GetInstance(type, view_control_delegate_);
     state_->Initialize(this);
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState, "out"));
 }

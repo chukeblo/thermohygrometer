@@ -5,7 +5,7 @@
 class LatestResultViewState : public ViewState
 {
 public:
-    LatestResultViewState();
+    LatestResultViewState(ViewControlDelegate* delegate);
     ~LatestResultViewState() override;
 
 public:

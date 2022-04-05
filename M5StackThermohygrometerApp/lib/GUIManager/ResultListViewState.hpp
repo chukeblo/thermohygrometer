@@ -5,7 +5,7 @@
 class ResultListViewState : public ViewState
 {
 public:
-    ResultListViewState();
+    ResultListViewState(ViewControlDelegate* delegate);
     ~ResultListViewState() override;
 
 public:

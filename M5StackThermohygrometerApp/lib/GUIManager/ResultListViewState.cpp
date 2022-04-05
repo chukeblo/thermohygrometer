@@ -3,7 +3,7 @@
 #include <ConsoleLogger.hpp>
 #include <LogConstants.hpp>
 
-ResultListViewState::ResultListViewState()
+ResultListViewState::ResultListViewState(ViewControlDelegate* delegate) : ViewState(delegate)
 {
 }
 
