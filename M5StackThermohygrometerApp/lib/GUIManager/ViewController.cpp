@@ -12,6 +12,9 @@ ViewController::ViewController()
 {
     state_ = ViewState::GetInstance(ViewType::kLatestResultView);
     result_manager_ = MeasurementResultManager::GetInstance();
+    current_cursor_ = 0;
+    current_start_index_ = 0;
+    current_end_index_ = 0;
 }
 
 ViewController::~ViewController()
@@ -51,6 +54,14 @@ void ViewController::ChangeState(ViewType type)
     state_->Finalize(this);
     delete state_;
     state_ = nullptr;
+
+    // カーソル位置と表示データ範囲の初期化
+    // 表示データ範囲の初期値は一番古いデータから5つないし最新データまで
+    current_cursor_ = 0;
+    current_start_index_ = 0;
+    int size = result_manager_->GetResults().size();
+    current_end_index_ = size < kMaxDisplayNums ? size : kMaxDisplayNums;
+
     state_ = ViewState::GetInstance(type);
     state_->Initialize(this);
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState, "out"));
@@ -59,13 +70,15 @@ void ViewController::ChangeState(ViewType type)
 void ViewController::ScrollUp()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollUp, "in"));
-    current_cursor_--;
+    // カーソルがすでに一番古いデータを指している場合は何もしない
+    if (current_cursor_ > 0) current_cursor_--;
 }
 
 void ViewController::ScrollDown()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollDown, "in"));
-    current_cursor_++;
+    // カーソルがすでに最新データをさしている場合は何もしない
+    if (current_cursor_ < result_manager_->GetResults().size() - 1) current_cursor_++;
 }
 
 void ViewController::DisplayLatestResult()
@@ -95,14 +108,47 @@ void ViewController::DisplayResultList()
     M5.Lcd.setTextSize(kListDisplaySize);
     M5.Lcd.setTextColor(WHITE);
     M5.Lcd.setCursor(0, 0);
+
+    // 測定結果がない場合はここで終了
+    if (results.empty()) return;
+
+    // 表示データ範囲のアップデート
     auto itr = results.begin();
-    int dest = results.size();
-    int start = dest < kMaxDisplayNums ? 0 : dest - kMaxDisplayNums;
-    for (int i = 0; i < start; i++) itr++;
-    for (int i = start; i < dest; i++)
+    int length = results.size();
+    int start = 0;
+    int end = 0;
+    // カーソルが直前の表示データ範囲におさまっている場合
+    if (current_start_index_ <= current_cursor_ && current_cursor_ < current_end_index_)
     {
+        start = current_start_index_;
+        end = (start + kMaxDisplayNums < length) ? start + kMaxDisplayNums : length;
+    }
+    else
+    {
+        // カーソルが直前の表示データ範囲よりも古いものを指している場合
+        if (current_cursor_ < current_start_index_)
+        {
+            end = (current_cursor_ + kMaxDisplayNums < length) ? current_cursor_ + kMaxDisplayNums : length;
+        }
+        // カーソルが直前の表示データ範囲よりも新しいものをさしている場合
+        else if (current_end_index_ <= current_cursor_)
+        {
+            end = current_cursor_ + 1;
+        }
+        start = (end - kMaxDisplayNums > 0) ? end - kMaxDisplayNums : 0;
+    }
+
+    // 表示データ範囲までスキップ
+    for (int i = 0; i < start; i++) itr++;
+    for (int i = start; i < end; i++)
+    {
+        // カーソル位置のデータは黄色で表示。それ以外は白色で表示。
+        if (i == current_cursor_) M5.Lcd.setTextColor(YELLOW);
         MeasurementResult* result = *itr;
         M5.Lcd.printf("[%s] %5.2f %5.2f\n", result->time.c_str(), result->thermohygro_data->temperature, result->thermohygro_data->humidity);
+        M5.Lcd.setTextColor(WHITE);
         itr++;
     }
+    current_start_index_ = start;
+    current_end_index_ = end;
 }
