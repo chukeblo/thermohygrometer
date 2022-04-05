@@ -24,4 +24,6 @@ private:
     ViewState* state_;
     MeasurementResultManager* result_manager_;
     int current_cursor_;
+    int current_start_index_;
+    int current_end_index_;
 };

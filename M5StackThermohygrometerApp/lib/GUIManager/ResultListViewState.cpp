@@ -32,6 +32,7 @@ void ResultListViewState::DoRightButtonAction(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoRightButtonAction, "in"));
 	context->ScrollDown();
+	context->DisplayResultList();
 }
 
 void ResultListViewState::DoMiddleButtonAction(GUIContext* context)
@@ -44,4 +45,5 @@ void ResultListViewState::DoLeftButtonAction(GUIContext* context)
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoLeftButtonAction, "in"));
 	context->ScrollUp();
+	context->DisplayResultList();
 }
