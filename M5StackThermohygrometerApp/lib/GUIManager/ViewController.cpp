@@ -124,8 +124,10 @@ void ViewController::DisplayResultList()
     for (int i = 0; i < start; i++) itr++;
     for (int i = start; i < end; i++)
     {
+        if (i == current_cursor_) M5.Lcd.setTextColor(YELLOW);
         MeasurementResult* result = *itr;
         M5.Lcd.printf("[%s] %5.2f %5.2f\n", result->time.c_str(), result->thermohygro_data->temperature, result->thermohygro_data->humidity);
+        M5.Lcd.setTextColor(WHITE);
         itr++;
     }
     current_start_index_ = start;
