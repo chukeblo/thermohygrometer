@@ -112,15 +112,17 @@ void ViewController::DisplayResultList()
         start = current_start_index_;
         end = (start + kMaxDisplayNums < length) ? start + kMaxDisplayNums : length;
     }
-    else if (current_cursor_ < current_start_index_)
+    else
     {
-        end = (current_cursor_ + kMaxDisplayNums <= length) ? current_cursor_ + kMaxDisplayNums : length;
-        start = (end - kMaxDisplayNums >= 0) ? end - kMaxDisplayNums : 0;
-    }
-    else if (current_end_index_ <= current_cursor_)
-    {
-        end = current_cursor_ + 1;
-        start = (end - kMaxDisplayNums >= 0) ? end - kMaxDisplayNums : 0;
+        if (current_cursor_ < current_start_index_)
+        {
+            end = (current_cursor_ + kMaxDisplayNums < length) ? current_cursor_ + kMaxDisplayNums : length;
+        }
+        else if (current_end_index_ <= current_cursor_)
+        {
+            end = current_cursor_ + 1;
+        }
+        start = (end - kMaxDisplayNums > 0) ? end - kMaxDisplayNums : 0;
     }
     for (int i = 0; i < start; i++) itr++;
     for (int i = start; i < end; i++)
