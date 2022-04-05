@@ -65,13 +65,13 @@ void ViewController::ChangeState(ViewType type)
 void ViewController::ScrollUp()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollUp, "in"));
-    if (current_cursor_ > 1) current_cursor_--;
+    if (current_cursor_ > 0) current_cursor_--;
 }
 
 void ViewController::ScrollDown()
 {
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kScrollDown, "in"));
-    if (current_cursor_ < result_manager_->GetResults().size() - 2) current_cursor_++;
+    if (current_cursor_ < result_manager_->GetResults().size() - 1) current_cursor_++;
 }
 
 void ViewController::DisplayLatestResult()
