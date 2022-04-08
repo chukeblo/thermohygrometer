@@ -1,11 +1,10 @@
 #pragma once
 
-#include <GUIContext.hpp>
-
+#include <ButtonType.hpp>
 #include <MeasurementResultManager.hpp>
 #include <ViewState.hpp>
 
-class ViewController : public GUIContext
+class ViewController
 {
 public:
     class ViewControlDelegateImpl : public ViewState::ViewControlDelegate
@@ -15,6 +14,7 @@ public:
         ~ViewControlDelegateImpl();
 
     public:
+        void ChangeState(ViewType type) override;
         void CursorUp() override;
         void CursorDown() override;
         void DisplayLatestResult() override;
@@ -26,16 +26,18 @@ public:
 
 public:
     ViewController();
-    ~ViewController() override;
+    ~ViewController();
 
 public:
-    void OnButtonPressed(ButtonType type) override;
-    void OnMeasureEnvData() override;
-    void ChangeState(ViewType type) override;
-    void ScrollUp() override;
-    void ScrollDown() override;
-    void DisplayLatestResult() override;
-    void DisplayResultList() override;
+    void OnButtonPressed(ButtonType type);
+    void OnMeasureEnvData();
+
+private:
+    void ChangeState(ViewType type);
+    void ScrollUp();
+    void ScrollDown();
+    void DisplayLatestResult();
+    void DisplayResultList();
 
 private:
     ViewControlDelegateImpl* view_control_delegate_;

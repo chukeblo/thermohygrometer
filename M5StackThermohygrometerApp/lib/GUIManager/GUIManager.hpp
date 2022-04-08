@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GUIContext.hpp>
 #include <ThermohygroDataMeasurer.hpp>
+#include <ViewController.hpp>
 
 class GUIManager
 {
@@ -20,7 +20,7 @@ public:
 	};
 
 public:
-	GUIManager(GUIContext* context);
+	GUIManager(ViewController* view_controller);
 	~GUIManager();
 
 public:
@@ -29,5 +29,5 @@ public:
 	void NotifyEnvDataMeasured();
 
 private:
-	GUIContext* gui_context_;
+	ViewController* view_controller_;
 };

@@ -17,6 +17,11 @@ ViewController::ViewControlDelegateImpl::~ViewControlDelegateImpl()
 {
 }
 
+void ViewController::ViewControlDelegateImpl::ChangeState(ViewType type)
+{
+    view_controller_->ChangeState(type);
+}
+
 void ViewController::ViewControlDelegateImpl::CursorUp()
 {
     view_controller_->ScrollUp();
@@ -58,13 +63,13 @@ void ViewController::OnButtonPressed(ButtonType type)
     switch (type)
     {
     case ButtonType::kRightButton:
-        state_->DoRightButtonAction(this);
+        state_->DoRightButtonAction();
         break;
     case ButtonType::kMiddleButton:
-        state_->DoMiddleButtonAction(this);
+        state_->DoMiddleButtonAction();
         break;
     case ButtonType::kLeftButton:
-        state_->DoLeftButtonAction(this);
+        state_->DoLeftButtonAction();
         break;
     default:
         break;
@@ -73,7 +78,7 @@ void ViewController::OnButtonPressed(ButtonType type)
 
 void ViewController::OnMeasureEnvData()
 {
-    state_->OnMeasureEnvData(this);
+    state_->OnMeasureEnvData();
 }
 
 void ViewController::ChangeState(ViewType type)
@@ -81,7 +86,7 @@ void ViewController::ChangeState(ViewType type)
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState,
         "type=" + std::string(String((int)type).c_str())
     ));
-    state_->Finalize(this);
+    state_->Finalize();
     delete state_;
     state_ = nullptr;
 
@@ -93,7 +98,7 @@ void ViewController::ChangeState(ViewType type)
     current_end_index_ = size < kMaxDisplayNums ? size : kMaxDisplayNums;
 
     state_ = ViewState::GetInstance(type, view_control_delegate_);
-    state_->Initialize(this);
+    state_->Initialize();
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState, "out"));
 }
 

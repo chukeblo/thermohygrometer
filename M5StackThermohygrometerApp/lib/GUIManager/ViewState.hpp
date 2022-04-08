@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GUIContext.hpp>
 #include <ViewType.hpp>
 
 class ViewState
@@ -13,6 +12,7 @@ public:
         virtual ~ViewControlDelegate();
 
     public:
+        virtual void ChangeState(ViewType type) = 0;
         virtual void CursorUp() = 0;
         virtual void CursorDown() = 0;
         virtual void DisplayLatestResult() = 0;
@@ -27,12 +27,12 @@ public:
     virtual ~ViewState();
 
 public:
-    virtual void Initialize(GUIContext* context) = 0;
-    virtual void Finalize(GUIContext* context) = 0;
-    virtual void OnMeasureEnvData(GUIContext* context) = 0;
-    virtual void DoRightButtonAction(GUIContext* context) = 0;
-    virtual void DoMiddleButtonAction(GUIContext* context) = 0;
-    virtual void DoLeftButtonAction(GUIContext* context) = 0;
+    virtual void Initialize() = 0;
+    virtual void Finalize() = 0;
+    virtual void OnMeasureEnvData() = 0;
+    virtual void DoRightButtonAction() = 0;
+    virtual void DoMiddleButtonAction() = 0;
+    virtual void DoLeftButtonAction() = 0;
 
 protected:
     ViewControlDelegate* view_control_delegate_;

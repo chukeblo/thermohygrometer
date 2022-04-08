@@ -15,14 +15,14 @@ void GUIManager::MeasureEnvDataListenerImpl::OnMeasureEnvData()
     gui_manager_->NotifyEnvDataMeasured();
 }
 
-GUIManager::GUIManager(GUIContext* context)
+GUIManager::GUIManager(ViewController* view_controller)
 {
-    gui_context_ = context;
+    view_controller_ = view_controller;
 }
 
 GUIManager::~GUIManager()
 {
-    delete gui_context_;
+    delete view_controller_;
 }
 
 GUIManager::MeasureEnvDataListenerImpl* GUIManager::GetMeasureEnvDataListener()
@@ -36,21 +36,21 @@ void GUIManager::CheckIfButtonsPressed()
     if (M5.BtnA.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "left button has been pressed."));
-        gui_context_->OnButtonPressed(ButtonType::kLeftButton);
+        view_controller_->OnButtonPressed(ButtonType::kLeftButton);
     }
     else if (M5.BtnB.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "middle button has been pressed."));
-        gui_context_->OnButtonPressed(ButtonType::kMiddleButton);
+        view_controller_->OnButtonPressed(ButtonType::kMiddleButton);
     }
     else if (M5.BtnC.wasPressed())
     {
         ConsoleLogger::Log(new LogData(LogLevel::kInfo, kGUIManager, kCheckIfButtonsPressed, "right button has been pressed."));
-        gui_context_->OnButtonPressed(ButtonType::kRightButton);
+        view_controller_->OnButtonPressed(ButtonType::kRightButton);
     }
 }
 
 void GUIManager::NotifyEnvDataMeasured()
 {
-    gui_context_->OnMeasureEnvData();
+    view_controller_->OnMeasureEnvData();
 }
