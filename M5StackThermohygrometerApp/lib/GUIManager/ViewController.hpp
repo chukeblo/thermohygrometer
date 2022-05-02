@@ -1,12 +1,27 @@
 #pragma once
 
 #include <ButtonType.hpp>
+#include <GUIManager.hpp>
 #include <MeasurementResultManager.hpp>
 #include <ViewState.hpp>
 
 class ViewController
 {
 public:
+    class GUIEventListenerImpl : public GUIManager::GUIEventListener
+    {
+    public:
+        GUIEventListenerImpl(ViewController* view_controller);
+        ~GUIEventListenerImpl() override;
+    
+    public:
+        void OnButtonPressed(ButtonType type) override;
+        void OnMeasureEnvData() override;
+
+    private:
+        ViewController* view_controller_;
+    };
+
     class ViewControlDelegateImpl : public ViewState::ViewControlDelegate
     {
     public:
@@ -29,10 +44,11 @@ public:
     ~ViewController();
 
 public:
-    void OnButtonPressed(ButtonType type);
-    void OnMeasureEnvData();
+    ViewController::GUIEventListenerImpl* GetGUIEventListener();
 
 private:
+    void OnButtonPressed(ButtonType type);
+    void OnMeasureEnvData();
     void ChangeState(ViewType type);
     void ScrollUp();
     void ScrollDown();

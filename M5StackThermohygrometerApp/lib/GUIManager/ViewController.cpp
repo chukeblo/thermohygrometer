@@ -8,6 +8,25 @@ static const int kLatestDisplaySize = 3;
 static const int kListDisplaySize = 2;
 static const int kMaxDisplayNums = 5;
 
+ViewController::GUIEventListenerImpl::GUIEventListenerImpl(ViewController* view_controller)
+{
+    view_controller_ = view_controller;
+}
+
+ViewController::GUIEventListenerImpl::~GUIEventListenerImpl()
+{
+}
+
+void ViewController::GUIEventListenerImpl::OnButtonPressed(ButtonType type)
+{
+    view_controller_->OnButtonPressed(type);
+}
+
+void ViewController::GUIEventListenerImpl::OnMeasureEnvData()
+{
+    view_controller_->OnMeasureEnvData();
+}
+
 ViewController::ViewControlDelegateImpl::ViewControlDelegateImpl(ViewController* view_controller)
 {
     view_controller_ = view_controller;
@@ -56,6 +75,11 @@ ViewController::~ViewController()
 {
     delete state_;
     state_ = nullptr;
+}
+
+ViewController::GUIEventListenerImpl* ViewController::GetGUIEventListener()
+{
+    return new GUIEventListenerImpl(this);
 }
 
 void ViewController::OnButtonPressed(ButtonType type)

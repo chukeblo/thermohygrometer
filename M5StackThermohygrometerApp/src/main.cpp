@@ -6,7 +6,8 @@
 #include <ThermohygroDataMeasurer.hpp>
 #include <ViewController.hpp>
 
-GUIManager* gui_manager = new GUIManager(new ViewController());
+ViewController* view_controller = new ViewController();
+GUIManager* gui_manager = new GUIManager(view_controller->GetGUIEventListener());
 TaskManager* task_manager = new TaskManager();
 
 void setup()
