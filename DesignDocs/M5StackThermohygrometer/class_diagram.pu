@@ -94,7 +94,7 @@ class LogLevel {
 }
 
 class GUIManager {
-    - view_controller_: ViewController*
+    - gui_event_listener_: GUIEventListener*
 
     + GetMeasureEnvDataListener(): MeasureEnvDataListenerImpl
     + CheckIfButtonsPressed(): void
@@ -108,8 +108,13 @@ enum ButtonType {
 }
 
 GUIManager -- ButtonType
-GUIManager x--> GUIContext
+GUIManager +-- GUIEventListener
 GUIManager +-- MeasureEnvDataListenerImpl
+
+abstract class GUIEventListener {
+    + {abstract} OnButtonPressed(type: ButtonType): void
+    + {abstract} OnMeasureEnvData(): void
+}
 
 class MeasureEnvDataListenerImpl {
     + OnMeasureEnvData(): void
@@ -117,28 +122,34 @@ class MeasureEnvDataListenerImpl {
 
 MeasureEnvDataListener <|-- MeasureEnvDataListenerImpl
 
-abstract class GUIContext {
-    + {abstract} OnButtonPressed(type: ButtonType): void
-    + {abstract} OnMeasureEnvData(): void
-    + {abstract} ChangeState(type: ViewType): void
-    + {abstract} ScrollUp(): void
-    + {abstract} ScrollDown(): void
-    + {abstract} DisplayLatestResult(): void
-    + {abstract} DisplayResultList(): void
+class ViewController {
+    - OnButtonPressed(type: ButtonType): void
+    - OnMeasureEnvData(): void
+    - ChangeState(type: ViewType): void
+    - ScrollUp(): void
+    - ScrollDown(): void
+    - DisplayLatestResult(): void
+    - DisplayResultList(): void
 }
 
-class ViewController {
+ViewController +-- GUIEventListenerImpl
+ViewController +-- ViewControlDelegateImpl
+
+class GUIEventListenerImpl {
     + OnButtonPressed(type: ButtonType): void
     + OnMeasureEnvData(): void
-    + ChangeState(type: ViewType): void
-    + ScrollUp(): void
-    + ScrollDown(): void
+}
+GUIEventListener <|-- GUIEventListenerImpl
+
+class ViewControlDelegateImpl {
+    + ChangeState(ViewType type): void
+    + CursorUp(): void
+    + CursorDown(): void
     + DisplayLatestResult(): void
     + DisplayResultList(): void
 }
-
-GUIContext <|-- ViewController
 ViewController x--> ViewState
+ViewControlDelegateImpl --|> ViewControlDelegate
 
 abstract class ViewState {
     + {static} GetInstance(type: ViewType): ViewState*
@@ -148,6 +159,21 @@ abstract class ViewState {
     + {abstract} DoRightButtonAction(context: GUIContext*): void
     + {abstract} DoMiddleButtonAction(context: GUIContext*): void
     + {abstract} DoLeftButtonAction(context: GUIContext*): void
+}
+
+enum ViewType {
+    kLatestResultView
+    kResultListView 
+}
+
+ViewState +-- ViewControlDelegate
+
+abstract class ViewControlDelegate {
+    + {abstract} ChangeState(ViewType type): void
+    + {abstract} CursorUp(): void
+    + {abstract} CursorDown(): void
+    + {abstract} DisplayLatestResult(): void
+    + {abstract} DisplayResultList(): void
 }
 
 ViewState <|-- LatestResultViewState

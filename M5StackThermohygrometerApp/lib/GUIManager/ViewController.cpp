@@ -8,9 +8,63 @@ static const int kLatestDisplaySize = 3;
 static const int kListDisplaySize = 2;
 static const int kMaxDisplayNums = 5;
 
+ViewController::GUIEventListenerImpl::GUIEventListenerImpl(ViewController* view_controller)
+{
+    view_controller_ = view_controller;
+}
+
+ViewController::GUIEventListenerImpl::~GUIEventListenerImpl()
+{
+}
+
+void ViewController::GUIEventListenerImpl::OnButtonPressed(ButtonType type)
+{
+    view_controller_->OnButtonPressed(type);
+}
+
+void ViewController::GUIEventListenerImpl::OnMeasureEnvData()
+{
+    view_controller_->OnMeasureEnvData();
+}
+
+ViewController::ViewControlDelegateImpl::ViewControlDelegateImpl(ViewController* view_controller)
+{
+    view_controller_ = view_controller;
+}
+
+ViewController::ViewControlDelegateImpl::~ViewControlDelegateImpl()
+{
+}
+
+void ViewController::ViewControlDelegateImpl::ChangeState(ViewType type)
+{
+    view_controller_->ChangeState(type);
+}
+
+void ViewController::ViewControlDelegateImpl::CursorUp()
+{
+    view_controller_->ScrollUp();
+}
+
+void ViewController::ViewControlDelegateImpl::CursorDown()
+{
+    view_controller_->ScrollDown();
+}
+
+void ViewController::ViewControlDelegateImpl::DisplayLatestResult()
+{
+    view_controller_->DisplayLatestResult();
+}
+
+void ViewController::ViewControlDelegateImpl::DisplayResultList()
+{
+    view_controller_->DisplayResultList();
+}
+
 ViewController::ViewController()
 {
-    state_ = ViewState::GetInstance(ViewType::kLatestResultView);
+    view_control_delegate_ = new ViewController::ViewControlDelegateImpl(this);
+    state_ = ViewState::GetInstance(ViewType::kLatestResultView, view_control_delegate_);
     result_manager_ = MeasurementResultManager::GetInstance();
     current_cursor_ = 0;
     current_start_index_ = 0;
@@ -23,18 +77,23 @@ ViewController::~ViewController()
     state_ = nullptr;
 }
 
+ViewController::GUIEventListenerImpl* ViewController::GetGUIEventListener()
+{
+    return new GUIEventListenerImpl(this);
+}
+
 void ViewController::OnButtonPressed(ButtonType type)
 {
     switch (type)
     {
     case ButtonType::kRightButton:
-        state_->DoRightButtonAction(this);
+        state_->DoRightButtonAction();
         break;
     case ButtonType::kMiddleButton:
-        state_->DoMiddleButtonAction(this);
+        state_->DoMiddleButtonAction();
         break;
     case ButtonType::kLeftButton:
-        state_->DoLeftButtonAction(this);
+        state_->DoLeftButtonAction();
         break;
     default:
         break;
@@ -43,7 +102,7 @@ void ViewController::OnButtonPressed(ButtonType type)
 
 void ViewController::OnMeasureEnvData()
 {
-    state_->OnMeasureEnvData(this);
+    state_->OnMeasureEnvData();
 }
 
 void ViewController::ChangeState(ViewType type)
@@ -51,7 +110,7 @@ void ViewController::ChangeState(ViewType type)
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState,
         "type=" + std::string(String((int)type).c_str())
     ));
-    state_->Finalize(this);
+    state_->Finalize();
     delete state_;
     state_ = nullptr;
 
@@ -62,8 +121,8 @@ void ViewController::ChangeState(ViewType type)
     int size = result_manager_->GetResults().size();
     current_end_index_ = size < kMaxDisplayNums ? size : kMaxDisplayNums;
 
-    state_ = ViewState::GetInstance(type);
-    state_->Initialize(this);
+    state_ = ViewState::GetInstance(type, view_control_delegate_);
+    state_->Initialize();
     ConsoleLogger::Log(new LogData(LogLevel::kTrace, kViewController, kChangeState, "out"));
 }
 

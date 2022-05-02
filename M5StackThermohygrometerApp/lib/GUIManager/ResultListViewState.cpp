@@ -3,7 +3,7 @@
 #include <ConsoleLogger.hpp>
 #include <LogConstants.hpp>
 
-ResultListViewState::ResultListViewState()
+ResultListViewState::ResultListViewState(ViewControlDelegate* delegate) : ViewState(delegate)
 {
 }
 
@@ -11,39 +11,39 @@ ResultListViewState::~ResultListViewState()
 {
 }
 
-void ResultListViewState::Initialize(GUIContext* context)
+void ResultListViewState::Initialize()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kInitialize, "in"));
-	context->DisplayResultList();
+	view_control_delegate_->DisplayResultList();
 }
 
-void ResultListViewState::Finalize(GUIContext* context)
+void ResultListViewState::Finalize()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kFinalize, "in"));
 }
 
-void ResultListViewState::OnMeasureEnvData(GUIContext* context)
+void ResultListViewState::OnMeasureEnvData()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kOnMeasureEnvData, "in"));
-	context->DisplayResultList();
+	view_control_delegate_->DisplayResultList();
 }
 
-void ResultListViewState::DoRightButtonAction(GUIContext* context)
+void ResultListViewState::DoRightButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoRightButtonAction, "in"));
-	context->ScrollDown();
-	context->DisplayResultList();
+	view_control_delegate_->CursorDown();
+	view_control_delegate_->DisplayResultList();
 }
 
-void ResultListViewState::DoMiddleButtonAction(GUIContext* context)
+void ResultListViewState::DoMiddleButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoMiddleButtonAction, "in"));
-	context->ChangeState(ViewType::kLatestResultView);
+	view_control_delegate_->ChangeState(ViewType::kLatestResultView);
 }
 
-void ResultListViewState::DoLeftButtonAction(GUIContext* context)
+void ResultListViewState::DoLeftButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kResultListViewState, kDoLeftButtonAction, "in"));
-	context->ScrollUp();
-	context->DisplayResultList();
+	view_control_delegate_->CursorUp();
+	view_control_delegate_->DisplayResultList();
 }

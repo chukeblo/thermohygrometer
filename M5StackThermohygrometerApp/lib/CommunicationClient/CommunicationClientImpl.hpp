@@ -24,7 +24,7 @@ public:
 private:
 	bool ConnectToWiFi();
 	bool SyncronizeTime();
-	bool SetUpMqttClient();
+	void SetUpMqttClient();
 	bool ConnectToAws();
 
 private:

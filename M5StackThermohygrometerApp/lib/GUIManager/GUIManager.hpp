@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GUIContext.hpp>
+#include <ButtonType.hpp>
 #include <ThermohygroDataMeasurer.hpp>
 
 class GUIManager
@@ -19,15 +19,27 @@ public:
 		GUIManager* gui_manager_;
 	};
 
+	class GUIEventListener
+	{
+	public:
+		GUIEventListener() {}
+		virtual ~GUIEventListener() {}
+
+	public:
+		virtual void OnButtonPressed(ButtonType type) = 0;
+		virtual void OnMeasureEnvData() = 0;
+	};
+
 public:
-	GUIManager(GUIContext* context);
+	GUIManager(GUIEventListener* gui_event_listener);
 	~GUIManager();
 
 public:
 	GUIManager::MeasureEnvDataListenerImpl* GetMeasureEnvDataListener();
 	void CheckIfButtonsPressed();
+private:
 	void NotifyEnvDataMeasured();
 
 private:
-	GUIContext* gui_context_;
+	GUIEventListener* gui_event_listener_;
 };

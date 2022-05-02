@@ -1,26 +1,62 @@
 #pragma once
 
-#include <GUIContext.hpp>
-
+#include <ButtonType.hpp>
+#include <GUIManager.hpp>
 #include <MeasurementResultManager.hpp>
 #include <ViewState.hpp>
 
-class ViewController : public GUIContext
+class ViewController
 {
 public:
-    ViewController();
-    ~ViewController() override;
+    class GUIEventListenerImpl : public GUIManager::GUIEventListener
+    {
+    public:
+        GUIEventListenerImpl(ViewController* view_controller);
+        ~GUIEventListenerImpl() override;
+    
+    public:
+        void OnButtonPressed(ButtonType type) override;
+        void OnMeasureEnvData() override;
+
+    private:
+        ViewController* view_controller_;
+    };
+
+    class ViewControlDelegateImpl : public ViewState::ViewControlDelegate
+    {
+    public:
+        ViewControlDelegateImpl(ViewController* view_controller);
+        ~ViewControlDelegateImpl();
+
+    public:
+        void ChangeState(ViewType type) override;
+        void CursorUp() override;
+        void CursorDown() override;
+        void DisplayLatestResult() override;
+        void DisplayResultList() override;
+
+    private:
+        ViewController* view_controller_;
+    };
 
 public:
-    void OnButtonPressed(ButtonType type) override;
-    void OnMeasureEnvData() override;
-    void ChangeState(ViewType type) override;
-    void ScrollUp() override;
-    void ScrollDown() override;
-    void DisplayLatestResult() override;
-    void DisplayResultList() override;
+    ViewController();
+    ~ViewController();
+
+public:
+    ViewController::GUIEventListenerImpl* GetGUIEventListener();
 
 private:
+    void OnButtonPressed(ButtonType type);
+    void OnMeasureEnvData();
+    void ChangeState(ViewType type);
+    void ScrollUp();
+    void ScrollDown();
+    void DisplayLatestResult();
+    void DisplayResultList();
+
+private:
+    ViewControlDelegateImpl* view_control_delegate_;
     ViewState* state_;
     MeasurementResultManager* result_manager_;
     int current_cursor_;

@@ -7,11 +7,13 @@
 #include <LogConstants.hpp>
 #include <SettingsProvider.hpp>
 
+static const uint16_t kKeepAliveSecs = 90;
+
 CommunicationClientImpl::CommunicationClientImpl()
 {
 	settings_ = SettingsProvider::Of();
 	http_client_ = new WiFiClientSecure();
-	mqtt_client_ = new PubSubClient(*http_client_);
+	mqtt_client_ = new PubSubClient();
 	Prepare();
 }
 
@@ -50,19 +52,22 @@ static void MqttCallback(char* topic, byte* payload, unsigned int length)
 
 void CommunicationClientImpl::SendThermohygroData(MeasurementResult* result)
 {
-	while (!mqtt_client_->connected())
+	if (!mqtt_client_->loop())
 	{
-		if (ConnectToAws()) {
-			ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData, "connected to mqtt server"));
-		}
-		delay(2000);
-	}
 
-	mqtt_client_->loop();
+		while (!mqtt_client_->connected())
+		{
+			if (ConnectToAws()) {
+				ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData, "connected to mqtt server"));
+			}
+			delay(2000);
+		}
+	}
 	std::string message = result->ToString();
 	mqtt_client_->publish(settings_->aws_settings->topic.c_str(), message.c_str());
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kSendThrmohygroData,
 		"published message to aws. topic=" + settings_->aws_settings->topic + ", message=" + message));
+	mqtt_client_->loop();
 }
 
 bool CommunicationClientImpl::ConnectToWiFi()
@@ -100,20 +105,24 @@ bool CommunicationClientImpl::SyncronizeTime()
 	return true;
 }
 
-bool CommunicationClientImpl::SetUpMqttClient()
+void CommunicationClientImpl::SetUpMqttClient()
 {
 	http_client_->setCACert(settings_->aws_settings->root_ca.c_str());
 	http_client_->setCertificate(settings_->aws_settings->device_certificate.c_str());
 	http_client_->setPrivateKey(settings_->aws_settings->private_key.c_str());
+	mqtt_client_->setClient(*http_client_);
 	mqtt_client_->setServer(settings_->aws_settings->endpoint.c_str(), settings_->aws_settings->port);
 	mqtt_client_->setCallback(&MqttCallback);
+	mqtt_client_->setKeepAlive(kKeepAliveSecs);
 }
 
 bool CommunicationClientImpl::ConnectToAws()
 {
 	if (mqtt_client_->connect(settings_->aws_settings->client_id.c_str()));
 	{
-		ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kConnectToAws, "connected to aws"));
+		ConsoleLogger::Log(new LogData(LogLevel::kInfo, kCommunicationClient, kConnectToAws,
+			"connected to aws. state=" + std::string(String(mqtt_client_->state()).c_str())
+		));
 		return true;
 	}
 

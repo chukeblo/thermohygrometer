@@ -3,7 +3,7 @@
 #include <ConsoleLogger.hpp>
 #include <LogConstants.hpp>
 
-LatestResultViewState::LatestResultViewState()
+LatestResultViewState::LatestResultViewState(ViewControlDelegate* delegate) : ViewState(delegate)
 {
 }
 
@@ -11,35 +11,35 @@ LatestResultViewState::~LatestResultViewState()
 {
 }
 
-void LatestResultViewState::Initialize(GUIContext* context)
+void LatestResultViewState::Initialize()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kInitialize, "in"));
-	context->DisplayLatestResult();
+	view_control_delegate_->DisplayLatestResult();
 }
 
-void LatestResultViewState::Finalize(GUIContext* context)
+void LatestResultViewState::Finalize()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kFinalize, "in"));
 }
 
-void LatestResultViewState::OnMeasureEnvData(GUIContext* context)
+void LatestResultViewState::OnMeasureEnvData()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kOnMeasureEnvData, "in"));
-	context->DisplayLatestResult();
+	view_control_delegate_->DisplayLatestResult();
 }
 
-void LatestResultViewState::DoRightButtonAction(GUIContext* context)
+void LatestResultViewState::DoRightButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kDoRightButtonAction, "in"));
 }
 
-void LatestResultViewState::DoMiddleButtonAction(GUIContext* context)
+void LatestResultViewState::DoMiddleButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kDoMiddleButtonAction, "in"));
-	context->ChangeState(ViewType::kResultListView);
+	view_control_delegate_->ChangeState(ViewType::kResultListView);
 }
 
-void LatestResultViewState::DoLeftButtonAction(GUIContext* context)
+void LatestResultViewState::DoLeftButtonAction()
 {
 	ConsoleLogger::Log(new LogData(LogLevel::kInfo, kLatestResultViewState, kDoLeftButtonAction, "in"));
 }
