@@ -67,10 +67,11 @@ std::map<std::string, JsonElement*> JsonHandler::Parse(std::string raw)
 		sKeyValuePairResult result = ExtractKeyValuePair(raw, count);
 		map.insert(std::make_pair(result.key, result.value));
 		count = result.index;
-		if (raw[count++] != kComma)
+		if (raw[count] != kComma)
 		{
 			break;
 		}
+		count++;
 	}
 	count = SkipBlankAndNewLineCharacters(raw, count);
 	if (raw[count] != kCloseBracket)
