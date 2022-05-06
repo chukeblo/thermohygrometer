@@ -1,0 +1,7 @@
+#ifndef TEST_MAIN_HPP_
+#define TEST_MAIN_HPP_
+
+void run_aws_settings_tests();
+void run_wifi_settings_tests();
+
+#endif // TEST_MAIN_HPP_

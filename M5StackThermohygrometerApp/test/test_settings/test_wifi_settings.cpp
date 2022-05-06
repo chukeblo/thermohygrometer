@@ -3,9 +3,10 @@
 
 #include <string>
 
+#include "../test_main.hpp"
 #include <WiFiSettings.hpp>
 
-void test_ctor(void)
+static void test_wifi_settings_ctor(void)
 {
     std::string ssid("hoge");
     std::string password("fuga");
@@ -14,7 +15,7 @@ void test_ctor(void)
     TEST_ASSERT_EQUAL_STRING(password.c_str(), settings->password.c_str());
 }
 
-void test_FromString(void)
+static void test_wifi_settings_FromString(void)
 {
     std::string ssid("hoge");
     std::string password("fuga");
@@ -24,20 +25,8 @@ void test_FromString(void)
     TEST_ASSERT_EQUAL_STRING(password.c_str(), settings->password.c_str());
 }
 
-void setup()
+void run_wifi_settings_tests()
 {
-    // wait for over 2 secs
-    // if board does not support software reset via Serial.DTR/RTS
-    delay(2000);
-
-    UNITY_BEGIN();
-
-    RUN_TEST(test_ctor);
-    RUN_TEST(test_FromString);
-
-    UNITY_END();
-}
-
-void loop()
-{
+    RUN_TEST(test_wifi_settings_ctor);
+    RUN_TEST(test_wifi_settings_FromString);
 }
