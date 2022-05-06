@@ -6,12 +6,15 @@
 #include <ConsoleLogger.hpp>
 #include <LogConstants.hpp>
 #include <SettingsProvider.hpp>
+#include <SDCardController.hpp>
 
 static const uint16_t kKeepAliveSecs = 90;
 
 CommunicationClientImpl::CommunicationClientImpl()
 {
-	settings_ = SettingsProvider::Of();
+	SDCardController* sd_card_controller = new SDCardController();
+	settings_ = SettingsProvider::Of(sd_card_controller);
+	delete sd_card_controller;
 	http_client_ = new WiFiClientSecure();
 	mqtt_client_ = new PubSubClient();
 	Prepare();

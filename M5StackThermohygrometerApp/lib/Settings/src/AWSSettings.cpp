@@ -4,7 +4,6 @@
 
 #include <JsonHandler.hpp>
 #include <SDCardConstants.hpp>
-#include <SDCardController.hpp>
 
 const std::string kClientIdKey = "clientId";
 const std::string kEndpointKey = "endpoint";
@@ -29,7 +28,7 @@ AWSSettings::~AWSSettings()
 {
 }
 
-AWSSettings* AWSSettings::FromString(std::string json)
+AWSSettings* AWSSettings::FromString(std::string json, SDCardController* sd_card_controller)
 {
     std::map<std::string, JsonElement*> aws_settings_map = JsonHandler::Parse(json);
     JsonStringElement* client_id_element = static_cast<JsonStringElement*>(aws_settings_map[kClientIdKey]);
@@ -43,8 +42,8 @@ AWSSettings* AWSSettings::FromString(std::string json)
     JsonStringElement* root_ca_path_element = static_cast<JsonStringElement*>(aws_settings_map[kRootCaPathKey]);
     JsonStringElement* device_cert_path_element = static_cast<JsonStringElement*>(aws_settings_map[kDeviceCertPathKey]);
     JsonStringElement* private_key_path_element = static_cast<JsonStringElement*>(aws_settings_map[kPrivateKeyPathKey]);
-    std::string root_ca = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + root_ca_path_element->data);
-    std::string device_certificate = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + device_cert_path_element->data);
-    std::string private_key = SDCardController::ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + private_key_path_element->data);
+    std::string root_ca = sd_card_controller->ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + root_ca_path_element->data);
+    std::string device_certificate = sd_card_controller->ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + device_cert_path_element->data);
+    std::string private_key = sd_card_controller->ReadFileFromSDCard(kSDCardRootPath + kAwsDocsFilePath + private_key_path_element->data);
     return new AWSSettings(client_id, endpoint, port, root_ca, device_certificate, private_key, topic);
 }
