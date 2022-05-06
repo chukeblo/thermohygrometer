@@ -3,5 +3,6 @@
 
 void run_aws_settings_tests();
 void run_wifi_settings_tests();
+void run_aws_communication_settings_tests();
 
 #endif // TEST_MAIN_HPP_

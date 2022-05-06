@@ -13,6 +13,7 @@ void setup()
 
     run_aws_settings_tests();
     run_wifi_settings_tests();
+    run_aws_communication_settings_tests();
 
     UNITY_END();
 }
