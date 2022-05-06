@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <unity.h>
 
-#include "test_main.hpp"
+#include "test_settings.hpp"
 
 void setup()
 {
@@ -11,10 +11,13 @@ void setup()
 
     UNITY_BEGIN();
 
+    // unit tests for Settings lib
     run_aws_settings_tests();
     run_wifi_settings_tests();
     run_aws_communication_settings_tests();
     run_settings_provider_tests();
+    // unit tests for MeasurementResultManager lib
+    // run_measurement_result_tests();
 
     UNITY_END();
 }
