@@ -4,7 +4,7 @@
 #include <AWSCommunicationSettings.hpp>
 #include "../test_main.hpp"
 
-void test_aws_communication_settings_ctor(void)
+static void test_aws_communication_settings_ctor(void)
 {
     WiFiSettings* wifi_settings = new WiFiSettings(
         "ssid", "password"
