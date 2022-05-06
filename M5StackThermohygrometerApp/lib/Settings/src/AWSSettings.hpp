@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <SDCardController.hpp>
+
 class AWSSettings
 {
 public:
@@ -9,7 +11,7 @@ public:
 	~AWSSettings();
 
 public:
-	static AWSSettings* FromString(std::string json);
+	static AWSSettings* FromString(std::string json, SDCardController* sd_card_controller);
 
 public:
 	std::string client_id;
