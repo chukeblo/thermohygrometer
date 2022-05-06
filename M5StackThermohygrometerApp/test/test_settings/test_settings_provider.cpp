@@ -3,10 +3,10 @@
 
 #include <string>
 
+#include "test_settings.hpp"
 #include <SDCardConstants.hpp>
 #include <SDCardController.hpp>
 #include <SettingsProvider.hpp>
-#include "../test_main.hpp"
 
 static const std::string kWiFiSettingsFile = kSDCardRootPath + kWiFiSettingsFileName;
 static const std::string kAWSSettingsFile = kSDCardRootPath + kAwsDocsFilePath + kAwsSettingsFileName;

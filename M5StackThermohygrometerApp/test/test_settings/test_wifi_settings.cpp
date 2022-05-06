@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../test_main.hpp"
+#include "test_settings.hpp"
 #include <WiFiSettings.hpp>
 
 static void test_wifi_settings_ctor(void)
