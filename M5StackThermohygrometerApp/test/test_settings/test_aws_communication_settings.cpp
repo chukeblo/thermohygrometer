@@ -2,7 +2,7 @@
 #include <unity.h>
 
 #include <AWSCommunicationSettings.hpp>
-#include "test_settings.hpp"
+#include "test_settings_main.hpp"
 
 static void test_aws_communication_settings_ctor(void)
 {

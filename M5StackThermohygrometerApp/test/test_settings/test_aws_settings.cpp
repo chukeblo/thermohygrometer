@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "test_settings.hpp"
+#include "test_settings_main.hpp"
 #include <AWSSettings.hpp>
 #include <SDCardConstants.hpp>
 #include <SDCardController.hpp>
