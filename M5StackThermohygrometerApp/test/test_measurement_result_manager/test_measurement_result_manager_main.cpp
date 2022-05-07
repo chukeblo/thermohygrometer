@@ -13,6 +13,7 @@ void setup()
 
     // unit tests for MeasurementResultManager lib
     run_measurement_result_tests();
+    run_measurement_result_manager_tests();
 
     UNITY_END();
 }
