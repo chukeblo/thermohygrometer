@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <unity.h>
 
-#include "test_measurement_result_manager.hpp"
+#include "test_measurement_result_manager_main.hpp"
 #include <MeasurementResult.hpp>
 
 std::string kTime = "00:00:00";

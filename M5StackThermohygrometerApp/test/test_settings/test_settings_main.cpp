@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <unity.h>
 
-#include "test_settings.hpp"
+#include "test_settings_main.hpp"
 
 void setup()
 {
