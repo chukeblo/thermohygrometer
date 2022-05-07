@@ -16,8 +16,6 @@ void setup()
     run_wifi_settings_tests();
     run_aws_communication_settings_tests();
     run_settings_provider_tests();
-    // unit tests for MeasurementResultManager lib
-    // run_measurement_result_tests();
 
     UNITY_END();
 }
